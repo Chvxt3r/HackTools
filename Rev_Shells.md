@@ -21,3 +21,6 @@ reset: unknown terminal type unknown
 Terminal type? screen
 root@target:/backend#
 ```
+## Scripts
+### Powershell
+
