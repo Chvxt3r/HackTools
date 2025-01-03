@@ -179,11 +179,11 @@ Look for user input to be displayed as part of an error messages
 Test Payloads
 
 ```html
-<script>alert(window.origin)</script> # This will pop up a window shoing the source URL for the popup window(iframes)
+<script>alert(window.origin)</script> # This will pop up a window showing the source URL for the popup window(iframes)
 <script>print()</script> # Will pop up the printer dialog
 <plaintext> # Should render the rest of the page as plain text.
 ```
-Payloads will NOT be rendered by the browser on execution
+Payloads will **NOT** be rendered by the browser on execution
 
 **Targeting**
 Target users by sending them a GET-Request URL containing our payload
