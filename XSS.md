@@ -1,5 +1,19 @@
 # Cross-Site Scripting (XSS)
 
+## Discovery
+### xsstrike.py
+```bash
+python xsstrike.py -u "http://SERVER_IP:PORT/index.php?task=test" 
+```
+### Manual
+Manually test payloads against input fields
+[PayloadAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XSS%20Injection/README.md)
+[PayloadBox](https://github.com/payloadbox/xss-payload-list)
+
+### Code Review
+
+## Defacing
+
 ## Stored XSS (Persistent XSS)
 
 ### Testing
@@ -31,7 +45,7 @@ Test Payloads
 ```
 Payloads will NOT be rendered by the browser on execution
 
-Targeting
+**Targeting**
 Target users by sending them a GET-Request URL containing our payload
 
 ### DOM-Based
@@ -68,3 +82,4 @@ Test Payloads
 ```html
 <img src="" onerror=alert(window.origin)>
 ```
+
