@@ -28,3 +28,26 @@ netstat -tulpn
 ```bash
 mysql -u <user> -p<pass> -h <host> <db>#No space between -p and the password (ex: -pPassword)
 ```
+
+## Pivots
+SSH Socks4 Dynamic
+```bash
+ssh -D 9050 <user>@<host>
+```
+Change browser settings to socks4 proxy 127.0.0.1:9050 to route web traffic
+
+Proxychains settings located in /etc/proxychains4.conf
+```bash
+[ProxyList]
+# add proxy here ...
+# meanwile
+# defaults set to "tor"
+socks4  127.0.0.1 9050
+```
+For app traffic, prepend "proxychains4" before command
+Example:
+```bash
+proxychains4 curl http://<site>.<dom>/<page>
+```
+
+
