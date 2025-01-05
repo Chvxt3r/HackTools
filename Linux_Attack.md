@@ -18,12 +18,12 @@ ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-11000
 ```bash
 ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/raft-large-files.txt -u http://<Domain or IP>/FUZZ -e .php,.html,.txt -fs 283
 ```
-
+## Credentials Enumeration
 ==What's Listening?
 ```bash
 netstat -tulpn
 ```
-## Databases
+### Databases
 ==MySQL
 ```bash
 mysql -u <user> -p<pass> -h <host> <db>#No space between -p and the password (ex: -pPassword)
