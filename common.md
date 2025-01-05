@@ -136,11 +136,11 @@ smtp-user-enum -M EXPN -U /usr/share/wordlists/seclists/Usernames/xato-net-10-mi
 
 ## Command Execution Verification - [Ping check]
 ```bash
-tcpdump -i any -c5 icmp
+sudo tcpdump -i any icmp -c10
 ```
 ```bash
 #Check Network
-netdiscover /r 0.0.0.0/24
+netdiscover -r 0.0.0.0/24
 ```
 ```bash
 #INTO OUTFILE D00R
