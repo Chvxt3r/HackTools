@@ -38,10 +38,6 @@ Change browser settings to socks4 proxy 127.0.0.1:9050 to route web traffic
 
 Proxychains settings located in /etc/proxychains4.conf
 ```bash
-SSH Simple Port forward (Useful for forward to a website only available from target machine)
-```bash
-ssh -L 8080:localhost:52846 <user>@<target>
-```
 [ProxyList]
 # add proxy here ...
 # meanwile
@@ -52,6 +48,10 @@ For app traffic, prepend "proxychains4" before command
 Example:
 ```bash
 proxychains4 curl http://<site>.<dom>/<page>
+```
+SSH Simple Port forward (Useful for forward to a website only available from target machine)
+```bash
+ssh -L 8080:localhost:52846 <user>@<target>
 ```
 
 
