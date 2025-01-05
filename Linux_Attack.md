@@ -18,7 +18,7 @@ ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-11000
 ```bash
 ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/raft-large-files.txt -u http://<Domain or IP>/FUZZ -e .php,.html,.txt -fs 283
 ```
-## Credentials Enumeration
+## Credentialed Enumeration
 ==What's Listening?
 ```bash
 netstat -tulpn
@@ -38,6 +38,10 @@ Change browser settings to socks4 proxy 127.0.0.1:9050 to route web traffic
 
 Proxychains settings located in /etc/proxychains4.conf
 ```bash
+SSH Simple Port forward (Useful for forward to a website only available from target machine)
+```bash
+ssh -L 8080:localhost:52846 <user>@<target>
+```
 [ProxyList]
 # add proxy here ...
 # meanwile
