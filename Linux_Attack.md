@@ -203,4 +203,19 @@ ls -l /bin /usr/bin/ /usr/sbin/
 # Compare system bins to gtfobins (This needs work)
 #for i in $(curl -s https://gtfobins.github.io/ | html2text | cut -d" " -f1 | sed '/^[[:space:]]*$/d');do if grep -q "$i" installed_pkgs.list;then echo "Check GTFO for: $i";fi;done
 ```
-
+Trace System Calls
+```bash
+strace <bin>
+```
+Find Configuration Files
+```bash
+find / -type f\( -name *.conf -o -name *.config\) -exec ls -l {} \; 2>/dev/null
+```
+Find Scripts
+```bash
+find / -type f -name "*.sh" 2>/dev/null | grep -v "src\|snap\|share"
+```
+Running Services by User
+```bash
+ps aux | grep <user>
+```
