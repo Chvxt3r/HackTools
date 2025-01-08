@@ -140,3 +140,65 @@ Mounted File Systems
 ```bash
 df -h
 ```
+Unmounted File Systems
+```bash
+cat /etc/fstab | grep -v "#" | column -t
+```
+All Hidden Files
+```bash
+find / -type f -name ".*" -exec ls -l {} \; 2>/dev/null | grep <username>
+```
+All Hidden Directories
+```bash
+find / -type d -name ".*" -ls 2>/dev/null
+```bash
+Temp Files
+```bash
+ls -l /tmp /var/tmp /dev/shm
+```
+### Services & Internals
+Network Interfaces
+```bash
+ip -a
+```
+Hosts
+```bash
+cat /etc/hosts
+```
+Users Last Logins
+```bash
+lastlog
+```
+Currently Logged in Users
+```bash
+w
+```
+Command History
+```bash
+History
+```
+Find History Files
+```bash
+find / -type f \( -name *_hist -o name *_history\) -exec ls -l {} \; 2>/dev/null
+```
+Cron
+```bash
+ls -la /etc/cron.daily
+```
+Proc
+```bash
+find /proc -name cmdline -exec cat {} \; 2>/dev/null | tr " " "\n"
+```
+Installed Packages
+```bash
+apt list --installed | tr "/" " " | cut -d" " -f1,3 | sed 's/[0-9]://g' | tee -a installed_pkgs.list
+```
+Sudo Version
+```bash
+sudo -v
+```
+Binaries ([GTFOBins](https://gtfobins.github.io/)
+```bash
+ls -l /bin /usr/bin/ /usr/sbin/
+for i in $9curl -s https://gtfobins.github.io/ | html2text | cut -d" " -f1 | sed '/^[[:space:]]*$/d');do if grep -q "$i" installed_pkgs.list;then echo "Check GTFO for: $i";fi;done # Compare system bins to gtfobins
+```
