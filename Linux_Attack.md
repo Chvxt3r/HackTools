@@ -5,16 +5,16 @@
 ```bash
 sudo nmap -p- -sC -sV $IP --open -oA scans/nmap_Initial
 ```
-
-==Fuzz Directories
+### Fuzzing
+Fuzz Directories
 ```bash
 ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/raft-large-directories-lowercase.txt:FUZZ -u http://<Domain or IP>/FUZZ -fs 278
 ```
-==Fuzz Subdomains
+Fuzz Subdomains
 ```bash
 ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-110000.txt -u http://<Domain or IP> -H "Host:FUZZ.<Domain or IP" -fw 20
 ```
-==Fuzz Files
+Fuzz Files
 ```bash
 ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/raft-large-files.txt -u http://<Domain or IP>/FUZZ -e .php,.html,.txt -fs 283
 ```
@@ -53,5 +53,90 @@ SSH Simple Port forward (Useful for forward to a website only available from tar
 ```bash
 ssh -L 8080:localhost:52846 <user>@<target>
 ```
-
-
+## PrivEsc
+### Environmental
+First
+```bash
+whoami
+id
+hostname
+ip -a
+sudo -l
+```
+Sudo - List User's Priv
+```bash
+sudo -l
+```
+Possible Passwords
+```bash
+cat /etc/passwd
+grep "*sh$" /etc/passwd #Find only users with login shells, and which shell they have.
+```
+Bash History
+```bash
+history
+```
+List current Processes
+```bash
+ps aux
+```
+Cron Jobs
+```bash
+ls -la /etc/cron.daily
+```
+File Systems & Additional Drives
+```bash
+lsblk
+cat /etc/fstab
+cat /etc/fstab | grep <password/username/credential/etc>
+```
+Find Writable Directories
+```bash
+find / -path /proc -prune -o -type d -perm -o+w 2>/dev/null
+```
+Find Writable Files
+```bash
+find / -path /proc -prune -o -type d -perm -o+w 2>/dev/null
+```
+OS Release
+```bash
+/etc/os-release
+```
+Current Users Path
+```bash
+echo $PATH
+```
+Current Users Enviornment
+```bash
+env
+```
+Current Kernel Version
+```bash
+uname -a
+cat /proc/version
+```
+List Login Shells
+```bash
+cat /etc/shells
+```
+Routing Table
+```bash
+route
+netstat -rn
+```
+Arp Table
+```bash
+arp -a
+```
+Existing Groups
+```bash
+cat /etc/group
+```
+Get all members of a group
+```bash
+getent group sudo
+```
+Mounted File Systems
+```bash
+df -h
+```
