@@ -200,7 +200,7 @@ sudo -v
 Binaries ([GTFOBins](https://gtfobins.github.io/))
 ```bash
 ls -l /bin /usr/bin/ /usr/sbin/
-# Compare system bins to gtfobins
-for i in $(curl -s https://gtfobins.github.io/ | html2text | cut -d" " -f1 | sed '/^[[:space:]]*$/d');do if grep -q "$i" installed_pkgs.list;then echo "Check GTFO for: $i";fi;done
+# Compare system bins to gtfobins (This needs work)
+#for i in $(curl -s https://gtfobins.github.io/ | html2text | cut -d" " -f1 | sed '/^[[:space:]]*$/d');do if grep -q "$i" installed_pkgs.list;then echo "Check GTFO for: $i";fi;done
 ```
 
