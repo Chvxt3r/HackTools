@@ -5,7 +5,9 @@
 ```bash
 sudo nmap -p- -sC -sV $IP --open -oA scans/nmap_Initial
 ```
-### Fuzzing
+## Common
+### Insert most commonly used here
+## Fuzzing
 Fuzz Directories
 ```bash
 ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/raft-large-directories-lowercase.txt:FUZZ -u http://<Domain or IP>/FUZZ -fs 278
@@ -19,7 +21,7 @@ Fuzz Files
 ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/raft-large-files.txt -u http://<Domain or IP>/FUZZ -e .php,.html,.txt -fs 283
 ```
 ## Credentialed Enumeration
-==What's Listening?
+### What's Listening?
 ```bash
 netstat -tulpn
 ```
