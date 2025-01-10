@@ -30,7 +30,7 @@ mysql -u <user> -p<pass> -h <host> <db>#No space between -p and the password (ex
 ```
 
 ## Pivots
-SSH Socks4 Dynamic
+### SSH Socks4 Dynamic
 ```bash
 ssh -D 9050 <user>@<host>
 ```
@@ -49,7 +49,7 @@ Example:
 ```bash
 proxychains4 curl http://<site>.<dom>/<page>
 ```
-SSH Simple Port forward (Useful for forward to a website only available from target machine)
+### SSH Simple Port forward (Useful to forward to a website only available from target machine)
 ```bash
 ssh -L 8080:localhost:52846 <user>@<target>
 ```
