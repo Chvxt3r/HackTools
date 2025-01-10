@@ -23,8 +23,8 @@ ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/raft-large-files.txt
 ```bash
 netstat -tulpn
 ```
-### Databases
-==MySQL
+## Databases
+### MySQL
 ```bash
 mysql -u <user> -p<pass> -h <host> <db>#No space between -p and the password (ex: -pPassword)
 ```
