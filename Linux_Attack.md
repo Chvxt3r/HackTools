@@ -288,10 +288,10 @@ Again, check [GTFOBins](https://gtfobins.github.io)
 
 ### Priviliged Groups
 
-LXC/LXD
-All users added to LXD group at install.
-Usage = Create LXD container, make it privileged, and then access host file system at /mnt/root
-Process:
+LXC/LXD  
+All users added to LXD group at install.  
+Usage = Create LXD container, make it privileged, and then access host file system at /mnt/root  
+Process:  
 ```bash
 id #Verify you are in the (lxd) group
 
@@ -316,10 +316,10 @@ Docker
 docker run -v /root:/mnt -it ubuntu #Creates a new docker instance with /root on the host mounted as a volume at /mnt
 ```
 
-Disk
-Members of the (Disk) group have access to any devices within /dev, including /dev/sda1 (usually the main OS drive)
+Disk  
+Members of the (Disk) group have access to any devices within /dev, including /dev/sda1 (usually the main OS drive)  
 
-ADM
+ADM  
 Members of the (ADM) group have access to all logs in /var/log. Not directly root, but good recon!
 
 
