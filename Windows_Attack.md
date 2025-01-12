@@ -40,6 +40,7 @@ impacket-psexec <user>:<password>@<IP>
 ```
 ### Evil-WinRM
 ```bash
+evil-winrm -u <user> -p <password> -i <host or ip>
 ```
 ## Attack
 ### SQL
