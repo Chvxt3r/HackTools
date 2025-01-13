@@ -1,11 +1,17 @@
 # Windows Recon & Attack
 ## Enumeration
+### Common
+```bash
+smbmap -H <IP or hostname> -u null # Test for null access
+
+bloodhound-python -d sequel.htb -u sql_svc -p 'WqSZAF6CysDQbGb3' -dc dc01.sequel.htb -gc dc01.sequel.htb -ns 10.10.11.51 -c all
+```
 ### Scans
 ```bash
 sudo nmap -p- -sC -sV $IP --open -oA scans/nmap_Initial
 ```
 
-### SMB - Uncredentialed
+### Uncredentialed
 List Shares
 ```bash
 smbclient -L \\\\<IP or hostname> 
@@ -14,7 +20,7 @@ smbmap
 ```bash
 smbmap -H <IP or hostname> -u null # Test for null access
 ```
-### SMB - Credentialed
+### Credentialed
 CME
 ```bash
 crackmapexec smb 10.10.10.178 -u TempUser -p welcome2019 --shares
@@ -26,6 +32,10 @@ smbmap -H <IP or Hostname> -u <user> -p <password>
 smbclient
 ```bash
 smbclient -U <user> //<host or ip>/<share> <password>
+```
+Bloodhound-Python
+```bash
+bloodhound-python -d sequel.htb -u sql_svc -p 'WqSZAF6CysDQbGb3' -dc dc01.sequel.htb -gc dc01.sequel.htb -ns 10.10.11.51 -c all
 ```
 ### Password Spray
 CME
