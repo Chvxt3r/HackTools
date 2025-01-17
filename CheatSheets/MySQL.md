@@ -1,4 +1,4 @@
-# SQL Injection (SQLI)
+# SQL
 ## MySQL
 ### Basic Connection
 ```bash
