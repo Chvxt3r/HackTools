@@ -2,6 +2,13 @@
 ### Summary
 Injection occurs user-input is put into the SQL query string without properly sanitizing or filtering the input
 ## Common
+### Authentication Bypass
+```sql
+# Basic Admin Panel Query String
+SELECT * FROM logins WHERE username = 'admin' AND password = 'p@ssw0rd''
+# This statement returns True based on the "AND" Statement if both the username and password match the same entry in sql,
+# and thus allows the login
+```
 ## In-Band
 ### Summary
 Output of both the intended and new query are output directly to the screen and can be directly read.
