@@ -133,10 +133,10 @@ cn' UNION select 1,2,3,4--
 # We will get an error or no results until we hit the right number of columns
 ```
 ### Determining which columns are displayed to the page
-It is very common that not all columns are displayed to the user.
-Very important to figure out which columns are displayed so you know where to put your injection to get it displayed
-For example, the "id" field is often used to link to other tables, but is almost never displayed to the user
-To Find out, use numbers as your junk data, so you can see which numbers are displayed easily
+It is very common that not all columns are displayed to the user.  
+Very important to figure out which columns are displayed so you know where to put your injection to get it displayed  
+For example, the "id" field is often used to link to other tables, but is almost never displayed to the user  
+To Find out, use numbers as your junk data, so you can see which numbers are displayed easily  
 ```sql
 # Assuming column 1 is not displayed to the end user
 cn' UNION select 1,@@version,3,4-- 
