@@ -10,7 +10,7 @@ SELECT * FROM logins WHERE username = 'admin' AND password = 'p@ssw0rd';
 # This statement returns True based on the "AND" Statement if both the username and password match the same entry in sql,
 # and thus allows the login
 ```
-OR Injection ([Payloads](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL%20Injection#authentication-bypass))
+### OR Injection ([Payloads](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL%20Injection#authentication-bypass))
 ```sql
 # Injected Code
 admin' or '1'='1
@@ -48,7 +48,7 @@ SELECT username FROM logins; # Selects usernames from the logins table
 SELECT * FROM logins WHERE username='admin'-- ' AND password = 'something';
 # Everything after the '-- ' is commented out, and as long as the username match's in SQL, the query will return true
 ```
-Paranthetical evaulations  
+### Paranthetical evaulations  
 Evals in Parantheses are always evaluated first  
 Let's take the following:
 ```sql
