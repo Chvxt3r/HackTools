@@ -62,7 +62,7 @@ Attempting to just comment out the rest of the query will result in a syntax err
 SELECT * FROM logins WHERE (username='admin'-- ' and ID>1) AND password = 'hashed password';
 # This results in a syntax error because as you can see from the highlighting, you didn't close out the paranthesis
 ```
-The solution is to adjust your syntax to close out the parenthesis
+The solution is to adjust your syntax to close out the parenthesis  
 Injected Code: admin')-- 
 ```sql
 # Resulting query
