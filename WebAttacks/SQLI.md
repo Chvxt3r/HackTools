@@ -28,7 +28,8 @@ SELECT * FROM logins WHERE username='notAdmin' OR '1'='1' AND password = 'someth
 
 # The additional OR statement makes the password field evaluate as true, because 1=1 is always true.
 ```
-
+Using Comments
+3 types of comments ```sql --```,```sql #``` and inline comments ```sql /**/```(Inline comments are not frequently used in injection
 ## In-Band
 ### Summary
 Output of both the intended and new query are output directly to the screen and can be directly read.
