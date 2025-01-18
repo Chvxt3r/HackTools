@@ -18,7 +18,8 @@ admin' or '1'='1
 SELECT * FROM logins WHERE username='admin' OR '1'='1' AND password = 'something';
 
 # Easy way to understand this, AND is evaluated first and will return false, assuming 'something' isn't the password
-# When the OR is evaluated, 1=1 is always true, so that will return true.
+# When the OR is evaluated, 1=1 is always true, so that will return true, and because it's an "OR" statement, the
+# whole statement will return true. 
 # NOTE: This will only work with a valid username
 ```
 ```sql
