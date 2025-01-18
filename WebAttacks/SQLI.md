@@ -143,7 +143,7 @@ cn' UNION select 1,@@version,3,4--
 ```
 ## DB Enumeration
 ### MySQL
-We need to know what flavor of SQL to craft our querys. (Ex: MySQL, MSSQL, etc)
+We need to know what flavor of SQL to craft our querys. (Ex: MySQL, MSSQL, etc)  
 Good guesses: Webserver is IIS, probably MSSQL. If Webserver is NGINX or Apache, probably MySQL.
 ```sql
 # MySQL
@@ -151,15 +151,16 @@ SELECT @@version # Useful for when we have full query output. Will return with M
 SELECT POW(1,1) # Useful for when we only have numeric output. Only works with MySQL
 SELECT SLEEP(5) # Blind/No Output. Delays page response by 5 seconds. Only works with MySQL
 ```
-### INFORMATION_SCHEMA Db
-To pull data, we need a list of db's, list of tables within each db, list of columns in each table
+### INFORMATION_SCHEMA db
+To pull data, we need a list of db's, list of tables within each db, list of columns in each table  
 Use the dot (.) operator to reference a table in another db
 ```sql
+# Example query using the (.) dot operator
 SELECT * FROM my_database.user;
 # Selects all from table user in my_database db
 ```
 ### SCHEMATA
-Enumerate which db's are available
+Enumerate which db's are available  
 The table SCHEMATA in the INFORMATION_SCHEMA db contains the info about all db's on the server
 ```sql
 # Direct query, not an injection
