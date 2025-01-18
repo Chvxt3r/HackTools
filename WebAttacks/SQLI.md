@@ -2,7 +2,7 @@
 ### Summary
 Injection occurs user-input is put into the SQL query string without properly sanitizing or filtering the input
 ## Common
-### Authentication Bypass
+## Authentication Bypass
 For Auth bypass, the query always needs to return true
 ```sql
 # Basic Admin Panel Query String
