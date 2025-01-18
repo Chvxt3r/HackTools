@@ -54,10 +54,10 @@ Let's take the following:
 ```sql
 SELECT * FROM logins WHERE (username='admin' and id>1)AND password = 'hashed password';
 ```
-The query above ensures that the users ID is always greater than 1. 
-Logging in with 'Admin' and the correct password will still fail if the admin has an id = 1
-Logging in with user 'Tom' and toms correct password will result in a successful login
-Attempting to just comment out the rest of the query will result in a syntax error.
+The query above ensures that the users ID is always greater than 1.  
+Logging in with 'Admin' and the correct password will still fail if the admin has an id = 1  
+Logging in with user 'Tom' and toms correct password will result in a successful login  
+Attempting to just comment out the rest of the query will result in a syntax error.  
 ```sql
 SELECT * FROM logins WHERE (username='admin'-- ' and ID>1) AND password = 'hashed password';
 # This results in a syntax error because as you can see from the highlighting, you didn't close out the paranthesis
