@@ -10,9 +10,9 @@
 [IO.File]::WriteAllBytes("Output_File", [Convert]::FromBase64String("Base64_Encoded_Payload"))
 ```
 ### PowerShell Web Downloads
-1. Files vs. Fileless
-a. Files = Download and save the file
-b. Filess = Download and execute without saving the file
+1. Files vs. Fileless  
+a. Files = Download and save the file  
+b. Filess = Download and execute without saving the file  
 ## Transferring with Code
 ## Misc File Transfer Methods
 ## Catching files over HTTP/S
