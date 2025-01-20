@@ -29,7 +29,7 @@ Powershell v3.0 and later can use Invoke-WebRequest(by default is aliased to ```
 ```powershell
 Invoke-WebRequest <Target File URL> -OutFile <Output_File_Name>
 ```
-**Common Errors with Powershell**
+**Common Errors with Powershell**  
 Internet Explorer first-launch configuration not being completed will prevent downloads. To bypass, use ```-UseBasicParsing```
 ```Powershell
 Invoke-WebRequest <Target file URL> -UseBasicParsing | IEX
