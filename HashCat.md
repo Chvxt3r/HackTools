@@ -76,3 +76,55 @@ hashcat -a 3 -m 0 md5_mask_example_hash -1 01 'ILFREIGHT?l?l?l?l?l20?1?d'
 ```
 --increment can be used to increment the mask length automatically, and --increment-max flag used to cap the increment
 
+### Hybrid Mode
+Useful for when you have a general idea of the orgs password policy. Hybrid mode allows you to append or prepend a  
+mask to words in a wordlist.
+Append - Mode 6
+Prepend - Mode 7
+
+Example
+```bash
+# Append
+hashcat -a 6 -m 0 -1 01 <hashfile> <wordlist> '20?1?d'
+
+# Prepend
+hashcat -a 7 -m 0 <hashfile> -1 01 '20?1?d' <wordlist>
+```
+## Custom Wordlists
+### Crunch
+```bash
+crunch <min length> <max length> <charset> -t <pattern> -o <outfile>
+```
+Crunch Patterns
+@ - Lower case Characters  
+, - Upper Case Characters  
+% - Numbers  
+^ - Symbols  
+
+-d - Specify the amount of repetition
+
+Example
+```bash
+crunch 17 17 -t ILFREIGHT201%@@@@ -o wordlist
+# Result = min/max 17 char's, ILFREIGHT2010aaaa
+```
+### CUPP
+Use - i to run in interactive mode
+```bash
+python3 cupp.py -i
+```
+### CeWL
+Used to scrape possible passwords form websites
+Usage:
+```bash
+cewl -d <spider depth> -m <min word length> -w <output wordlist> <url of website>
+```
+Useful options
+-m - Alter the length of outputted words  
+-e - extract emails  
+
+Example:
+```bash
+cewl -d 5 -m 8 -e http://performanceltg.com/blog -w wordlist.txt
+```
+
