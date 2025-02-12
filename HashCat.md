@@ -58,14 +58,14 @@ hashcat -a 1 -m <hash type> <hash file> <wordlist1> <wordlist2>
 
 ### Mask Attack
 Used to generate words matching a specific Pattern
-?l - Lower-case ASCII letters (a-z)
-?u - Upper-case ASCII letters (A-Z)
-?d - digits (0-9)
-?h - 0123456789abcdef
-?H - 0123456789ABCDEF
-?s - Special Characters (<space> !"#$%&'()*+,-./:;<=>?@[]^_`{})
-?a - ?l?u?d?s
-?b - 0x00 -0xff
+?l - Lower-case ASCII letters (a-z)  
+?u - Upper-case ASCII letters (A-Z)  
+?d - digits (0-9)  
+?h - 0123456789abcdef  
+?H - 0123456789ABCDEF  
+?s - Special Characters (<space> !"#$%&'()*+,-./:;<=>?@[]^_`{})  
+?a - ?l?u?d?s  
+?b - 0x00 -0xff  
 
 Can be combined with options "-1" to "-4" which can be used for custom placeholders
 
