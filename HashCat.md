@@ -114,7 +114,7 @@ Use - i to run in interactive mode
 python3 cupp.py -i
 ```
 ### CeWL
-Used to scrape possible passwords form websites
+Used to scrape possible passwords form websites  
 Usage:
 ```bash
 cewl -d <spider depth> -m <min word length> -w <output wordlist> <url of website>
