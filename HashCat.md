@@ -119,7 +119,7 @@ Usage:
 ```bash
 cewl -d <spider depth> -m <min word length> -w <output wordlist> <url of website>
 ```
-Useful options
+Useful options  
 -m - Alter the length of outputted words  
 -e - extract emails  
 
