@@ -4,6 +4,7 @@
 ### Grep
 ```bash
 grep -R "<search term>" <PATH>
+
 ```
 ### Nmap
 ```bash
