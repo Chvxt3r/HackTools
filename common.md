@@ -1,7 +1,11 @@
 # Common Tools
 ### Credit: S1ren@sirensecurity.io [Original Source](https://sirensecurity.io/blog/common/)
 
-## Nmap
+### Grep
+```bash
+grep -R "<search term>" <PATH>
+```
+### Nmap
 ```bash
 nmap -p- -sT -sV -A $IP
 nmap -p- -sC -sV $IP --open
