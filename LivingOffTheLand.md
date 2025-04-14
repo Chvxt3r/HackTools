@@ -10,4 +10,49 @@ Extract IP's from a text file
 ```bash
 grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' nmapfile.txt
 ```
+### Informational
+Current Users Path
+```bash
+echo $PATH
+```
+Current Users Environment
+```bash
+env
+```
+Current Kernel Version
+```bash
+uname -a
+cat /proc/version
+```
+List Login Shells
+```bash
+cat /etc/shells
+```
+### Files
+Find all hidden files
+```bash
+find / -type f -name ".*" -exec ls -l {} \; 2>/dev/null | grep <username>
+```
+Find History Files
+```bash
+find / -type f \( -name *_hist -o name *_history\) -exec ls -l {} \; 2>/dev/null
+```
+Find Configuration Files
+```bash
+find / -type f\( -name *.conf -o -name *.config\) -exec ls -l {} \; 2>/dev/null
+```
+### Packages
+List installed Packages
+```bash
+apt list --installed | tr "/" " " | cut -d" " -f1,3 | sed 's/[0-9]://g' | tee -a installed_pkgs.list
+```
+List Binaries
+```bash
+ls -l /bin /usr/bin/ /usr/sbin/
+```
+### Credential Hunting
+Web/DB Credentials
+```bash
+cat <Config File> | grep 'DB_USER\|DB_PASSWORD' # Use on any config files you find in /var
+```
 
