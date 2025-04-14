@@ -1,5 +1,8 @@
 # Living Off the Land
 
+## Links
+[LOLBins](https://lolbas-project.github.io/) List of Windows Binaries that can be used to bypass security
+[GTFOBins](https://gtfobins.github.io/) Curated list of Unix/Linux binaries that can be used to bypass security restrictions
 ## Linux
 ### Grep
 Search contents of files/directories recursively  
