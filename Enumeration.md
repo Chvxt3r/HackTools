@@ -27,14 +27,14 @@ dig any <domain>
 ```
 
 ### Search for Cloud Providers
-Google Dorks:
-Amazon
-    intext:domain inurl:amazonaws.com
-Azure
-    intext:domain inurl:blob.core.windows.net
+Google Dorks: 
+Amazon 
+    intext:domain inurl:amazonaws.com 
+Azure 
+    intext:domain inurl:blob.core.windows.net 
 
-Infrastructure:
-[domain.glass](https://domain.glass)
-[GrayHatWarfare](https://grayhatwarfare.com)
+Infrastructure: 
+[domain.glass](https://domain.glass) 
+[GrayHatWarfare](https://grayhatwarfare.com) 
 ** Don't forget to search company name abbreviations **
 
