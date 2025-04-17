@@ -17,7 +17,7 @@ for i in $(cat <subdomainlist>);do host $i | grep "has address" | grep <domain> 
 Run through shodan to find devices with the same IP
 ```bash
 # Get IP addresses and export to a list
-for i in $(cat <subdomainlist>);do host $i | grep "has address" | grep inlanefreight.com | cut -d" " -f4 >> ip-addresses.txt;done
+for i in $(cat <subdomainlist>);do host $i | grep "has address" | grep <domain> | cut -d" " -f4 >> ip-addresses.txt;done
 # Run through shodan for attached devices
 for i in $(cat ip-addresses.txt);do shodan host $i;done
 ```
