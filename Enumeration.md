@@ -21,3 +21,20 @@ for i in $(cat <subdomainlist>);do host $i | grep "has address" | grep <domain> 
 # Run through shodan for attached devices
 for i in $(cat ip-addresses.txt);do shodan host $i;done
 ```
+Get any and all available DNS Records for a domain
+```bash
+dig any <domain>
+```
+
+### Search for Cloud Providers
+Google Dorks:
+Amazon
+    intext:domain inurl:amazonaws.com
+Azure
+    intext:domain inurl:blob.core.windows.net
+
+Infrastructure:
+[domain.glass](https://domain.glass)
+[GrayHatWarfare](https://grayhatwarfare.com)
+** Don't forget to search company name abbreviations **
+
