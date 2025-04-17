@@ -37,4 +37,73 @@ Infrastructure:
 [domain.glass](https://domain.glass)  
 [GrayHatWarfare](https://grayhatwarfare.com)  
 ** Don't forget to search company name abbreviations **  
+** Also look for ssh keys, passwords, etc **  
 
+## Services
+### FTP
+NMAP fingerprinting
+```bash
+sudo nmap -sV -p21 -sC -A <IP>
+```
+Anonymous Login
+```bash
+ftp <IP>
+```
+FTP Settings
+```bash
+status
+```
+Recursive Listing
+```bash
+ls -R
+```
+Download a file
+```bash
+get <filename>
+```
+Download ALL files
+```bash
+wget -m --no-passive ftp://<username>:<password>@<IP>
+```
+Upload a file
+```bash
+put <filename>
+```
+### SMB
+Nmap Fingerprinting
+```bash
+sudo nmap <IP> -sV -sC -p139,445
+```
+Connect with smbclient
+```bash
+smbclient //<IP>/share
+```
+Download a file
+```bash
+get <filename>
+```
+### SMB/RPC
+Anonymous Connection
+```bash
+rpcclient -U "" <IP>
+```
+Server Info
+```bash
+srvinfo
+```
+Enumerate domains
+```bash
+enumdomains
+```
+Query domain info
+```bash
+querydominfo
+```
+Enumerate all shares
+```bash
+netshareenumall
+```
+Get info about a specific share
+```bash
+netsharegetinfo <share>
+```
