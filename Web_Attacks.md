@@ -3,6 +3,9 @@
 ## Identify Parameters
 ### Command Injection
 **Hijacking a system command that takes a web parameter as part of the command.**
+Links:
+[PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Command%20Injection)
+[HackTricks](https://book.hacktricks.wiki/en/pentesting-web/command-injection.html)
 
   1. Look for a parameter that **does** something with the OS/System. ie; a ping command, a backup/zip command, etc.  
 
