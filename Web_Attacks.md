@@ -2,6 +2,8 @@
 
 ## Identify Parameters
 ### Command Injection
+Hijacking a system command that takes a web parameter as part of the command.
+
   1. Look for a parameter that **does** something with the OS/System. ie; a ping command, a backup/zip command, etc.  
 
 Example PHP Code
