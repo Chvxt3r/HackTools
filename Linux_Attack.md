@@ -85,6 +85,7 @@ ps aux
 List Current Open ports and services
 ```bash
 netstat -ltp
+ss -ta # Little bit more detail
 ```
 Cron Jobs
 ```bash
