@@ -1,0 +1,26 @@
+# Web Attacks
+
+## Identify Parameters
+### Command Injection
+  1. Look for a parameter that **does** something with the OS/System. ie; a ping command, a backup/zip command, etc.  
+
+Example PHP Code
+```php
+if (isset($_POST['backup']) && !empty($_POST['password'])) {
+    $password = cleanEntry($_POST['password']);
+    $backupFile = "backups/backup_" . date('Y-m-d') . ".zip";
+
+    if ($password === false) {
+        echo "<div class='error-message'>Error: Try another password.</div>";
+    } else {
+        $logFile = '/tmp/backup_' . uniqid() . '.log';
+       
+        $command = "zip -x './backups/*' -r -P " . $password . " " . $backupFile . " .  > " . $logFile . " 2>&1 &";
+        
+        $descriptor_spec = [
+            0 => ["pipe", "r"], // stdin
+            1 => ["file", $logFile, "w"], // stdout
+            2 => ["file", $logFile, "w"], // stderr
+        ];
+# In this example, we can terminate the zip command and execute code using the "Password Parameter"
+```
