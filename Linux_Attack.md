@@ -82,6 +82,10 @@ List current Processes
 ```bash
 ps aux
 ```
+List Current Open ports and services
+```bash
+netstat -ltp
+```
 Cron Jobs
 ```bash
 ls -la /etc/cron.daily
