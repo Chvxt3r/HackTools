@@ -72,7 +72,7 @@ sudo -l
 Possible Passwords
 ```bash
 cat /etc/passwd
-grep "*sh$" /etc/passwd #Find only users with login shells, and which shell they have.
+grep "sh$" /etc/passwd #Find only users with login shells, and which shell they have.
 ```
 Bash History
 ```bash
