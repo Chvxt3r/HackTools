@@ -20,6 +20,14 @@ smbmap
 ```bash
 smbmap -H <IP or hostname> -u null # Test for null access
 ```
+Enumerate NFS Shares
+```bash
+/usr/sbin/showmount -e <IP>
+```
+Connect to NFS Shares
+```bash
+sudo mount -t nfs IP:share /tmp/mount/ -nolock
+```
 ### Credentialed
 CME
 ```bash
