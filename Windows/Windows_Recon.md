@@ -26,6 +26,10 @@ Connect to NFS Shares
 ```bash
 sudo mount -t nfs IP:share /tmp/mount/ -nolock
 ```
+Kerbrute Username Enumeration
+```bash
+kerbrute userenum -d scepter.htb --dc 10.10.11.65 jsmith.txt -o users.txt
+```
 ### Credentialed
 CME
 ```bash
