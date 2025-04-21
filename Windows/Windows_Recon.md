@@ -3,8 +3,6 @@
 ### Common
 ```bash
 smbmap -H <IP or hostname> -u null # Test for null access
-
-bloodhound-python -d sequel.htb -u sql_svc -p 'WqSZAF6CysDQbGb3' -dc dc01.sequel.htb -gc dc01.sequel.htb -ns 10.10.11.51 -c all
 ```
 ### Scans
 ```bash
