@@ -19,5 +19,47 @@ c:\Windows\Temp # usually writable by the BUILTIN\Users group
 ### Situational Awareness
 ```cmd
 ipconfig /all #Get status and configuration of network interfaces
-
+```
+```cmd
+arp -a #Show the ARP Table
+```
+```cmd
+route print #Show routes to other networks (Useful for pivoting through a dmz)
+```
+```powershell
+Get-MpComputerStatus #Check Windows Defender Status
+```
+```powershell
+Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections #List AppLocker Rules
+```
+```powershell
+# Test AppLocker Policy against an executable and User
+Get-AppLockerPolicy -Local | Test-AppLockerPolicy -path C:\Windows\System32\cmd.exe -User Everyone
+```
+## Initial Enumeration
+### Targets
+NT Authority\SYSTEM  
+Built-in Administrator account  
+Any other local account that is a member of the local Administrators Group  
+Standard domain user is part of local Admins
+Domain admin that is part of the local Administrators group
+### System Info
+```cmd
+tasklist /svc #List all Services
+set #Display All Environment Variabls
+systeminfo #Display Detailed Configuration Info
+wmic qfe #Display Patches and Updates (Powershell - Get-Hotfix | ft -AutoSize)
+wmic product get name #Display Installed Software (Powershell - Get-WmiObject -Class Win32_Product | select Name, Version)
+netstat -ano #Display Active TCP/UDP connections
+```
+### User/Group Info
+```cmd
+query user #Get a list of logged in users
+echo %username% #Get current user (equivalent to whoami)
+whoami /priv #Get Current User Privileges
+whoami /groups #What groups am I in?
+net user #Get list of all users
+net localgroup #Get list of all local groups
+net localgroup <groupname> #Get details of the group, including members
+net accounts #Get Password Policy and Other account info
 ```
