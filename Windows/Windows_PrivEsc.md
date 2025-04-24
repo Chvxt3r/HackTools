@@ -15,4 +15,9 @@
 ```cmd
 c:\Windows\Temp # usually writable by the BUILTIN\Users group
 ```
+## Lay of the Land
+### Situational Awareness
+```cmd
+ipconfig /all #Get status and configuration of network interfaces
 
+```
