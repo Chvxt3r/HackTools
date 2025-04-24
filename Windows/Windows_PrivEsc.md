@@ -52,6 +52,13 @@ wmic qfe #Display Patches and Updates (Powershell - Get-Hotfix | ft -AutoSize)
 wmic product get name #Display Installed Software (Powershell - Get-WmiObject -Class Win32_Product | select Name, Version)
 netstat -ano #Display Active TCP/UDP connections
 ```
+```powershell
+gci \\.\pip\ #Get a listing of named pipes
+```
+```cmd
+#List DACL's of a named pipe
+accesschk.exe /accepteula \\.\Pipe\lsass -v #accesschk.exe is part of sysinternals
+```
 ### User/Group Info
 ```cmd
 query user #Get a list of logged in users
@@ -63,3 +70,7 @@ net localgroup #Get list of all local groups
 net localgroup <groupname> #Get details of the group, including members
 net accounts #Get Password Policy and Other account info
 ```
+## Process Communication
+### Access Tokens
+Used to describe the security context of a process or thread
+
