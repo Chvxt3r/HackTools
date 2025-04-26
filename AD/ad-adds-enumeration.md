@@ -74,9 +74,11 @@ Use the appropriate data collector to gather information for **BloodHound** or *
 
 * Use [fox-it/BloodHound.py](https://github.com/fox-it/BloodHound.py)
 
-  ```ps1
+  ```bash
   pip install bloodhound
-  bloodhound-python -d domain.local -u username -p password -gc LAB2008DC01.domain.local -c all
+  bloodhound-python -d domain.local -u username -p password -gc "GC Hostname" -dc "<DC Hostname>" -ns <DNS IP> -c all
+  # With Kerberos
+  bloodhound-python -d "scepter.htb" -u "d.baker" -no-pass -k -gc "dc01.scepter.htb" -dc "dc01.scepter.htb" -ns 10.10.11.65 -c all
   ```
 
 * Use [c3c/ADExplorerSnapshot.py](https://github.com/c3c/ADExplorerSnapshot.py) to query data from SysInternals/ADExplorer snapshot  (ADExplorer remains a legitimate binary signed by Microsoft, avoiding detection with security solutions).
