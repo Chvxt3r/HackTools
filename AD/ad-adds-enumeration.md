@@ -214,7 +214,7 @@ You can add some custom queries like :
 
 Replace the customqueries.json file located at `/home/username/.config/bloodhound/customqueries.json` or `C:\Users\USERNAME\AppData\Roaming\BloodHound\customqueries.json`.
 
-## From Linux
+## Enumeration From Linux
 
 * **Testing for Null Shares**
   ```bash
@@ -233,7 +233,7 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   #LDAP Anonymous Bind
   ldapsearch -h <host ip> -x -b "DC=test,DC=local" -s sub "*" | grep -m 1 -B 10 pwdHistoryLength
   ```
-## From Windows
+## Enumeration From Windows
 
 * **Testing for Null Shares**
 
