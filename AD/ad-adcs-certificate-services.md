@@ -22,6 +22,10 @@ Active Directory Certificate Services (AD CS) is a Microsoft Windows server role
     certutil.exe -config - -ping
     certutil -dump
     ```
+* certipy-ad:
+    ```bash
+    certipy-ad find -target 'dc01.scepter.htb' -dc-ip 10.10.11.65 -u "scepter.htb/a.carter" -k -stdout -vulnerable
+    ```
 
 ## Certificate Enrollment
 
