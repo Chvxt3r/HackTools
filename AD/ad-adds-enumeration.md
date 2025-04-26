@@ -214,6 +214,34 @@ You can add some custom queries like :
 
 Replace the customqueries.json file located at `/home/username/.config/bloodhound/customqueries.json` or `C:\Users\USERNAME\AppData\Roaming\BloodHound\customqueries.json`.
 
+## From Linux
+
+* **Testing for Null Shares**
+  ```bash
+  rpcclient -U "" -N <IP>
+  ```
+* **Password Policy**
+  ```bash
+  # CME
+  crackmapexec smb <IP> -u <username> -p <password> --pass-pol
+  # rpcclient
+  querydominfo
+  # enum4linux
+  enum4linux -P <IP>
+  # enum4linux-ng (Written in Python, supports colored output and export to JSON or YAML)
+  enum4linux-ng -P <IP> -oA <outfile>
+  #LDAP Anonymous Bind
+  ldapsearch -h <host ip> -x -b "DC=test,DC=local" -s sub "*" | grep -m 1 -B 10 pwdHistoryLength
+  ```
+## From Windows
+
+* **Testing for Null Shares**
+
+* **Password Policy**
+  ```cmd
+  net accounts
+  ```
+
 ## Using PowerView
   
 * **Get Current Domain:** `Get-NetDomain`
