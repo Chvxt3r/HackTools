@@ -1,5 +1,66 @@
 # Active Directory - Enumeration
 
+## User Hunting
+
+Sometimes you need to find a machine where a specific user is logged in.
+You can remotely query every machines on the network to get a list of the users's sessions.
+
+* netexec
+
+  ```ps1
+  nxc smb 10.10.10.0/24 -u Administrator -p 'P@ssw0rd' --sessions
+  SMB         10.10.10.10    445    WIN-8OJFTLMU1IG  [+] Enumerated sessions
+  SMB         10.10.10.10    445    WIN-8OJFTLMU1IG  \\10.10.10.10            User:Administrator
+  ```
+
+* Impacket Smbclient
+
+  ```ps1
+  $ impacket-smbclient Administrator@10.10.10.10
+  # who
+  host:  \\10.10.10.10, user: Administrator, active:     1, idle:     0
+  ```
+
+* PowerView Invoke-UserHunter
+
+  ```ps1
+  # Find computers were a Domain Admin OR a specified user has a session
+  Invoke-UserHunter
+  Invoke-UserHunter -GroupName "RDPUsers"
+  Invoke-UserHunter -Stealth
+  ```
+
+## RID cycling
+
+In Windows, every security principal (user, group, etc.) has a Security Identifier (SID). The SID is a unique identifier used for access control.
+
+```ps1
+S-1-5-21-<domain>-<RID>
+```
+
+* `S-1-5-21-<domain>` = Base domain SID
+* `<RID>` = Unique ID assigned to a user/group
+
+RID cycling involves brute-forcing a range of RIDs (like 500–1500) by appending them to the known domain SID, and attempting to resolve each SID into a username.
+
+* Using [Pennyw0rth/NetExec](https://github.com/Pennyw0rth/NetExec)
+
+  ```ps1
+  netexec smb 10.10.11.231 -u guest -p '' --rid-brute 10000 --log rid-brute.txt
+  SMB         10.10.11.231    445    DC01             [*] Windows 10 / Server 2019 Build 17763 x64 (name:DC01) (domain:rebound.htb) (signing:True) (SMBv1:False)
+  SMB         10.10.11.231    445    DC01             [+] rebound.htb\guest:
+  SMB         10.10.11.231    445    DC01             498: rebound\Enterprise Read-only Domain Controllers (SidTypeGroup)
+  SMB         10.10.11.231    445    DC01             500: rebound\Administrator (SidTypeUser)
+  SMB         10.10.11.231    445    DC01             501: rebound\Guest (SidTypeUser)
+  SMB         10.10.11.231    445    DC01             502: rebound\krbtgt (SidTypeUser)
+  ```
+
+* Using Impacket script [impacket/lookupsid.py](https://github.com/fortra/impacket/blob/master/examples/lookupsid.py)
+
+  ```ps1
+  lookupsid.py -no-pass 'guest@rebound.htb' 20000
+  ```
+
 ## Using BloodHound
 
 Use the appropriate data collector to gather information for **BloodHound** or **BloodHound Community Edition (CE)** across various platforms.
@@ -323,67 +384,6 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
  ```powershell
  Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections
  ```
-
-## User Hunting
-
-Sometimes you need to find a machine where a specific user is logged in.
-You can remotely query every machines on the network to get a list of the users's sessions.
-
-* netexec
-
-  ```ps1
-  nxc smb 10.10.10.0/24 -u Administrator -p 'P@ssw0rd' --sessions
-  SMB         10.10.10.10    445    WIN-8OJFTLMU1IG  [+] Enumerated sessions
-  SMB         10.10.10.10    445    WIN-8OJFTLMU1IG  \\10.10.10.10            User:Administrator
-  ```
-
-* Impacket Smbclient
-
-  ```ps1
-  $ impacket-smbclient Administrator@10.10.10.10
-  # who
-  host:  \\10.10.10.10, user: Administrator, active:     1, idle:     0
-  ```
-
-* PowerView Invoke-UserHunter
-
-  ```ps1
-  # Find computers were a Domain Admin OR a specified user has a session
-  Invoke-UserHunter
-  Invoke-UserHunter -GroupName "RDPUsers"
-  Invoke-UserHunter -Stealth
-  ```
-
-## RID cycling
-
-In Windows, every security principal (user, group, etc.) has a Security Identifier (SID). The SID is a unique identifier used for access control.
-
-```ps1
-S-1-5-21-<domain>-<RID>
-```
-
-* `S-1-5-21-<domain>` = Base domain SID
-* `<RID>` = Unique ID assigned to a user/group
-
-RID cycling involves brute-forcing a range of RIDs (like 500–1500) by appending them to the known domain SID, and attempting to resolve each SID into a username.
-
-* Using [Pennyw0rth/NetExec](https://github.com/Pennyw0rth/NetExec)
-
-  ```ps1
-  netexec smb 10.10.11.231 -u guest -p '' --rid-brute 10000 --log rid-brute.txt
-  SMB         10.10.11.231    445    DC01             [*] Windows 10 / Server 2019 Build 17763 x64 (name:DC01) (domain:rebound.htb) (signing:True) (SMBv1:False)
-  SMB         10.10.11.231    445    DC01             [+] rebound.htb\guest: 
-  SMB         10.10.11.231    445    DC01             498: rebound\Enterprise Read-only Domain Controllers (SidTypeGroup)
-  SMB         10.10.11.231    445    DC01             500: rebound\Administrator (SidTypeUser)
-  SMB         10.10.11.231    445    DC01             501: rebound\Guest (SidTypeUser)
-  SMB         10.10.11.231    445    DC01             502: rebound\krbtgt (SidTypeUser)
-  ```
-
-* Using Impacket script [impacket/lookupsid.py](https://github.com/fortra/impacket/blob/master/examples/lookupsid.py)
-
-  ```ps1
-  lookupsid.py -no-pass 'guest@rebound.htb' 20000
-  ```
 
 ## Other Interesting Commands
 
