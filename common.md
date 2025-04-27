@@ -161,4 +161,4 @@ GIF89a1
 Chuxtr's rip-off of S1ren's common implies that you have seclists installed in the default Kali location '/usr/share/wordlists/seclists/'
 https://github.com/danielmiessler/SecLists
 
-#test
+
