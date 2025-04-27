@@ -26,6 +26,13 @@ Active Directory Certificate Services (AD CS) is a Microsoft Windows server role
     ```bash
     certipy-ad find -target 'dc01.scepter.htb' -dc-ip 10.10.11.65 -u "scepter.htb/a.carter" -k -stdout -vulnerable
     ```
+* Use [ly4k/Certipy](https://github.com/ly4k/Certipy) to collect certificates data for import to bloodhound
+
+  ```bash
+  certipy find 'corp.local/john:Passw0rd@dc.corp.local' -bloodhound
+  certipy find 'corp.local/john:Passw0rd@dc.corp.local' -old-bloodhound
+  certipy find 'corp.local/john:Passw0rd@dc.corp.local' -vulnerable -hide-admins -username user@domain -password Password123
+  ```
 
 ## Certificate Enrollment
 
