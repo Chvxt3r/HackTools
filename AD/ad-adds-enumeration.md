@@ -177,7 +177,11 @@ RID cycling involves brute-forcing a range of RIDs (like 500–1500) by appendin
     # If the current user has access, we can search for computers with LAPS enabled, and get the passwords
     Get-LAPSComputers
     ```
-## Using BloodHound
+
+## Credentials Enumeration
+> "That fuckin' nobody, was ..."
+
+### Using BloodHound
 
 Use the appropriate data collector to gather information for **BloodHound** or **BloodHound Community Edition (CE)** across various platforms.
 
