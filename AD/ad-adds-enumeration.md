@@ -146,6 +146,36 @@ RID cycling involves brute-forcing a range of RIDs (like 500–1500) by appendin
   lookupsid.py -no-pass 'guest@rebound.htb' 20000
   ```
 
+## Enumerating Security Controls
+> Now that we have a foothold, it's time to figure out what we're allowed to do/run
+
+* **Windows Defender**
+    ```powershell
+    Get-MPComputer Status
+    ```
+* **AppLocker**
+    ```powershell
+    Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections
+    ```
+* **PowerShell Constrained Language Mode**
+    ```powershell
+    $ExecutionContext.SessionState.LanguageMode
+    ```
+* **LAPS**  
+> Used to randomize and rotate local administrator credentials to prevent lateral movement
+> > We can use [LAPSToolkit](https://github.com/leoloobeek/LAPSToolkit) functions to speed this up
+    ```Powershell
+    Find-LAPSDelegatedGroups
+    ```
+    ```powershell
+    # Check the rights on each computer with LAPS Enabled for any groups with read access and users with "All Extended Rights"
+    # Users with "All Extended Rights" can read LAPS passwords and may be less protected than users in delegated groups
+    Find-AdmPwdExtendedRights
+    ```
+    ```powershell
+    # If the current user has access, we can search for computers with LAPS enabled, and get the passwords
+    Get-LAPSComputers
+    ```
 ## Using BloodHound
 
 Use the appropriate data collector to gather information for **BloodHound** or **BloodHound Community Edition (CE)** across various platforms.
