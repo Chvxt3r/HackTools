@@ -30,4 +30,7 @@ Push to github
 ```bash
 git push
 ```
-
+Update repository URI
+```bash
+git remote set-url origin https://github.com/username/reponame.git
+```
