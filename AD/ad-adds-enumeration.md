@@ -302,11 +302,62 @@ You can add some custom queries like :
 
 Replace the customqueries.json file located at `/home/username/.config/bloodhound/customqueries.json` or `C:\Users\USERNAME\AppData\Roaming\BloodHound\customqueries.json`.
 
-## Enumeration From Linux
-
+## Credentialed Enumeration From Linux
+### Using crackmapexec
+* **User Enumeration**  
+  ```bash
+  sudo crackmapexe smb <IP> -u <username> -p <password> --users
+  ```
+* **Group Enumeration**  
+  ```bash
+  sudo crackmapexe smb <IP> -u <username> -p <password> --groups
+  ```
+* **Logged on Users**  
+  ```bash
+  sudo crackmapexe smb <IP> -u <username> -p <password> --loggedon-users
+  ```
+* **Shares**  
+  ```bash
+  sudo crackmapexe smb <IP> -u <username> -p <password> --shares
+  ```
+* **List all readable files in all readable shares**  
+  ```bash
+  sudo crackmapexe smb <IP> -u <username> -p <password> -M spider_plus --share '<share name>'
+  # Results
+  head -n 10 /tmp/cme_spider_plus/<IP>.json
+  ```
+### Using smbmap
+* **Share Enumeration**  
+  ```bash
+  # List all shares and our permissions
+  smbmap -u <username> -p <password> -d <domain> -H <IP>
+  ```
+* **Recursive list all directories**  
+  ```bash
+  # Remove --dir-only to list files as well
+  smbmap -u <username> -p <password> -d <domain> -H <IP> -R '<share name>' --dir-only
+  ```
+### Using rpcclient
 * **Testing for Null Shares**
   ```bash
   rpcclient -U "" -N <IP>
+  ```
+* **Query Domain Users**  
+  ```bash
+  enumdomusers
+  ```
+* **Password Policy**
+  ```bash
+  querydominfo
+  ```
+* **User Details**  
+  ```bash
+  queryuser 0x<RID>
+  ```
+### Using Impacket's Psexec.py
+> Requires a user with local admin priv  
+  ```bash
+  impacket-psexec <domain>/<username:'<password>@<IP>
   ```
 * **Password Policy**
   ```bash
@@ -321,6 +372,7 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   #LDAP Anonymous Bind
   ldapsearch -h <host ip> -x -b "DC=test,DC=local" -s sub "*" | grep -m 1 -B 10 pwdHistoryLength
   ```
+
 ## Enumeration From Windows
 
 * **Testing for Null Shares**
