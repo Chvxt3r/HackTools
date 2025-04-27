@@ -164,7 +164,8 @@ RID cycling involves brute-forcing a range of RIDs (like 500–1500) by appendin
 * **LAPS**  
 > Used to randomize and rotate local administrator credentials to prevent lateral movement
 > > We can use [LAPSToolkit](https://github.com/leoloobeek/LAPSToolkit) functions to speed this up  
-    ```Powershell
+    
+    ```powershell
     Find-LAPSDelegatedGroups
     ```
     ```powershell
