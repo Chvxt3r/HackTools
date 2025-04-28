@@ -538,7 +538,6 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   ```
 
 * **User Hunting:**
-
   ```powershell
   #Finds all machines on the current domain where the current user has local admin access
   Find-LocalAdminAccess -Verbose
@@ -553,11 +552,9 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
 
   #Confirming admin access:
   Invoke-UserHunter -CheckAccess
-  ```
-* **Test for local admin access**  
-  ```powershell
   Test-AdminAccess -ComputerName <computer name>
   ```
+
 ### Using AD Module
 * **See what Modules are loaded:** `Get-Module`
 * **Load AD Module:** `Import-Module ActiveDirectory`
@@ -594,21 +591,18 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   ```
 
 * **Enum Domain Computers:**
-
   ```powershell
   Get-ADComputer -Filter * -Properties *
   Get-ADGroup -Filter * 
   ```
 
 * **Enum Domain Trust:**
-
   ```powershell
   Get-ADTrust -Filter *
   Get-ADTrust -Identity <DomainName>
   ```
 
 * **Enum Forest Trust:**
-
   ```powershell
   Get-ADForest
   Get-ADForest -Identity <ForestName>
@@ -618,15 +612,13 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   ```
 
 * **Enum Local AppLocker Effective Policy:**
+  ```powershell
+  Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections
+  ```
 
- ```powershell
- Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections
- ```
-
-## Other Interesting Commands
+### Other Interesting Commands
 
 * **Find Domain Controllers**
-
   ```ps1
   nslookup domain.com
   nslookup -type=srv _ldap._tcp.dc._msdcs.<domain>.com
@@ -654,3 +646,4 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
 * [PowerView 3.0 Tricks - HarmJ0y](https://gist.github.com/HarmJ0y/184f9822b195c52dd50c379ed3117993)
 * [SOAPHound - tool to collect Active Directory data via ADWS - Nikos Karouzos - 01/26/204](https://medium.com/falconforce/soaphound-tool-to-collect-active-directory-data-via-adws-165aca78288c)
 * [Training - Attacking and Defending Active Directory Lab - Altered Security](https://www.alteredsecurity.com/adlab)
+* [Training - Active Directory Enumeration and Attacks - Hack the Box Academy](https://academy.hackthebox.com/module/143/section/1262)
