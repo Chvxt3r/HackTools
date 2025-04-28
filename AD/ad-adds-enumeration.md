@@ -616,7 +616,7 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections
   ```
 ## Snaffler
-> Snaffler scans the domain for any shares available to the current user and then hunts for any files in those shares that might be useful
+  Snaffler scans the domain for any shares available to the current user and then hunts for any files in those shares that might be useful
   ```powershell
   Snaffler.exe -s -d <domain> -o <logfile> -v data
   ```
