@@ -395,45 +395,6 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   ```
 
 ## Credentialed Enumeration From Windows
-### AD Powershell
-* **Discover Modules**  
-  ```powershell
-  Get-Module
-  ```
-* **Load AD Module**
-  ```powershell
-  Import-Module ActiveDirectory
-  ```
-* **Basic Domain Info**  
-  ```powershell
-  Get-ADDomain
-  ```
-* **AD Accounts with SPN**  
-  ```powershell
-  Get-ADUser -Filter {ServicePrincipalName -ne "$null"} -Properties ServicePrincipalName
-  ```
-* **Checking for Trust Relationships**  
-  ```powershell
-  Get-ADTrust -Filter *
-  ```
-* **Group Enumeration**  
-  ```powershell
-  Get-ADGroup -Filter * | select name
-  ```
-* **Detailed Group Enumeration**
-  ```powershell
-  Get-ADGroup -identity "<Group Name>"
-  ```
-* **Group Membership**  
-  ```powershell
-  Get-ADGroupMember -Identity "<Group Name>"
-  ```
-* **Testing for Null Shares**
-
-* **Password Policy**
-  ```cmd
-  net accounts
-  ```
 
 ### Using PowerView
   
@@ -598,26 +559,38 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   Test-AdminAccess -ComputerName <computer name>
   ```
 ### Using AD Module
-* **See what Modules are loaded** ```powershell Get-Module```
+* **See what Modules are loaded:** `Get-Module`
+* **Load AD Module:** `Import-Module ActiveDirectory`
 * **Get Current Domain:** `Get-ADDomain`
 * **Enum Other Domains:** `Get-ADDomain -Identity <Domain>`
 * **Get Domain SID:** `Get-DomainSID`
-* **Get Domain Controlers:**
-
+* **Get Domain Password Policy:** 'net accounts'
+* **Get Domain Controllers:**
   ```powershell
   Get-ADDomainController
   Get-ADDomainController -Identity <DomainName>
   ```
   
 * **Enumerate Domain Users:**
-
   ```powershell
   Get-ADUser -Filter * -Identity <user> -Properties *
 
   #Get a specific "string" on a user's attribute
   Get-ADUser -Filter 'Description -like "*wtver*"' -Properties Description | select Name, Description
+  
   #Get all users with a SPN set
   Get-ADUser -Filter {ServicePrincipalName -ne "$null"} -Properties ServicePrincipalName
+  ```
+
+* **Enum Domain Groups:**  
+  ```powershell
+  Get-ADGroup -Filter * | select name
+
+  #Detailed Group Enumeration
+  Get-ADGroup -identity "<Group Name>"
+
+  #Group Membership
+  Get-ADGroupMember -Identity "<Group Name>"
   ```
 
 * **Enum Domain Computers:**
