@@ -622,9 +622,9 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   ```
 ## Living Off the Land & Covering Tracks
 
-* **Downgrade Powershell to an earlier version**  
-> > PowerShell event logging introduced in v3. Downgrading to v2 prevents us from showing in Event Viewer. The downgrade action itself will be logged.  
+* **Downgrade Powershell to an earlier version**   
   ```powershell
+  #PowerShell event logging introduced in v3. Downgrading to v2 prevents us from showing in Event Viewer. The downgrade action itself will be logged.
   powershell.exe -version 2
   ```
 * **Firewall Checks**  
