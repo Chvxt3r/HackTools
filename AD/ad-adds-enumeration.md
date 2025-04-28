@@ -676,7 +676,7 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   wmic sysaccount list /format:list
   ```
 * **Net Commands**  
-> Use net1 instead of net to avoid detection
+  Use net1 instead of net to avoid detection
   ```powershell
   #Password Policy
   net accounts
