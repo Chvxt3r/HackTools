@@ -394,8 +394,24 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   ldapsearch -h <host ip> -x -b "DC=test,DC=local" -s sub "*" | grep -m 1 -B 10 pwdHistoryLength
   ```
 
-## Enumeration From Windows
-
+## Credentialed Enumeration From Windows
+### AD Powershell
+* **Discover Modules**  
+  ```powershell
+  Get-Module
+  ```
+* **Load AD Module**
+  ```powershell
+  Import-Module ActiveDirectory
+  ```
+* **Basic Domain Info**  
+  ```powershell
+  Get-ADDomain
+  ```
+* **AD Accounts with SPN**  
+  ```powershell
+  Get-ADUser -Filter {ServicePrincipalName -ne "$null"} -Properties ServicePrincipalName
+  ```
 * **Testing for Null Shares**
 
 * **Password Policy**
