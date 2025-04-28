@@ -598,7 +598,7 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   Test-AdminAccess -ComputerName <computer name>
   ```
 ### Using AD Module
-
+* **See what Modules are loaded** ```powershell Get-Module```
 * **Get Current Domain:** `Get-ADDomain`
 * **Enum Other Domains:** `Get-ADDomain -Identity <Domain>`
 * **Get Domain SID:** `Get-DomainSID`
@@ -616,6 +616,8 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
 
   #Get a specific "string" on a user's attribute
   Get-ADUser -Filter 'Description -like "*wtver*"' -Properties Description | select Name, Description
+  #Get all users with a SPN set
+  Get-ADUser -Filter {ServicePrincipalName -ne "$null"} -Properties ServicePrincipalName
   ```
 
 * **Enum Domain Computers:**
