@@ -628,6 +628,8 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   $Env:LOGONSERVER 
   echo %LOGONSERVER%
   ```
+# Original Credit
+* [swisskyrepo](https://github.com/swisskyrepo) - Their original work, modified and added to by me.
 
 ## References
 
