@@ -564,7 +564,7 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
 * **Get Current Domain:** `Get-ADDomain`
 * **Enum Other Domains:** `Get-ADDomain -Identity <Domain>`
 * **Get Domain SID:** `Get-DomainSID`
-* **Get Domain Password Policy:** 'net accounts'
+* **Get Domain Password Policy:** `net accounts`
 * **Get Domain Controllers:**
   ```powershell
   Get-ADDomainController
