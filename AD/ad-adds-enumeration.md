@@ -620,10 +620,10 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   ```powershell
   Snaffler.exe -s -d <domain> -o <logfile> -v data
   ```
-### Living Off the Land & Covering Tracks
+## Living Off the Land & Covering Tracks
 
 * **Downgrade Powershell to an earlier version**  
-> PowerShell event logging introduced in v3. Downgrading to v2 prevents us from showing in Event Viewer. The downgrade action itself will be logged.  
+> > PowerShell event logging introduced in v3. Downgrading to v2 prevents us from showing in Event Viewer. The downgrade action itself will be logged.  
   ```powershell
   powershell.exe -version 2
   ```
