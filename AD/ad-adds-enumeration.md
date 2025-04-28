@@ -615,9 +615,71 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   ```powershell
   Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections
   ```
+## Snaffler
+> Snaffler scans the domain for any shares available to the current user and then hunts for any files in those shares that might be useful
+  ```powershell
+  Snaffler.exe -s -d <domain> -o <logfile> -v data
+  ```
+### Living Off the Land & Covering Tracks
 
-### Other Interesting Commands
+* **Downgrade Powershell to an earlier version**  
+> PowerShell event logging introduced in v3. Downgrading to v2 prevents us from showing in Event Viewer. The downgrade action itself will be logged.  
+  ```powershell
+  powershell.exe -version 2
+  ```
+* **Firewall Checks**  
+  ```powershell
+  netsh advfirewall show all profiles
+  ```
+* **Windows Defender Check (from CMD)
+  ```powershell
+  sc query windefend
+  ```
+* **Windows Defender Check Status and Setting**  
+  ```powershell
+  Get-MPComputerStatus
+  ```
+* **Am I Alone?**  
+  ```powershell
+  qwinsta
+  ```
+* **Network Information**  
+  ```powershell
+  #Dump the arp table
+  arp -a
+  #Dump Adapter Settings
+  ipconfig /all
+  #Dump the routing table
+  route print
+  ```
+* **Quick WMI Checks**  
+  ```powershell
+  #Print Patch Level and Hotfixe
+  wmic qfe get Caption,Description,HotFixID,Installation
+  
+  #Display Basic Host Info
+  wmic computersystem get Name,Domain,Manufacturer,Model,Username,Roles /format:List
+  
+  #List all running processes
+  wmic process list /format:list
 
+  #Display Domain and Domain Controller info
+  wmic ntdomain list /format:list
+
+  #Display information about all local accounts and domain accounts that have logged in to this sytem
+  wmic useraccount list /format:list
+
+  #Information about local groups
+  wmic group list /format:list
+
+  #Information about any system accounts being used as service accounts
+  wmic sysaccount list /format:list
+  ```
+* **Net Commands**  
+> Use net1 instead of net to avoid detection
+  ```powershell
+
+  ```
 * **Find Domain Controllers**
   ```ps1
   nslookup domain.com
