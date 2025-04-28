@@ -412,6 +412,22 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   ```powershell
   Get-ADUser -Filter {ServicePrincipalName -ne "$null"} -Properties ServicePrincipalName
   ```
+* **Checking for Trust Relationships**  
+  ```powershell
+  Get-ADTrust -Filter *
+  ```
+* **Group Enumeration**  
+  ```powershell
+  Get-ADGroup -Filter * | select name
+  ```
+* **Detailed Group Enumeration**
+  ```powershell
+  Get-ADGroup -identity "<Group Name>"
+  ```
+* **Group Membership**  
+  ```powershell
+  Get-ADGroupMember -Identity "<Group Name>"
+  ```
 * **Testing for Null Shares**
 
 * **Password Policy**
@@ -419,7 +435,7 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   net accounts
   ```
 
-## Using PowerView
+### Using PowerView
   
 * **Get Current Domain:** `Get-NetDomain`
 * **Enum Other Domains:** `Get-NetDomain -Domain <DomainName>`
@@ -448,6 +464,9 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   Get-NetUser -SamAccountName <user> 
   Get-NetUser | select cn
   Get-UserProperty
+  
+  #Get specific information about a user
+  Get-Domainuser -Identity <username> -Domain <domain> | Select-Object -Property name,samaccountname,description,memberof,whencreated,pwdlastset,lastlogontimestamp,accountexpires,admincount,userprincipalname,serviceprincipalname,useraccountcontrol
 
   #Check last password change
   Get-UserProperty -Properties pwdlastset
@@ -482,6 +501,9 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   
   #Enumerate the members of a specified group of the domain
   Get-DomainGroup -Identity <GroupName> | Select-Object -ExpandProperty Member
+  
+  #Enumerate the members of the group and any nested groups
+  Get-DomainGroupMember -Identity "<Group Name>" -Recurse
   
   #Returns all GPOs in a domain that modify local group memberships through Restricted Groups or Group Policy Preferences
   Get-DomainGPOLocalGroup | Select-Object GPODisplayName, GroupName
@@ -536,6 +558,7 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   ```powershell
   Get-NetDomainTrust
   Get-NetDomainTrust -Domain <DomainName>
+  Get-DomainTrustMapping
   ```
 
 * **Enum Forest Trust:**
@@ -570,8 +593,11 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
   #Confirming admin access:
   Invoke-UserHunter -CheckAccess
   ```
-
-## Using AD Module
+* **Test for local admin access**  
+  ```powershell
+  Test-AdminAccess -ComputerName <computer name>
+  ```
+### Using AD Module
 
 * **Get Current Domain:** `Get-ADDomain`
 * **Enum Other Domains:** `Get-ADDomain -Identity <Domain>`
