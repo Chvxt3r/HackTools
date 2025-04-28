@@ -678,7 +678,81 @@ Replace the customqueries.json file located at `/home/username/.config/bloodhoun
 * **Net Commands**  
 > Use net1 instead of net to avoid detection
   ```powershell
+  #Password Policy
+  net accounts
+  
+  #Password and lockout policy
+  net accounts /domain
 
+  #List users with domain admin priv's
+  net group "Domain Admins" /domain
+
+  #List of all PC's connected to the domain
+  net group "domain computers" /domain
+
+  #List of all domain controllers
+  net group "Domain Controllers" /domain
+
+  #Users that belong to a group
+  net group <domain group name> /domain
+
+  #List of domain Groups
+  net groups /domain
+
+  #list of all available groups
+  net localgroup
+
+  #List users in the administrators group
+  net localgroup administrators /domain
+
+  #Information about a group
+  net localgroup <group>
+
+  #Add user to administrators group
+  net localgroup administrators <username> /add
+
+  #List current shares
+  net share
+
+  #Get info about a domain user
+  net user <account name> /domain
+
+  #List all users of the domain
+  net user /domain
+
+  #Information about the current user
+  net user %username%
+
+  #Mount a share locally
+  net use x: \\computer\share
+
+  #Get a list of computers
+  net view
+
+  #List all shares on the domain
+  net view /all /domain
+
+  #List shares of a specific computer
+  net view \computer /ALL
+
+  #List of PC's on the domain
+  net view /domain
+  ```
+* **Dsquery**  
+Exists on all computers with the ADDS role installed and the DLL exists on all modern windows systems.
+Can be found at C:\Windows\System32\dsquery.dll
+  ```powershell
+  #User Search
+  dsquery user
+  
+  #Computer search
+  dsquery computer
+
+  #Wildcard Search
+  dsquery * "CN=<OU>,DC=<DC>,DC=<DC>"
+
+  #All users with "PASSWD_NOTREQD"
+  dsquery * -filter "(&(objectCategory=person)(objectClass=user)(userAccountControl:1.2.840.113556.1.4.803:=32))" -attr distinguishedName userAccountControl
   ```
 * **Find Domain Controllers**
   ```ps1
