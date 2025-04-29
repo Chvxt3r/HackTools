@@ -69,7 +69,7 @@ Amazon provides an internal service that allows every EC2 instance to query and 
     {
         "RoleArn": "arn:aws:iam::953574914659:role/awesome-waf-role",
         "AccessKeyId": "ASIAXXXXXXXXXX",
-        "SecretAccessKey": "j72eTy+WHgIbO6zpe2DnfjEhbObuTBKcemfrIygt",
+        "SecretAccessKey": "j72eTy+WHgIbO6zpe2DnfjEhb[REDACTED]TBKcemfrIygt",
         "Token": "FQoGZXIvYXdzEMj/////...jHsYXsBQ==",
         "Expiration": "2019-09-18T04:05:59Z"
     }
