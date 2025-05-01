@@ -1,3 +1,4 @@
+Left off at ACL Abuse Tactics
 # Active Directory - Access Controls ACL/ACE
 
 An **Access Control Entry (ACE)** is a specific permission granted or denied to a user or group for a particular resource, such as a file or directory. Each ACE defines the type of access allowed (e.g., read, write, execute) or denied.
