@@ -4,6 +4,32 @@ An **Access Control Entry (ACE)** is a specific permission granted or denied to 
 
 An **Access Control List (ACL)** is a collection of Access Control Entries (ACEs) associated with a resource.
 
+## Enumeration
+### Manual
+* **Using Powerview**  
+  ```powershell
+  #Get all ACL's
+  Find-InterestingDomainACL
+  
+  #Targeting a specific User
+  $sid = Convert-NameToSid <username>
+  Get-DomainObjectACL -ResolveGUIDs -identity * | ? {$_.SecurityIdentifier -eq $sid}
+  ```
+* **GUID Reverse Search**  
+  ```powershell
+  #PowerView cannot be imported for this. Open another PowerShell Session
+  $guid= "<guid>"
+  Get-ADObject -SearchBase "CN=Extended-Rights,$((Get-ADRootDSE).ConfigurationNamingContext)" -Filter {ObjectClass -like 'ControlAccessRight'} -Properties * |Select Name,DisplayName,DistinguishedName,rightsGuid| ?{$_.rightsGuid -eq $guid} | fl
+  ```
+* **Basic Powershell**  
+  ```powershell
+  #Get a list of domain users
+  Get-ADUser -Filter * | Select-Object -ExpandProperty SamAccountName > ad_users.txt
+  
+  #Target a specific User
+  foreach($line in [System.IO.File]::ReadLines("<Path to>\ad_users.txt")) {get-acl  "AD:\$(Get-ADUser $line)" | Select-Object Path -ExpandProperty Access | Where-Object {$_.IdentityReference -match '<domain>\\<Username>'}}
+  ```
+### Automated
 * Check ACL for an User with [ADACLScanner](https://github.com/canix1/ADACLScanner).
 
  ```ps1
