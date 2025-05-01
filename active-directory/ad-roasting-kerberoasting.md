@@ -34,7 +34,8 @@ Any valid domain user can request a kerberos ticket (ST) for any domain service.
   ```
 
  ### [targetedKerberoast](https://github.com/ShutdownRepo/targetedKerberoast)
-
+* **for each user without SPNs, it tries to set one (abuse of a write permission on the servicePrincipalName attribute),**  
+  **print the "kerberoast" hash, and delete the temporary SPN set for that operation**  
   ```bash
   # for each user without SPNs, it tries to set one (abuse of a write permission on the servicePrincipalName attribute),
   # print the "kerberoast" hash, and delete the temporary SPN set for that operation
