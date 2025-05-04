@@ -100,7 +100,8 @@ An **Access Control List (ACL)** is a collection of Access Control Entries (ACEs
   # Remove the SPN
   PowerView2 > Set-DomainObject -Identity username -Clear serviceprincipalname
   ```
-* **Usering Basic Powershell to change a users password**  
+#### Changing a users password
+* **Usering Powershell & Powerview to change a users password**  
   ```powershell
   # Create PSCredential Object
   $SecPassword = ConvertTo-SecureString '<password here>' -AsPlainText -Force
