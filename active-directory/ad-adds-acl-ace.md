@@ -210,6 +210,18 @@ This ACE allows us to add ourselves to the Domain Admin group :
 
 NOTE: To not alert the user the payload should hide its own process window and spawn the normal graphical environment.
 
+### Cleanup
+#### Remove an SPN
+* **Using Powerview**  
+  ```ps1
+  Set-DomainObject -Credential $Cred2 -Identity adunn -Clear serviceprincipalname -Verbose
+  ```
+#### Remove user from a group
+* **Using Powerview**  
+  ```ps1
+  Remove-DomainGroupMember -Identity "Help Desk Level 1" -Members 'damundsen' -Credential $Cred2 -Verbose
+  ```
+
 ## WriteDACL
 
 To abuse `WriteDacl` to a domain object, you may grant yourself the DcSync privileges. It is possible to add any given account as a replication partner of the domain by applying the following extended rights `Replicating Directory Changes/Replicating Directory Changes All`.
