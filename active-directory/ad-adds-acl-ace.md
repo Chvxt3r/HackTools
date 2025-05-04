@@ -44,10 +44,8 @@ An **Access Control List (ACL)** is a collection of Access Control Entries (ACEs
  ```
 
 ## GenericAll/GenericWrite Abuse
-
-### From Linux
-
-We can set a **SPN** on a target account, request a Service Ticket (ST), then grab its hash and kerberoast it.
+### Set a SPN, Grab a service ticket, grab it's hash and roast it
+#### From Linux
 
 * **Using BloodyAD and Impacket**  
 
@@ -102,7 +100,7 @@ We can set a **SPN** on a target account, request a Service Ticket (ST), then gr
   # Remove the SPN
   PowerView2 > Set-DomainObject -Identity username -Clear serviceprincipalname
   ```
-* **Usering Basic Powershell**  
+* **Usering Basic Powershell to change a users password**  
   ```powershell
   # Create PSCredential Object
   $SecPassword = ConvertTo-SecureString '<password here>' -AsPlainText -Force
