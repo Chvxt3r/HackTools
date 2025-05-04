@@ -45,8 +45,9 @@ DCSync is a technique used by attackers to obtain sensitive information, includi
   - `-just-dc-ntlm`: Just dump NTLM hashes
   - `-just-dc-user <username>`: Extract only a specific user
   - `-pwd-last-set`: See when the users last changed their password
-  - `history`: Dump their password history as well
+  - `-history`: Dump their password history as well
   - `-user-status`: See if a user is disabled
+  - `-use-vss`: Use VSS to copy the NTDS.dit. Useful for seBackupPrivilege?
 
 > :warning: OPSEC NOTE: Replication is always done between 2 Computers. Doing a DCSync from a user account can raise alerts.
 
