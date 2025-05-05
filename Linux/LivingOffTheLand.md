@@ -5,7 +5,7 @@
 [GTFOBins](https://gtfobins.github.io/) Curated list of Unix/Linux binaries that can be used to bypass security restrictions
 ## Linux
 ### Common Scripts
-> Don't store scripts in common directories /tmp works fabulously
+> :warning: Don't store scripts in common directories! /tmp works fabulously
 * **[Lin Enum](https://github.com/rebootuser/LinEnum)**  
   ```bash
   chmod +x LinEnum.sh #If Needed
