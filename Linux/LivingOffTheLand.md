@@ -4,8 +4,20 @@
 [LOLBins](https://lolbas-project.github.io/) List of Windows Binaries that can be used to bypass security
 [GTFOBins](https://gtfobins.github.io/) Curated list of Unix/Linux binaries that can be used to bypass security restrictions
 ## Linux
+### Common Scripts
+> Don't store scripts in common directories /tmp works fabulously
+* **[Lin Enum](https://github.com/rebootuser/LinEnum)**  
+  ```bash
+  chmod +x LinEnum.sh #If Needed
+  ./LinEnum.sh
+  ```
+* **[Linux Exploit Suggester](https://github.com/The-Z-Labs/linux-exploit-suggester)**  
+  ```bash
+  chmod +x les.sh #If needed
+  ./les.sh
+  ```
 ### Grep
-Search contents of files/directories recursively  
+* **Search contents of files/directories recursively**    
 ```bash
 grep -R "<search term>" <PATH>
 ```
