@@ -21,14 +21,16 @@
 ```bash
 grep -R "<search term>" <PATH>
 ```
-* **Search contents of files/directories recursively for specific term
+* **Search contents of files/directories recursively for specific term**  
   ```bash
+  #This can be quite involved if doing it from root as shown here, try and 
+  #narrow it down some. For example: /etc, /var/www/html, /var/www/html/wp-config
   grep --color=auto -rnw '/' -ie "Password" --color=always 2> /dev/null
   ```
-Extract IP's from a text file
-```bash
-grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' nmapfile.txt
-```
+* **Extract IP's from a text file**  
+  ```bash
+  grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' nmapfile.txt
+  ```
 ### Informational
 Current Users Path
 ```bash
