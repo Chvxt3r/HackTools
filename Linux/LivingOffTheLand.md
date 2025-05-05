@@ -21,6 +21,10 @@
 ```bash
 grep -R "<search term>" <PATH>
 ```
+* **Search contents of files/directories recursively for specific term
+  ```bash
+  grep --color=auto -rnw '/' -ie "Password" --color=always 2> /dev/null
+  ```
 Extract IP's from a text file
 ```bash
 grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' nmapfile.txt
