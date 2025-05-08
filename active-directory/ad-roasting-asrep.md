@@ -10,7 +10,7 @@
     bloodyAD -u user -p 'totoTOTOtoto1234*' -d crash.lab --host 10.100.10.5 get search --filter '(&(userAccountControl:1.2.840.113556.1.4.803:=4194304)(!(UserAccountControl:1.2.840.113556.1.4.803:=2)))' --attr sAMAccountName  
     ```
 
-    - Windows (Powerview) only:
+* ** Windows (Powerview) only:
 
     ```ps1
     Get-DomainUser -UACFilter DONT_REQ_PREAUTH
