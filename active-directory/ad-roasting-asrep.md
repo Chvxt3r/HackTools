@@ -5,7 +5,7 @@
 ## Requirements:
 
 ### Accounts with the attribute 'DONT_REQ_PREAUTH'
-    - Linux:
+* **Linux:
     ```bash
     bloodyAD -u user -p 'totoTOTOtoto1234*' -d crash.lab --host 10.100.10.5 get search --filter '(&(userAccountControl:1.2.840.113556.1.4.803:=4194304)(!(UserAccountControl:1.2.840.113556.1.4.803:=2)))' --attr sAMAccountName  
     ```
