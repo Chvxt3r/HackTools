@@ -14,12 +14,13 @@
     ```bash
     Impacket-GetNPusers inlanefreight.local/<username>
     ```
-### Windows (Powerview) only:
+### Windows:
+* Powerview
 
     Get-DomainUser -UACFilter DONT_REQ_PREAUTH
     PowerView > Get-DomainUser -PreauthNotRequired -Properties distinguishedname -Verbose
     
-### Windows (Rubeus):
+* Rubeus:
     
     Rubeus.exe asreproast /format:hashcat
     
