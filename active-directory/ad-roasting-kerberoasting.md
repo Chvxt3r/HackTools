@@ -166,7 +166,7 @@ Any valid domain user can request a kerberos ticket (ST) for any domain service.
 ./hashcat -m 13100 -a 0 kerberos_hashes.txt crackstation.txt
 ./john --wordlist=/opt/wordlists/rockyou.txt --fork=4 --format=krb5tgs ~/kerberos_hashes.txt
 ```
-### Kerberoasting w/o an Account Password
+## Kerberoasting w/o an Account Password
 * **Requirements**  
   1. Username of an account wiht pre-auth disabled (DONT_REQ_PREAUTH)
   2. Target SPN or list of SPN's
