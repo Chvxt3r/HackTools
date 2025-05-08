@@ -42,7 +42,7 @@ Any valid domain user can request a kerberos ticket (ST) for any domain service.
 ## Windows
 
 ### Manual Method
-* **Using setspn.exe to enumerate SPN's**  
+* **Using setspn.exe to enumerate SPN's**   
   ```powershell
   setspn.exe -Q */*
   ```

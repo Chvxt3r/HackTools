@@ -53,7 +53,7 @@
 ### [GetNPUsers](https://github.com/SecureAuthCorp/impacket/blob/master/examples/GetNPUsers.py) from Impacket Suite
 
   ```bash
-  # Credentials
+  # Credentialed
   Impacket-GetNPUsers <domain>/<user> -request
 
   # Uncredentialed
