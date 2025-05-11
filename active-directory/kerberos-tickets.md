@@ -227,7 +227,7 @@ Mitigations:
 * Set the attribute "Account is Sensitive and Cannot be Delegated" to prevent lateral movement with the generated ticket.
 
 ## Pass the Ticket(PtT)
-> :Warning: Make sure to create a sacrificial process to avoid overwriting an existing logon sessions Kerberos ticket. If SERVICE loses it's ticket, it will not get another one until a reboot
+> :warning: Make sure to create a sacrificial process to avoid overwriting an existing logon sessions Kerberos ticket. If SERVICE loses it's ticket, it will not get another one until a reboot
 
 ## Pass-the-Ticket Diamond Tickets
 
