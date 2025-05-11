@@ -39,7 +39,7 @@ While both caches serve the same basic purpose of storing Kerberos tickets to en
 * kekeo: `misc::convert ccache ticket.kirbi`
 * impacket: `impacket-ticketConverter SRV01.kirbi SRV01.ccache`
 
-## Pass-the-Ticket Golden Tickets
+## Golden Tickets
 
 A Golden Ticket is a forged Kerberos Ticket Granting Ticket (TGT) that allows an attacker to impersonate any user — including Domain Admins — on a compromised Active Directory domain.
 
@@ -151,7 +151,7 @@ Golden tickets with "Enterprise admins" SID can be used cross forest boundaries.
 * Hard to detect because they are legit TGT tickets
 * Mimikatz generate a golden ticket with a life-span of 10 years
 
-## Pass-the-Ticket Silver Tickets
+## Silver Tickets
 
 Forging a Service Ticket (ST) require machine account password (key) or NT hash of the service account.
 
@@ -225,6 +225,9 @@ impacket-psexec -k -no-pass sql01.inlanefreight.local
 Mitigations:
 
 * Set the attribute "Account is Sensitive and Cannot be Delegated" to prevent lateral movement with the generated ticket.
+
+## Pass the Ticket(PtT)
+> :Warning: Make sure to create a sacrificial process to avoid overwriting an existing logon sessions Kerberos ticket. If SERVICE loses it's ticket, it will not get another one until a reboot
 
 ## Pass-the-Ticket Diamond Tickets
 
