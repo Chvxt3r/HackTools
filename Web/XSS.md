@@ -17,6 +17,7 @@
 ### Stored XSS
 > Can be verified if its persistent across sessions. For example, if you upload `<h1>test</h1>` and open the same page in an incognito window or another browser and it remains. Useful for stealing session cookies.
 * Test Payloads  
+
 Test with HTML first
 ```html
 # Should appear as a heading on the page
