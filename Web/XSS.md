@@ -22,6 +22,7 @@ Test with HTML first
 # Should appear as a heading on the page
 <h1>test</h1>
 ```
+Test with javascript
 ```javascript
 # Should pop the print dialog for every user that visits the page.
 <script>print(1)</script>
