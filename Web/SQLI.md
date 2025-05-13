@@ -88,7 +88,7 @@ SELECT * FROM ports UNION SLECT * FROM ships;
 ### Detection
 1. Find a successful query
 2. Start adding 'null' columns until you no long recieve an errors  
-jeremy' union slect null,null,null#
+jeremy' union select null,null,null#
 3. Once you find the the correct number of columns, you can begin filling them with data.
 
 ### Useful recon once you've found the correct number of columns
