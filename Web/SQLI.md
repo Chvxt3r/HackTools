@@ -90,7 +90,7 @@ SELECT * FROM ports UNION SLECT * FROM ships;
 2. Start adding 'null' columns until you no long recieve an errors  
 jeremy' union select null,null,null#
 3. Once you find the the correct number of columns, you can begin filling them with data.
-> :warning: Not all columns may be displayed. You may find 3 columns but it only display's 2 data points. Useful to not which columns are displayed
+> :warning: Not all columns may be displayed. You may find 3 columns but it only display's 2 columns. Useful to note which columns are displayed
 
 ### Useful recon once you've found the correct number of columns
 > These will be helpful in crafting your query's to get useful results
