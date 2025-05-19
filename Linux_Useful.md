@@ -10,7 +10,7 @@ deactivate
 ### Git
 Store credentials
 ```bash
-git --global credential.helper store 
+git config --global credential.helper store 
 # Then do a push, enter username, PAT as password.
 ```
 Add File
