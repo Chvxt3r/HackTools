@@ -1,6 +1,11 @@
 # Common Tools
 ### Credit: S1ren@sirensecurity.io [Original Source](https://sirensecurity.io/blog/common/)
 
+### Faketime
+> install libfaketime & ntp
+```bash
+faketime "$(ntpdate -q <ip of timesource> | cut -d'' -f 1,2)"
+```
 ### Grep
 ```bash
 grep -R "<search term>" <PATH>
