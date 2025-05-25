@@ -12,6 +12,10 @@
 
 **Exploitation**
 
+* Use [Certipy]() to find any vulnerable templates  
+  ```bash
+  certipy find -vulnerable -u <user@domain> -p <password>
+  ```
 * Use [Certify.exe](https://github.com/GhostPack/Certify) to see if there are any vulnerable templates
 
     ```ps1
