@@ -32,3 +32,7 @@
   ```bash
   nxc mssql <hname> -u <user> -p <password> -x $command
   ```
+  ```bash
+  # Run powershell commands by capitalizing the "x"
+  nxc mssql <hname> -u <user> -p <password> -X $command
+  ```
