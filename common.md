@@ -1,6 +1,13 @@
 # Common Tools
 The most common tools I use, mostly for recon.
 
+## Host Scans
+### nmap
+* My Initial Scan
+  ```bash
+  nmap -sCV -p- <$IP> --open -oA scans/nmap_initial
+  ```
+
 ## Searches from Linux
 ### Grep
 * Search recursively the contents of files
