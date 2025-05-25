@@ -5,6 +5,8 @@
 > install libfaketime & ntp
 ```bash
 faketime "$(ntpdate -q <ip of timesource> | cut -d'' -f 1,2)"
+
+`faketime -f '+7h'
 ```
 ### Grep
 ```bash
