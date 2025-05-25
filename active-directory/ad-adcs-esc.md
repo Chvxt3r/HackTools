@@ -1,5 +1,20 @@
 # Active Directory - Certificate ESC Attacks
 
+## Recon (Finding vulnerabilities)
+* Use [Certipy](https://github.com/ly4k/Certipy) to find any vulnerable templates (Linux)
+  ```bash
+  certipy find -vulnerable -u <user@domain> -p <password>
+  ```
+* Use [Certify](https://github.com/GhostPack/Certify) to find vulnerable templates (Windows)
+  ```powershell
+  Certify.exe find /vulnerable
+  Certify.exe find /vulnerable /currentuser
+  ```
+* Use Powershelll to find vulnerable templates (Windows)
+  ```powershell
+  Get-ADObject -LDAPFilter '(&(objectclass=pkicertificatetemplate)(!(mspki-enrollment-flag:1.2.840.113556.1.4.804:=2))(|(mspki-ra-signature=0)(!(mspki-ra-sign    ature=*)))(|(pkiextendedkeyusage=1.3.6.1.4.1.311.20.2.2)(pkiextendedkeyusage=1.3.6.1.5.5.7.3.2) (pkiextendedkeyusage=1.3.6.1.5.2.3.4))(mspki-certificate-name-flag:1    .2.840.113556.1.4.804:=1))' -SearchBase 'CN=Configuration,DC=lab,DC=local'
+  ```
+
 ## ESC1 - Misconfigured Certificate Templates
 
 > Domain Users can enroll in the **VulnTemplate** template, which can be used for client authentication and has **ENROLLEE_SUPPLIES_SUBJECT** set. This allows anyone to enroll in this template and specify an arbitrary Subject Alternative Name (i.e. as a DA). Allows additional identities to be bound to a certificate beyond the Subject.
@@ -12,10 +27,6 @@
 
 **Exploitation**
 
-* Use [Certipy]() to find any vulnerable templates  
-  ```bash
-  certipy find -vulnerable -u <user@domain> -p <password>
-  ```
 * Use [Certify.exe](https://github.com/GhostPack/Certify) to see if there are any vulnerable templates
 
     ```ps1
