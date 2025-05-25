@@ -27,6 +27,9 @@
   ```bash
   nxc ldap <dc hname> -u <user> -p <password> --bloodhound --collection All --dns-server <DNS IP>
   ```
+* Password Spray
+  ```bash
+
 ## SQL
 * Run commands
   ```bash
@@ -36,3 +39,4 @@
   # Run powershell commands by capitalizing the "x"
   nxc mssql <hname> -u <user> -p <password> -X $command
   ```
+  If you get an error about an untrusted domain and integrated authentication, use the '''--local-auth''' tag
