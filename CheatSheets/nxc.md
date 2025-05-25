@@ -12,7 +12,7 @@
   nxc smb <dc hname> -u <user> -p <password> --users
   ```
   Create a user list
-  - Copy output to a .txt file
+  - Copy output to a .txt file and run the following
   ```bash
   cat <users.txt> |awk '{print $5}' > userlist.txt
   ```
