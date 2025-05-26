@@ -3,6 +3,7 @@
 ## Resources
 [Red & Blue Team Security](https://www.rbtsec.com/blog/)
 [ly4k](https://github.com/ly4k/Certipy/wiki/06-%E2%80%90-Privilege-Escalation)
+[ly4k](https://github.com/ly4k/Certipy/wiki/06-%E2%80%90-Privilege-Escalation)
 
 ## Recon (Finding vulnerabilities)
 * Use [Certipy](https://github.com/ly4k/Certipy) to find any vulnerable templates (Linux)
