@@ -1,5 +1,8 @@
 # Active Directory - Certificate ESC Attacks
 
+## Resources
+[Red & Blue Team Security](https://www.rbtsec.com/blog/)
+
 ## Recon (Finding vulnerabilities)
 * Use [Certipy](https://github.com/ly4k/Certipy) to find any vulnerable templates (Linux)
   ```bash
