@@ -26,7 +26,7 @@
   ```
 * Start Ligolo-NG
   ```bash
-  proxy
+  ligolo-ng-proxy
   ```
 * Run the agent on the pivot machine
   ```bash
