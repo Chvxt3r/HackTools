@@ -2,10 +2,12 @@
 
 ## Attacking Credential Manager Offline using impacket-dpapi
 
-* We need to grab 3 things
+* We need to grab 4 things
   - The user SID
   - The Credential File(s) (Stored in %USERPROFILE%\AppData\Roaming\Microsoft\Credentials)
+  - The Master Key File (Stored at %USERPROFILE%\AppData\Roaming\Microsoft\Protect\<SID>\<MasterKey>
   - The Users Password
+
 
 1. First we need to extract the key
 
