@@ -36,6 +36,7 @@
     impacket-dpapi credential -file 772275FAD58525253490A9B0039791D3 -key 0xd2832547d1d5e0a01ef271ede2d299248d1cb0320061fd5355fea2907f9cf879d10c9f329c77c4fd0b9bf83a9e240ce2b8a9dfb92a0d15969ccae6f550650a83
     ```
     ```bash
+    # Example
     Impacket v0.13.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
 
     [CREDENTIAL]
