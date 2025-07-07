@@ -38,14 +38,14 @@
     ```bash
     Impacket v0.13.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
 
-[CREDENTIAL]
-LastWritten : 2025-01-29 12:55:19+00:00
-Flags       : 0x00000030 (CRED_FLAGS_REQUIRE_CONFIRMATION|CRED_FLAGS_WILDCARD_MATCH)
-Persist     : 0x00000003 (CRED_PERSIST_ENTERPRISE)
-Type        : 0x00000002 (CRED_TYPE_DOMAIN_PASSWORD)
-Target      : Domain:target=Jezzas_Account
-Description : 
-Unknown     : 
-Username    : jeremy.combs
-Unknown     : qT3V9pLXyN7W4m
+    [CREDENTIAL]
+    LastWritten : 2025-01-29 12:55:19+00:00
+    Flags       : 0x00000030 (CRED_FLAGS_REQUIRE_CONFIRMATION|CRED_FLAGS_WILDCARD_MATCH)
+    Persist     : 0x00000003 (CRED_PERSIST_ENTERPRISE)
+    Type        : 0x00000002 (CRED_TYPE_DOMAIN_PASSWORD)
+    Target      : Domain:target=Jezzas_Account
+    Description : 
+    Unknown     : 
+    Username    : jeremy.combs
+    Unknown     : qT3V9pLXyN7W4m
     ```
