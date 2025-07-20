@@ -378,6 +378,11 @@ Require [SecureAuthCorp/impacket](https://github.com/SecureAuthCorp/impacket/pul
     certipy auth -pfx administrator.pfx -domain corp.local
     # Add -domain <domain> to your command line since there is no domain specified in the certificate.
     ```
+## ESC 10 - Weak Certificate Mappings
+
+#### Explanation
+
+
 
 ## ESC11 - Relaying NTLM to ICPR
 
