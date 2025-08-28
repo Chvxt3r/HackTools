@@ -48,7 +48,7 @@ Install libfaketime
   ```
 * Fuzz Extensions
   ```bash
-  ffuf -w /opt/useful/seclists/Discovery/Web-Content/web-extensions.txt:FUZZ -u http://SERVER_IP:PORT/blog/indexFUZZ
+  ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/web-extensions.txt:FUZZ -u http://SERVER_IP:PORT/blog/indexFUZZ
   ```
 * Fuzz Files
   ```bash
