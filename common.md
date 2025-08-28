@@ -50,6 +50,14 @@ Install libfaketime
   ```bash
   ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/raft-large-files.txt -u http://<Domain or IP>/FUZZ -e .php,.html,.txt -fs 283
   ```
+* Fuzz Parameters(GET requests)
+  ```bash
+  ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://admin.academy.htb:51480/admin/admin.php\?FUZZ\=key -ac
+  ```
+* Fuzz Parameters(POST)
+  ```bash
+  ffuf -w //usr/share/wordlists/seclists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://admin.academy.htb:51480/admin/admin.php -X POST -d 'FUZZ=key' -H 'Content-Type: application/x-www-form-urlencoded' -ac
+  ```
 ## Databases
 ### MySQL
 * Connect to a MySQL instance
