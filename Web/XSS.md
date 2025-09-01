@@ -1,5 +1,10 @@
 # Cross-Site Scripting (XSS)
 
+## Stored XSS
+### Discovery
+    > Can be verified if its persistent across sessions. For example, if you upload `<h1>test</h1>` and open the same page in an incognito window or another browser and it remains. Useful for stealing session cookies.
+
+
 ## Discovery
 ### DOM-Based
 > Done completely in the client browser. No request to server on data entry. Easily confused for relfected XSS. Needs a trigger to run the payload, such as 'img src=""'
