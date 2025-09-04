@@ -66,6 +66,13 @@ Install libfaketime
   ```bash
   ffuf -w ids.txt:FUZZ -u http://admin.academy.htb:51480/admin/admin.php -X POST -d 'id=FUZZ' -H 'Content-Type: application/x-www-form-urlencoded' -ac
   ```
+## DNS
+* Zone Transfer
+  ```bash
+  dig axfr @<IP of DNS> <domain>
+  # Example
+  dig axfr @10.129.199.210 inlanefreight.local
+  ```
 ## Databases
 ### MySQL
 * Connect to a MySQL instance
