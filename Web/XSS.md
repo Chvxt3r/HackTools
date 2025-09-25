@@ -55,7 +55,7 @@ localStorage
 sessionStorage
 ```
 
-**Sink:** A potentially dnagerous method that could lead to a vulnerability. In this case, DOM based XSS.  
+**Sink:** A potentially dangerous method that could lead to a vulnerability. In this case, DOM based XSS.  
 ```bash
 eval
 Function
