@@ -29,8 +29,8 @@ Test with JS
 
 Completely Processed on the client side (JS used to change page source through the Document Object Model(DOM) No HTTP requests made (Developer Toos/Network Tab) Check the URL for the parameters Page source does not change when refreshed (Parameter passed in the URL rather than added to the page source)   
 
-* Does your input go into a sink? 'vulnerable'
-* It doesn't? 'Not vulnerable'
+* Does your input go into a sink?  `vulnerable`
+* It doesn't? `Not vulnerable`
 
 **Source**=JS object that takes user input (Can be any input parameter like a url parameter or an input field)   
 **Sink**=JS function that writes user input to a DOM object on the page.  
