@@ -28,9 +28,54 @@ Test with JS
 > Done completely in the client browser. No request to server on data entry. Easily confused for relfected XSS. Needs a trigger to run the payload, such as 'img src=""'  
 
 Completely Processed on the client side (JS used to change page source through the Document Object Model(DOM) No HTTP requests made (Developer Toos/Network Tab) Check the URL for the parameters Page source does not change when refreshed (Parameter passed in the URL rather than added to the page source)   
+
+* Does your input go into a sink? 'vulnerable'
+* It doesn't? 'Not vulnerable'
+
 **Source**=JS object that takes user input (Can be any input parameter like a url parameter or an input field)   
 **Sink**=JS function that writes user input to a DOM object on the page.  
 
+**Source:** An input that can be controlled by an external (untrusted) source.  
+```bash
+document.URL
+document.documentURI
+document.URLUnencoded (IE 5.5 or later Only)
+document.baseURI
+location
+location.href
+location.search
+location.hash
+location.pathname
+document.cookie
+document.referrer
+window.name
+history.pushState()
+history.replaceState()
+localStorage
+sessionStorage
+```
+
+**Sink:** A potentially dnagerous method that could lead to a vulnerability. In this case, DOM based XSS.  
+```bash
+eval
+Function
+setTimeout
+setInterval
+setImmediate
+execScript
+crypto.generateCRMFRequest
+ScriptElement.src
+ScriptElement.text
+ScriptElement.textContent
+ScriptElement.innerText
+anyTag.onEventName
+document.write
+document.writeln
+anyElement.innerHTML
+Range.createContextualFragment
+window.location
+document.location
+```
 Test Payloads 
 ```javascript
 # Loads the print dialog
