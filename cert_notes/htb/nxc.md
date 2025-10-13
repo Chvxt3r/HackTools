@@ -206,6 +206,8 @@ nxc smb $IP -u [user] -p [pass] -M spider_plus -o EXCLUDE_DIR=IPC$,print$,NETLOG
 # Downlaod all files in the shares
 nxc smb $IP -u [user] -p [pass] -M spider_plus -o EXCLUDE_DIR=IPC$,print$,NETLOGON,SYSVOL READ_ONLY=false
 ```
+### NXC with Proxychains
+
 
 ## Admin Credentialed enumeration
 
