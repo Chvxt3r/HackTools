@@ -46,7 +46,7 @@ nxc smb $IP -u '' -p '' --shares
 ### Password Spraying
 #### Targeting SMB and general usage
 * Create a list of usernames and password (for this example, users.txt and passwords.txt)
-> -u and -p can both either take a single name, space seperated names, or a filename
+> -u and -p can both either take a single name, space separated names, or a filename
 ```bash
 # multiple names and single password
 nxc smb $IP -u name1 name2 name3 -p password1
