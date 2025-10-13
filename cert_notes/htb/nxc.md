@@ -32,7 +32,7 @@ nxc smb 172.16.10.10 -u '' -p '' --users --export users.txt
 # Clean up the exported list
 sed -i "s/'/\"/g" users.txt
 jq -r '.[]' users.txt > userslist.txt
-```bash
+```
 * Enumerate users through RID brute force
 > By default, --rid-brute only tries 4000 RIDs. Specify an upper limit with --rid-brute [max rid]  
 ```bash
