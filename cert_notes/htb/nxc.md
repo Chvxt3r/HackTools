@@ -44,6 +44,7 @@ nxc smb $IP -u '' -p '' --shares
 ```
 
 ### Password Spraying
+#### Targeting SMB and general usage
 * Create a list of usernames and password (for this example, users.txt and passwords.txt)
 > -u and -p can both either take a single name, space seperated names, or a filename
 ```bash
@@ -76,8 +77,31 @@ nxc smb $IP -u users.txt -p passwords.txt --local-auth --continue-on-success
 ```bash
 smbpassword -r [domain or IP] -u [user]
 ```
-* test  
-** test
+#### Targeting WinRM
+> winrm gives command execution on the target
+```bash
+nxc winrm $IP -u foundusers.txt -p foundpasswords.txt --continue-on-success
+```
+#### Targeting LDAP
+> ldap requires the use of FQDN's. Either add to hosts file or use the targets DNS
+```bash
+nxc smb ldap -u users.txt -p passwords.txt
+```
+#### Targeting MSSQL
+> SQL, SSH, and FTP are unique in that they can use local users, their own local db users, or domain users. You must specify the domain name if trying a domain account.
+```bash
+#AD Domain account
+nxc mssql $IP -u [user] -p [pass] -d [domain]
+
+#Local Windows Account
+nxc mssql $IP -u [user] -p [pass] -d .
+
+#SQL Account
+nxc mssql $IP -u [user] -p [pass] --local-auth
+```
+> Lookout for reused passwords. A DB admin may use the same credentials as their domain account just stored in the DB
+
+
 
 ## Credentialed enumeration
 
