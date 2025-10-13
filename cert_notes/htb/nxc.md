@@ -76,7 +76,7 @@ nxc smb $IP -u users.txt -p passwords.txt --local-auth --continue-on-success
 ```bash
 smbpassword -r [domain or IP] -u [user]
 ```
-* test
+* test  
 ** test
 
 ## Credentialed enumeration
