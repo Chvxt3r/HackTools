@@ -42,6 +42,43 @@ nxc smb 172.16.10.10 -u '' -p '' --rid-brute
 ```bash
 nxc smb $IP -u '' -p '' --shares
 ```
+
+### Password Spraying
+* Create a list of usernames and password (for this example, users.txt and passwords.txt)
+> -u and -p can both either take a single name, space seperated names, or a filename
+```bash
+# multiple names and single password
+nxc smb $IP -u name1 name2 name3 -p password1
+
+# single name and multiple passwords
+nxc smb $IP -u name1 -p password1 password2 password3
+
+# lists
+nxc smb $IP -u users.txt -p passwords.txt
+```
+> By default, nxc will stop on the first match it finds, to try them all, use --continue-on-success  
+* Testing if credentials are still valid (testing one username per one password in a list
+```bash
+nxc smb $IP -u foundusers.txt -p matchingpasswords.txt --no-bruteforce --continue-on-success
+```
+* Testing Local Accounts
+> Use the --local-auth flag to test local accounts
+```bash
+nxc smb $IP -u users.txt -p passwords.txt --local-auth --continue-on-success
+```
+
+#### Account Status
+* Green = Username and password is valid
+* Red = Invalid username and password
+* Magenta = Username and password is valid, but auth unsuccessful
+> Auth maybe unsuccessful for alot reasons, one of them being a password change is required  
+* change a users password via impackets smbpassword
+```bash
+smbpassword -r [domain or IP] -u [user]
+```
+* test
+** test
+
 ## Credentialed enumeration
 
 ## Admin Credentialed enumeration
