@@ -207,6 +207,8 @@ nxc smb $IP -u [user] -p [pass] -M spider_plus -o EXCLUDE_DIR=IPC$,print$,NETLOG
 nxc smb $IP -u [user] -p [pass] -M spider_plus -o EXCLUDE_DIR=IPC$,print$,NETLOGON,SYSVOL READ_ONLY=false
 ```
 ### NXC with Proxychains
+#### Scenario
+![network unreachable diagrom](images/network-unreachable.jpg)
 
 
 ## Admin Credentialed enumeration
