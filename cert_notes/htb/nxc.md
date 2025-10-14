@@ -316,6 +316,7 @@ nxc smb $IP -u [user] -p [pass] --loggedon-users-filter [user]
 * Check for a user session (not logged in but accessing the computer with credentials)
 ```bash
 nxc smb $IP -u [user] -p [pass] --sessions
+```
 ### Enumerate LAPS
 > Local Administrator Password Solution
 ```bash
