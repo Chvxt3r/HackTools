@@ -292,7 +292,7 @@ proxychains4 -q nxc smb $IP -u [user] -p [pass] -M drop-sc -o CLEANUP=True FILEN
 ### SMB options available with admin or non-admin account
 |Command|Description|
 |-------|-----------|
-|'crackmapexec smb <target> -u <u> -p <p> --loggedon-users'|Enumerate logged on users on the target|
+|`crackmapexec smb <target> -u <u> -p <p> --loggedon-users`|Enumerate logged on users on the target|
 ## Remote Shell
 
 ## Modules
