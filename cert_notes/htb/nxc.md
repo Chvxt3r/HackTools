@@ -349,7 +349,7 @@ nxc smb [host list .txt] -u [user] -p [pass] --laps --sam
 nxc winrm $FQDN -u [user] -p [pass] -X 'Get-ADServiceAccount -Filter * -Properties PrincipalsAllowedToRetrieveManagedPassword'
 ```
 * Retrieving gMSA passwords
-> must of an account with permissions, as enumerated above  
+> must have credentials permissions, as enumerated above  
 ```bash
 nxc ldap $FQDN -u [user] -p [pass] --gmsa
 ```
