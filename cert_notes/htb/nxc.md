@@ -353,6 +353,8 @@ nxc winrm $FQDN -u [user] -p [pass] -X 'Get-ADServiceAccount -Filter * -Properti
 ```bash
 nxc ldap $FQDN -u [user] -p [pass] --gmsa
 ```
+### Command Execution
+
 
 ## Remote Shell
 
