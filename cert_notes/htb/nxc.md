@@ -293,6 +293,18 @@ proxychains4 -q nxc smb $IP -u [user] -p [pass] -M drop-sc -o CLEANUP=True FILEN
 |Command|Description|
 |-------|-----------|
 |`crackmapexec smb <target> -u <u> -p <p> --loggedon-users`|Enumerate logged on users on the target|
+|`crackmapexec smb <target> -u <u> -p <p> --sessions`||
+|`crackmapexec smb <target> -u <u> -p <p> --disks`||
+|`crackmapexec smb <target> -u <u> -p <p> --computers`||
+|`crackmapexec smb <target> -u <u> -p <p> --wmi`||
+|`crackmapexec smb <target> -u <u> -p <p> --wmi-namespace`||
+|`crackmapexec smb <target> -u <u> -p <p> --rid-brute'||
+|`crackmapexec smb <target> -u <u> -p <p> --local-groups`||
+|`crackmapexec smb <target> -u <u> -p <p> --shares`||
+|`crackmapexec smb <target> -u <u> -p <p> --users'||
+|`crackmapexec smb <target> -u <u> -p <p> --groups`||
+|`crackmapexec smb <target> -u <u> -p <p> --pass-pol`||
+
 ## Remote Shell
 
 ## Modules
