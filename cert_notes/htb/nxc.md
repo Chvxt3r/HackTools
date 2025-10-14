@@ -293,18 +293,18 @@ proxychains4 -q nxc smb $IP -u [user] -p [pass] -M drop-sc -o CLEANUP=True FILEN
 #### SMB Commands
 |Command|Description|
 |-------|-----------|
-|`crackmapexec smb <target> -u <u> -p <p> --loggedon-users`|Enumerate logged on users on the target|
-|`crackmapexec smb <target> -u <u> -p <p> --sessions`|Enumerate active sessions on the target|
-|`crackmapexec smb <target> -u <u> -p <p> --disks`|Enumerate disks on the target|
-|`crackmapexec smb <target> -u <u> -p <p> --computers`|Enumerate computer on the target domain|
-|`crackmapexec smb <target> -u <u> -p <p> --wmi`|Issues the specified WMI query|
-|`crackmapexec smb <target> -u <u> -p <p> --wmi-namespace`|WMI Namespace (default: root\cimv2)|
-|`crackmapexec smb <target> -u <u> -p <p> --rid-brute`|Enumerate users by bruteforcing the RID on the target|
-|`crackmapexec smb <target> -u <u> -p <p> --local-groups`|Enumerate local groups, if a group is specified then its members are enumerated|
-|`crackmapexec smb <target> -u <u> -p <p> --shares`|Enumerate permissions on all shares of the target|
-|`crackmapexec smb <target> -u <u> -p <p> --users`|Enumerate domain users on the target|
-|`crackmapexec smb <target> -u <u> -p <p> --groups`|Enumerate domain groups on the target|
-|`crackmapexec smb <target> -u <u> -p <p> --pass-pol`|Password policy of the domain|
+|`nxc smb <target> -u <u> -p <p> --loggedon-users`|Enumerate logged on users on the target|
+|`nxc smb <target> -u <u> -p <p> --sessions`|Enumerate active sessions on the target|
+|`nxc smb <target> -u <u> -p <p> --disks`|Enumerate disks on the target|
+|`nxc smb <target> -u <u> -p <p> --computers`|Enumerate computer on the target domain|
+|`nxc smb <target> -u <u> -p <p> --wmi`|Issues the specified WMI query|
+|`nxc smb <target> -u <u> -p <p> --wmi-namespace`|WMI Namespace (default: root\cimv2)|
+|`nxc smb <target> -u <u> -p <p> --rid-brute`|Enumerate users by bruteforcing the RID on the target|
+|`nxc smb <target> -u <u> -p <p> --local-groups`|Enumerate local groups, if a group is specified then its members are enumerated|
+|`nxc smb <target> -u <u> -p <p> --shares`|Enumerate permissions on all shares of the target|
+|`nxc smb <target> -u <u> -p <p> --users`|Enumerate domain users on the target|
+|`nxc smb <target> -u <u> -p <p> --groups`|Enumerate domain groups on the target|
+|`nxc smb <target> -u <u> -p <p> --pass-pol`|Password policy of the domain|
 ### Enumerate active sessions / logged on users on a target machine
 * Enumerate just logged on users
 ```bash
@@ -332,17 +332,17 @@ nxc smb [host list .txt] -u [user] -p [pass] --laps --sam
 #### LDAP & RDP Commands
 |Command|Description|
 |-------|-----------|
-|`crackmapexec ldap <target> -u <u> -p <p> --users`|Enumerate enabled domain users|
-|`crackmapexec ldap <target> -u <u> -p <p> --groups`|Enumerate domain groups|
-|`crackmapexec ldap <target> -u <u> -p <p> --password-not-required`|Get the list of users with flag PASSWD_NOTREQD|
-|`crackmapexec ldap <target> -u <u> -p <p> --trusted-for-delegation`|Get the list of users and computers with flag TRUSTED_FOR_DELEGATION|
-|`crackmapexec ldap <target> -u <u> -p <p> --admin-count`|Get objets that had the value adminCount=1|
-|`crackmapexec ldap <target> -u <u> -p <p> --get-sid`|Get domain sid|
-|`crackmapexec ldap <target> -u <u> -p <p> --gmsa`|Enumerate GMSA passwords|
-|`crackmapexec rdp <target> -u <u> -p <p> --nla-screenshot`|Screenshot RDP login prompt if NLA is disabled|
-|`crackmapexec rdp <target> -u <u> -p <p> --screenshot`|Screenshot RDP if connection success|
-|`crackmapexec rdp <target> -u <u> -p <p> --screentime SCREENTIME`|Time to wait for desktop image|
-|`crackmapexec rdp <target> -u <u> -p <p> --res RES`|Resolution in "WIDTHxHEIGHT" format. Default: "1024x768"|
+|`nxc ldap <target> -u <u> -p <p> --users`|Enumerate enabled domain users|
+|`nxc ldap <target> -u <u> -p <p> --groups`|Enumerate domain groups|
+|`nxc ldap <target> -u <u> -p <p> --password-not-required`|Get the list of users with flag PASSWD_NOTREQD|
+|`nxc ldap <target> -u <u> -p <p> --trusted-for-delegation`|Get the list of users and computers with flag TRUSTED_FOR_DELEGATION|
+|`nxc ldap <target> -u <u> -p <p> --admin-count`|Get objets that had the value adminCount=1|
+|`nxc ldap <target> -u <u> -p <p> --get-sid`|Get domain sid|
+|`nxc ldap <target> -u <u> -p <p> --gmsa`|Enumerate GMSA passwords|
+|`nxc rdp <target> -u <u> -p <p> --nla-screenshot`|Screenshot RDP login prompt if NLA is disabled|
+|`nxc rdp <target> -u <u> -p <p> --screenshot`|Screenshot RDP if connection success|
+|`nxc rdp <target> -u <u> -p <p> --screentime SCREENTIME`|Time to wait for desktop image|
+|`nxc rdp <target> -u <u> -p <p> --res RES`|Resolution in "WIDTHxHEIGHT" format. Default: "1024x768"|
 #### Group Managed Service Accounts
 * Enumeration
 ```bash
