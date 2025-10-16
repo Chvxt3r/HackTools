@@ -19,6 +19,8 @@
 
 ## Passwords and Port Forwarding
 
+## WSL
+
 ## Impersonation and Potato Attacks
 
 ## GetSystem
