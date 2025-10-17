@@ -110,9 +110,12 @@ netsh firewall show config
 
 * [Seatbelt](https://github.com/GhostPack/Seatbelt)
 
-* 
+* [WES-NG(Windows Exploit Suggester)](https://github.com/bitsadmin/wesng)
 
 ## Kernel Exploits
+* [Big list of kernel exploits - Has not been updated in a while](https://github.com/SecWiki/windows-kernel-exploits)
+* usually just upload and execute. 
+* can be found using the exploit suggest in MSF (post/multi/recon/local_exploit_suggester)
 
 ## Passwords and Port Forwarding
 
@@ -135,5 +138,3 @@ netsh firewall show config
 ## Service Permissions
 
 ## CVE-2019-1388
-
-
