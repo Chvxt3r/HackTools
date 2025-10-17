@@ -4,6 +4,19 @@
 
 ## Initial Enumeration
 ### System Enumeration
+* Systeminfo
+```powershell
+systeminfo
+```
+* Using the pipe (|) as grep
+```cmd
+systeminfo | findstr /B /C:"OS Name" /C:"OS Version" /C:"System Type"
+```
+* Enumerating Patching Level
+> wmic must be installed for this to work. Not installed by default on Win10/11
+```cmd
+wmic qfe get Caption,Description,HotFixID,Installation
+```
 
 ### User Enumeration
 
