@@ -49,6 +49,23 @@ net localgroup [group]
 ```
 
 ### Network Enumeration
+* Get the entire network config
+```cmd
+ipconfig /all
+```
+* Find our computer neighbors
+```cmd
+arp -a
+```
+* View the routing table
+```cmd
+route print
+```
+* What ports and services are running?
+```cmd
+netstat -ano
+```
+
 
 ### Password Hunting
 
