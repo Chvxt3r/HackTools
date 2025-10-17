@@ -104,6 +104,13 @@ netsh firewall show config
 ```
 
 ## Automated Tools
+* [WinPEAS](https://github.com/peass-ng/PEASS-ng)
+
+* [Windows PrivEsc Checklist](https://book.hacktricks.wiki/en/windows-hardening/checklist-windows-privilege-escalation.html)
+
+* [Seatbelt](https://github.com/GhostPack/Seatbelt)
+
+* 
 
 ## Kernel Exploits
 
