@@ -5,7 +5,7 @@
 ## Initial Enumeration
 ### System Enumeration
 * Systeminfo
-```powershell
+```cmd
 systeminfo
 ```
 * Using the pipe (|) as grep
@@ -19,6 +19,34 @@ wmic qfe get Caption,Description,HotFixID,Installation
 ```
 
 ### User Enumeration
+* Who am I?
+```cmd
+whoami
+```
+* What are my privileges?
+```cmd
+whoami /priv
+```
+* What groups am I in?
+```cmd
+whoami /groups
+```
+* What users are on this machine?
+```cmd
+net user
+```
+* What info can I get about a specific user?
+```cmd
+net user [user]
+```
+* What are the local groups?
+```cmd
+net localgroup
+```
+* Who's in what group?
+```cmd
+net localgroup [group]
+```
 
 ### Network Enumeration
 
