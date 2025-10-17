@@ -84,6 +84,24 @@ netsh wlan show provile [SSID] key=clear
 ```
 
 ### AV Enumeration
+* Windows Defender
+```cmd
+sc query windefund
+```
+* All the services on the machine (Look for AV)
+```cmd
+sc queryex type= service
+```
+* Firewall Settings
+```cmd
+netsh advfirewall firewall dump
+# or
+netsh firewall show state
+```
+* Show firewall configuration
+```cmd
+netsh firewall show config
+```
 
 ## Automated Tools
 
