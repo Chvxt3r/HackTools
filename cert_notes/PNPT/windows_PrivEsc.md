@@ -66,8 +66,22 @@ route print
 netstat -ano
 ```
 
-
 ### Password Hunting
+* Basic Password Hunting with findstr
+```cmd
+findstr /si [search term] [file extensions]
+
+# Example
+findstr /si password *.txt *.ini *.config
+```
+* Wifi passwords
+```cmd
+# Find the profile
+netsh wlan show profile
+
+# Show the passwords
+netsh wlan show provile [SSID] key=clear
+```
 
 ### AV Enumeration
 
