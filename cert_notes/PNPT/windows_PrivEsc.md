@@ -4,7 +4,7 @@
 
 ## Initial Enumeration
 ### System Enumeration
-Test2
+
 ### User Enumeration
 
 ### Network Enumeration
@@ -39,4 +39,4 @@ Test2
 
 ## CVE-2019-1388
 
-Test1
+
