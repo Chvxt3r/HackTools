@@ -490,6 +490,7 @@ nxc smb [$IP] -u [user] -p [pass] -M ioxidresolver
 * keepass_discover
 ```bash
 nxc smb [$IP] -u [user] -p [pass] -M keepass_discover
+```
 * keepass Exploitation
 1. Locate the keepass file location from keepass_discover
 2. Add a trigger to the configuration file using nxc
