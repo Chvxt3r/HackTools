@@ -166,7 +166,6 @@ reg query HKCU /f password /t REG_SZ /s
 * HTB Practice Box - SECnotes
 * [PayloadAllTheThings](https://swisskyrepo.github.io/InternalAllTheThings/redteam/escalation/windows-privilege-escalation/#eop---windows-subsystem-for-linux-wsl)
 
-
 ## Impersonation and Potato Attacks
 ### Resources
 * [PayloadAllTheThings](https://swisskyrepo.github.io/InternalAllTheThings/redteam/escalation/windows-privilege-escalation/#eop-impersonation-privileges)
@@ -181,12 +180,22 @@ reg query HKCU /f password /t REG_SZ /s
 * [Juicy Potato](https://github.com/ohpe/juicy-potato/releases) - ver <= Win10 1809 and Windows Server 2019
 * [Sigma Potato](https://github.com/tylerdotrar/SigmaPotato) - 
 
-
-
 ## GetSystem
+* Metasploit command to elevate priviliges
 
 ## RUNAS
+### Resources
+* Practice Machine - Access (Hint: cmdkey /list)
 
+### Execution
+* Look for Stored Credentials
+```cmd
+cmdkey /list
+```
+* Open a new cmd windows as users
+```cmd
+C:\Windows\System32\runas.exe /user:[domain\user] /savecred "C:\Windows\System32\cmd.exe /c [command to run]"
+```
 ## Registry
 
 ## Executables
