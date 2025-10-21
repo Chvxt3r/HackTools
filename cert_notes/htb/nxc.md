@@ -392,7 +392,12 @@ python3 -m http.server 80
 |`--port [port]`|To Select a custom port for WinRM connection|
 |`--ssl`|To connect to SSL Enabled WinRM|
 |'--ignore-ssl-cert`|To ignore certificate verification when connecting to SSL|
-
+### Command Exectution with SSH
+> Optional `--key-file` flag to provide a key. Key must be in OPENSSH format.  
+```bash
+# Example
+nxc ssh [$IP] -u [user] --key-file [key file] -p "" -x whoami
+```
 
 ## Remote Shell
 
