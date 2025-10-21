@@ -385,7 +385,7 @@ python3 -m http.server 80
 > Remember, the script *executes on the victim machine*. That's why we need the hosting.  
 ### Command Execution with WinRM
 > Same as SMB, use `-x` for cmd and `-X` for powershell.  
-> Optionally, we can specify some new options.
+> Optionally, we can specify some new options.  
 |Flag|Description|
 |----|-----------|
 |`--port [port]`|To Select a custom port for WinRM connection|
