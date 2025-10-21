@@ -386,10 +386,11 @@ python3 -m http.server 80
 ### Command Execution with WinRM
 > Same as SMB, use `-x` for cmd and `-X` for powershell.  
 > Optionally, we can specify some new options.
-|  |
-|`--port [port]`    To Select a custom port for WinRM connection|
-|`--ssl`    To connect to SSL Enabled WinRM|
-|'--ignore-ssl-cert`    To ignore certificate verification when connecting to SSL|
+|Flag|Description|
+|----|-----------|
+|`--port [port]`|To Select a custom port for WinRM connection|
+|`--ssl`|To connect to SSL Enabled WinRM|
+|'--ignore-ssl-cert`|To ignore certificate verification when connecting to SSL|
 
 
 ## Remote Shell
