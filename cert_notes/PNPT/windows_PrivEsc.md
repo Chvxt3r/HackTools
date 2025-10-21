@@ -162,6 +162,11 @@ reg query HKLM /f password /t REG_SZ /s
 reg query HKCU /f password /t REG_SZ /s
 ```
 ## WSL
+### Resources
+* HTB Practice Box - SECnotes
+* [PayloadAllTheThings](https://swisskyrepo.github.io/InternalAllTheThings/redteam/escalation/windows-privilege-escalation/#eop---windows-subsystem-for-linux-wsl)
+
+
 
 ## Impersonation and Potato Attacks
 
