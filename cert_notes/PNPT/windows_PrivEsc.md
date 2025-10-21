@@ -167,8 +167,21 @@ reg query HKCU /f password /t REG_SZ /s
 * [PayloadAllTheThings](https://swisskyrepo.github.io/InternalAllTheThings/redteam/escalation/windows-privilege-escalation/#eop---windows-subsystem-for-linux-wsl)
 
 
-
 ## Impersonation and Potato Attacks
+### Resources
+* [PayloadAllTheThings](https://swisskyrepo.github.io/InternalAllTheThings/redteam/escalation/windows-privilege-escalation/#eop-impersonation-privileges)
+* [Hacktricks Article](https://book.hacktricks.wiki/en/windows-hardening/windows-local-privilege-escalation/roguepotato-and-printspoofer.html)
+* [FoxGloveSecurity](https://foxglovesecurity.com/2016/09/26/rotten-potato-privilege-escalation-from-service-accounts-to-system/)
+* [Potato Breakdown by gtworek](https://github.com/gtworek/Priv2Admin)
+* Basically we are looking for SEImpersonate or SEAssignPrimaryToken Privilege after `whoami /priv`
+* Practice Machine - HTB Jeeves
+
+### List of potatoes
+* [God Potato](https://github.com/BeichenDream/GodPotato) - Win8-8.1 through Win11 and Server 2012-2022
+* [Juicy Potato](https://github.com/ohpe/juicy-potato/releases) - ver <= Win10 1809 and Windows Server 2019
+* [Sigma Potato](https://github.com/tylerdotrar/SigmaPotato) - 
+
+
 
 ## GetSystem
 
