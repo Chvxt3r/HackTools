@@ -192,7 +192,7 @@ reg query HKCU /f password /t REG_SZ /s
 ```cmd
 cmdkey /list
 ```
-* Open a new cmd windows as users
+* Execute command as user
 ```cmd
 C:\Windows\System32\runas.exe /user:[domain\user] /savecred "C:\Windows\System32\cmd.exe /c [command to run]"
 ```
