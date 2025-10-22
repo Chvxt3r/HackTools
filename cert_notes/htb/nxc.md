@@ -550,5 +550,37 @@ nxc smb [$IP] -u [user] -p [pass] -M shadowcoerce
 nxc smb [$IP] -M ms17-010
 ```
 ## Misc
+### Audit Mode
+> Replaces passwords and hashes with a character of our choosing.
+```bash
+# in ~/.nxc/nxc.conf, edit the audit mode parameter to include the character you would like to replace the password with
+```
+### IPv6 Support
+> Simply replace [$IP] with the IPv6 Address
+### Completion Percent
+> Useful when doing a large number of machines
+Press `Enter` while it's running and it will drop the completion percentage
+### Kerberos Authentication
+> nxc supports KRB auth in `smb`,`ldap`, and `mssql`.  
+> Setup kerberos like normal (Export the krb5ccname, etc  
+> As always, KRB requires an FQDN
+#### Username and password with KRB auth.
+```bash
+nxc smb [$FQDN] -u [user] -p [pass] --kerberos --shares
+```
+#### Identify Users with kerberos auth
+> This command will inform us if any of the users are vulnerable to asreproast  
+```bash
+nxc smb [$IP] -u [user1] [user2] [user3] -p [pass] --kerberos
+```
+### Using AES-128 or AES-256
+```bash
+nxc smb [$IP] -u [user] --aesKey [aesKey]
+```
+### Using the kcache(export krb5ccname=[file])
+> Can use IP's with `smb` and `ldap', but `mssql` requires a FQDN  
+```bash
+nxc smb [$IP] --use-kcache
+```
 
 ## Database
