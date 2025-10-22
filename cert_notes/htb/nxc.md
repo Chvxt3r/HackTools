@@ -523,8 +523,32 @@ nxc smb [$IP] -u [user] -p [pass] -M keepass_trigger -o ACTION=ALL KEEPASS_CONFI
 ```bash
 nxc smb [$IP] -u [user] -p [pass] -M rdp -o ACTION=enable
 ```
-
-
+### Vulnerability Scan Modules
+* [ZeroLogon](https://www.secura.com/uploads/whitepapers/Zerologon.pdf)
+> Must be run on a DC.  
+```bash
+nxc smb [$IP] -M ZeroLogon
+```
+* [PetitPotam](https://github.com/topotam/PetitPotam)
+```bash
+nxc smb [$IP] -M PetitPotam
+```
+* [noPAC](https://github.com/Ridter/noPac)
+```bash
+nxc smb [$IP] -u [user] -pass [pass] -M nopac
+```
+* [DFSCoerce](https://github.com/Wh04m1001/DFSCoerce)
+```bash
+nxc smb [$IP] -u [user] -p [pass] -M dfscoerce
+```
+* [ShadowCoerce](https://github.com/ShutdownRepo/ShadowCoerce)
+```bash
+nxc smb [$IP] -u [user] -p [pass] -M shadowcoerce
+```
+* [EternalBlue(MS17-010)](https://learn.microsoft.com/en-us/security-updates/SecurityBulletins/2017/ms17-010?redirectedfrom=MSDN)
+```bash
+nxc smb [$IP] -M ms17-010
+```
 ## Misc
 
 ## Database
