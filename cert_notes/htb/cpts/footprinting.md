@@ -1,6 +1,12 @@
 # Footprinting
 ## Intro
 ### Methodology
+#### Enumeration Layers
+|Level|Layers|
+|-----|------|
+|`Infrastructure`|Internet Presence, Gateway|
+|`Host-Based`|Accessible Services, Processes|
+|`OS-Based`|Privileges, OS Setup|
 #### 6 Layers of Footprinting
 |Layer|Description|Information Categories|
 |-----|-----------|----------------------|
