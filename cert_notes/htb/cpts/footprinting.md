@@ -16,3 +16,11 @@
 |`4. Processes`|Identify the internal processes, sources, and destinations associated with the services.|PID, Processed Data, Tasks, Source, Destination|
 |`5. Privileges`|Identification of the internal permissions and privileges to the accessible services.|Groups, Users, Permissions, Restrictions, Environment|
 |`6. OS Setup`|	Identification of the internal components and systems setup.|OS Type, Patch Level, Network config, OS Environment, Configuration files, sensitive private files|
+
+* Internet Presence: Identify all possible targets and interfaces that can be tested.
+* Gateway: Understand what we are dealing with and what we have to watch out for.
+* Accessible Services: Understand the reason and functionality of the target and how to communicate with and exploit it.
+* Processes: Understand the processes running on the machine and the dependencies between them.
+* Priviliges: Identify and understand what and what is not possible with a given set of priviliges.
+* OS Setup: Understand how the admin's manage the environment and what useful/sensitive information we can get from them.
+
