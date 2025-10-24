@@ -89,7 +89,7 @@ cat /etc/vsftpd.conf | grep -v "#"
 cat /etc/ftpusers
 ```
 #### Dangerous Settings
-* Check for these `optional` configuration settings
+* Check for these `optional` configuration settings  
 |Setting|Description|
 |-------|-----------|
 |`anonymous_enable=YES`|Allowing anonymous login?|
