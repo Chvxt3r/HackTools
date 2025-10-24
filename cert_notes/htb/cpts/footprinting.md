@@ -50,3 +50,110 @@ for i in $(cat subdomainlist);do host $i | grep "has address" | grep inlanefreig
 # Run our new list through Shodan to get more info
 for i in $(cat ip-addresses.txt);do shodan host $i;done
 ```
+* DNS Records
+```bash
+dig any [domain]
+```
+### Cloud Resources
+#### Google Dorks for cloud resources
+* Google searchs of `inurl:` and `intext:`
+* Amazon - `intext:[search term] inurl:amazonaws.com`
+* Azure - `intext:[search term] inurl:blob.core.windows.net`
+#### Code Review
+* Review the code of the website and any downloadable files for pointers to cloud storage
+#### [GrayHatWarfare](https://buckets.grayhatwarfare.com/)
+* useful for search AWS/Azure/Google buckets and their contents
+* make sure to search for credentials (SSH keys, admin portals, etc)
+### Staff
+#### LinkedIn
+* Review job posting to learn about infrastructure
+* Review photo's for badge information and inadvertant information disclosure on screens, TV's, Signs, etc.
+#### Github
+* If you can track down an employee or company github, review the code for emails, JWT tokens, SSH keys, etc.
+## Host Based Enumeration
+### FTP
+* Check for anonymous sessions
+* Active - Client initiates the connection on port 21 and then informs the sever which port to reply on.
+* Passive - Server advertises the port the client should connect on (Great for firewall evasion)
+#### TFTP
+* Provides simple transfer of files
+* Does not provide any kind of client authentication
+* TFTP does not have a directory list function. 
+#### Default Configurations
+* vsFTPd default settings file
+```bash
+cat /etc/vsftpd.conf | grep -v "#"
+```
+* FTPUsers - People in this file are not allowed to use FTP
+```bash
+cat /etc/ftpusers
+```
+#### Dangerous Settings
+* Check for these `optional` configuration settings
+|Setting|Description|
+|-------|-----------|
+|`anonymous_enable=YES`|Allowing anonymous login?|
+|`anon_upload_enable=YES`|Allowing anonymous to upload files?|
+|`anon_mkdir_write_enable=YES`|Allowing anonymous to create new directories?|
+|`no_anon_password=YES`|Do not ask anonymous for password?|
+|`anon_root=/home/username/ftp`|Directory for anonymous.|
+|`write_enable=YES`|Allow the usage of FTP commands: STOR, DELE, RNFR, RNTO, MKD, RMD, APPE, and SITE?|
+
+#### FTP Commands
+|Command|Description|
+|-------|-----------|
+|`status`|Shows some of the settings of the server|
+|`debug`|Turns on/off debugging|
+|`trace`|Turns on/off packet tracing|
+|`ls`|Lists the contents of the directory w/ permissions and RIDS|
+|`ls -R`|Recursive Listing|
+|`get`|Download a file|
+|`wget -m --no-passive ftp://anonymous:anonymous@[IP]`|Download all the files we have access to|
+|`put`|Upload a file|
+
+#### Nmap FTP Scripts
+```bash
+find / -type f -name ftp* 2>/dev/null | grep scripts
+
+/usr/share/nmap/scripts/ftp-syst.nse
+/usr/share/nmap/scripts/ftp-vsftpd-backdoor.nse
+/usr/share/nmap/scripts/ftp-vuln-cve2010-4221.nse
+/usr/share/nmap/scripts/ftp-proftpd-backdoor.nse
+/usr/share/nmap/scripts/ftp-bounce.nse
+/usr/share/nmap/scripts/ftp-libopie.nse
+/usr/share/nmap/scripts/ftp-anon.nse
+/usr/share/nmap/scripts/ftp-brute.nse
+```
+#### Service Interaction
+```bash
+# netcat
+nc -nv 10.129.14.136 21
+
+# telnet
+telnet 10.129.14.136 21
+
+# openssl (May provide additional useful information)
+openssl s_client -connect 10.129.14.136:21 -starttls ftp
+
+CONNECTED(00000003)                                                                                      
+Can't use SSL_get_servername                        
+depth=0 C = US, ST = California, L = Sacramento, O = Inlanefreight, OU = Dev, CN = master.inlanefreight.htb, emailAddress = admin@inlanefreight.htb
+verify error:num=18:self signed certificate
+verify return:1
+
+depth=0 C = US, ST = California, L = Sacramento, O = Inlanefreight, OU = Dev, CN = master.inlanefreight.htb, emailAddress = admin@inlanefreight.htb
+verify return:1
+---                                                 
+Certificate chain
+ 0 s:C = US, ST = California, L = Sacramento, O = Inlanefreight, OU = Dev, CN = master.inlanefreight.htb, emailAddress = admin@inlanefreight.htb
+ 
+ i:C = US, ST = California, L = Sacramento, O = Inlanefreight, OU = Dev, CN = master.inlanefreight.htb, emailAddress = admin@inlanefreight.htb
+---
+ 
+Server certificate
+
+-----BEGIN CERTIFICATE-----
+
+MIIENTCCAx2gAwIBAgIUD+SlFZAWzX5yLs2q3ZcfdsRQqMYwDQYJKoZIhvcNAQEL
+...SNIP...
+```
