@@ -227,4 +227,78 @@ cat /etc/samba/smb.conf | grep -v "#\|\;"
 |`logon script = script.sh`|What script needs to be executed on the user's login?|
 |`magic script = script.sh`|Which script should be executed when the script gets closed?|
 |`magic output = script.out`|Where the output of the magic script needs to be stored?|
+##### Sample Share (Add to /etc/samba/smb.conf
+```bash
+[notes]
+    comment = CheckIT
+    path = /mnt/notes/
 
+    browseable = yes
+    read only = no
+    writable = yes
+    guest ok = yes
+
+    enable privileges = yes
+    create mask = 0777
+    directory mask = 0777
+```
+* After adding a share, restart samba
+```bash
+sudo systemctl restart smbd
+```
+### SMB Client
+* No Credentials, list all shares
+```bash
+smbclient -N -L //[IP]
+```
+* Connect, Anonymous login
+```bash
+smbclient //[IP]/[sharename]
+```
+* Download a file
+```bash
+get [filename]
+```
+* Get Status of smb
+```bash
+smbstatus
+```
+### Footprinting the service
+#### Nmap
+```bash
+sudo nmap [IP] -sVC -p139,445
+```
+#### RPCclient
+```bash
+rpclient -U '' [IP]
+```
+* RPCclient commands
+|Query|Description|
+|-----|-----------|
+|`srvinfo`|Server information.|
+|`enumdomains`|Enumerate all domains that are deployed in the network.|
+|`querydominfo`|Provides domain, server, and user information of deployed domains.|
+|`netshareenumall`|Enumerates all available shares.|
+|`netsharegetinfo [sharename]`|Provides information about a specific share.|
+|`enumdomusers`|Enumerates all domain users.|
+|`queryuser <RID>`|Provides information about a specific user.|
+* Simple bash script to Brute Force RID's
+```bash
+for i in $(seq 500 1100);do rpcclient -N -U "" 10.129.14.128 -c "queryuser 0x$(printf '%x\n' $i)" | grep "User Name\|user_rid\|group_rid" && echo "";done
+```
+* Alternate way with Imapcket-Samrdump
+```bash
+impacket-samrdump [IP]
+```
+#### SMBMap
+```bash
+smbmap -H [IP]
+```
+#### Netexec
+```bash
+nxc smb [IP] --shares -u '' -p''
+```
+#### [Enum4Linux-ng](https://github.com/cddmp/enum4linux-ng)
+```bash
+./enum4linux-ng [IP] -A
+```
