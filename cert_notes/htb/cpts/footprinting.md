@@ -263,7 +263,7 @@ get [filename]
 ```bash
 smbstatus
 ```
-### Footprinting the service
+### Footprinting SMB
 #### Nmap
 ```bash
 sudo nmap [IP] -sVC -p139,445
