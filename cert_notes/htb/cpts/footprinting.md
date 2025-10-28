@@ -302,3 +302,82 @@ nxc smb [IP] --shares -u '' -p''
 ```bash
 ./enum4linux-ng [IP] -A
 ```
+### NFS
+#### Default configuration
+* Stored in /etc/exports
+```bash
+cat /etc/exports 
+
+# /etc/exports: the access control list for filesystems which may be exported
+#               to NFS clients.  See exports(5).
+#
+# Example for NFSv2 and NFSv3:
+# /srv/homes       hostname1(rw,sync,no_subtree_check) hostname2(ro,sync,no_subtree_check)
+#
+# Example for NFSv4:
+# /srv/nfs4        gss/krb5i(rw,sync,fsid=0,crossmnt,no_subtree_check)
+# /srv/nfs4/homes  gss/krb5i(rw,sync,no_subtree_check)
+```
+#### Config Options
+|Option|Description|
+|------|-----------|
+|`rw`|Read and write permissions.|
+|`ro`|Read only permissions.|
+|`sync`|Synchronous data transfer. (A bit slower)|
+|`async`|Asynchronous data transfer. (A bit faster)|
+|`secure`|Ports above 1024 will not be used.|
+|`insecure`|Ports above 1024 will be used.|
+|`no_subtree_check`|This option disables the checking of subdirectory trees.|
+|`root_squash`|Assigns all permissions to files of root UID/GID 0 to the UID/GID of anonymous, which prevents root from accessing files on an NFS mount.|
+#### Sample Config Creation
+```bash
+root@nfs:~# echo '/mnt/nfs  10.129.14.0/24(sync,no_subtree_check)' >> /etc/exports
+root@nfs:~# systemctl restart nfs-kernel-server 
+root@nfs:~# exportfs
+
+/mnt/nfs        10.129.14.0/24
+```
+#### Dangerous Settings
+|Option|Description|
+|------|-----------|
+|`rw`|Read and write permissions.|
+|`insecure`|Ports above 1024 will be used.|
+|`nohide`|If another file system was mounted below an exported directory, this directory is exported by its own exports entry.|
+|`no_root_squash`|All files created by root are kept with the UID/GID 0.|
+### Footprinting NFS
+#### Simple nmap scan
+```bash
+sudo nmap -sCV [IP] -p111,2049
+```
+#### nmap script scan
+```bash
+sudo nmap --script nfs* [IP] -sV -p111,2049
+```
+#### Show available shares
+```bash
+showmount -e [IP]
+```
+#### Mount NFS Share
+```bash
+# Make a local folder to map the share to.
+mkdir target-NFS
+# Mount the share
+sudo mount -t nfs [IP]:/ ./target-NFS/ -o nolock
+# Change into the local folder
+cd target-NFS
+# List everything
+tree .
+```
+#### List contents with Username & Group names
+```bash
+ls -l mnt/nfs/
+```
+#### List Contents with UIDs & GUIDs
+```bash
+ls -n mnt/nfs/
+```
+#### Unmounting the share
+```bash
+cd ..
+sudo umount ./target-NFS
+```
